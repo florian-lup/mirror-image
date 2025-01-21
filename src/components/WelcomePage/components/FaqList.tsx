@@ -1,24 +1,21 @@
 "use client";
 
 const questions = [
-  { text: "How can I get started?", emoji: "🚀" },
-  { text: "What topics can I ask about?", emoji: "🤔" },
-  { text: "How fast will I get a response?", emoji: "⚡" },
-  { text: "Is this service free?", emoji: "💎" }
+  "How can I get started?",
+  "What topics can I ask about?",
+  "How fast will I get a response?",
+  "Is this service free?"
 ];
 
 export const FaqList = () => {
   return (
     <div className="grid grid-cols-2 gap-4 max-w-2xl mx-auto mt-4">
-      {questions.map(({ text, emoji }, index) => (
+      {questions.map((question, index) => (
         <button
           key={index}
-          className="text-left p-3 bg-primary-light/5 dark:bg-primary-dark/5 border border-accent-light dark:border-accent-dark text-content-light dark:text-content-dark rounded-md hover:bg-primary-light/10 dark:hover:bg-primary-dark/10 transition-colors"
+          className="text-left p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
         >
-          <span className="text-sm flex items-center gap-2">
-            <span className="text-lg">{emoji}</span>
-            {text}
-          </span>
+          <span className="text-sm text-gray-900">{question}</span>
         </button>
       ))}
     </div>
