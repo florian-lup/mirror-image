@@ -13,7 +13,7 @@ export const WelcomePage = () => {
           <main className="py-16">
             <div className="space-y-6">
               <section className="pt-16">
-                <h1 className="text-3xl font-bold tracking-tight text-neutral-100 sm:text-4xl mb-16 text-center">
+                <h1 className="text-3xl tracking-tight text-neutral-300 sm:text-4xl mb-16 text-center">
                   What do you want to know?
                 </h1>
                 <InputArea />
