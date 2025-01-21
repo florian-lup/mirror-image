@@ -13,9 +13,9 @@ export const FaqList = () => {
       {questions.map((question, index) => (
         <button
           key={index}
-          className="text-left p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+          className="text-left p-3 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
         >
-          <span className="text-sm text-gray-900">{question}</span>
+          <span className="text-sm">{question}</span>
         </button>
       ))}
     </div>
