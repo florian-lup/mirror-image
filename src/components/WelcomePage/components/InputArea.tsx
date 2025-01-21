@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react';
+import { SparklesIcon } from '@heroicons/react/24/solid';
 
 export const InputArea = () => {
   const [question, setQuestion] = useState('');
@@ -20,13 +21,14 @@ export const InputArea = () => {
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
             placeholder="Ask me anything..."
-            className="min-w-0 flex-auto rounded-md border-0 bg-white/5 px-4 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-black sm:text-base"
+            className="min-w-0 flex-auto rounded-md bg-neutral-800 px-4 py-3 text-neutral-100 placeholder:text-neutral-400 shadow-sm border border-neutral-700 focus:border-indigo-600 focus:outline-none transition-colors sm:text-base"
           />
           <button
             type="submit"
-            className="flex-none rounded-md bg-black px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+            className="flex-none rounded-md bg-indigo-950 p-3 text-indigo-200 shadow-sm hover:bg-indigo-900 border-2 border-indigo-600 focus:outline-none focus-visible:outline-none group transition-all"
+            aria-label="Submit question"
           >
-            Ask
+            <SparklesIcon className="h-5 w-5 transition-transform group-hover:scale-110" />
           </button>
         </div>
       </form>
