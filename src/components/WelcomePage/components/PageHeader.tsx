@@ -1,15 +1,15 @@
 export const PageHeader = () => {
   return (
-    <header className="py-6">
-      <nav className="flex justify-end space-x-4">
+    <header className="h-20 sticky top-0 z-10 backdrop-blur-sm flex items-center">
+      <nav className="flex justify-end items-center space-x-4 w-full px-8">
         <button 
-          className="w-10 h-10 rounded-full bg-neutral-900 text-neutral-300 hover:bg-neutral-800 transition-all flex items-center justify-center border-2 border-neutral-700"
+          className="h-8 w-8 rounded-full bg-white/80 text-neutral-900 hover:bg-white/95 hover:shadow-md transition-all duration-200 ease-in-out flex items-center justify-center border border-white/20"
           aria-label="Help"
         >
-          <span className="text-lg font-medium">?</span>
+          <span className="text-sm font-medium select-none">?</span>
         </button>
         <button 
-          className="px-4 py-2 rounded-md bg-neutral-900 text-neutral-300 border-2 border-neutral-700 hover:bg-neutral-800 transition-all font-medium"
+          className="h-8 px-3.5 rounded-md bg-white/80 text-neutral-900 border border-white/20 hover:bg-white/95 hover:shadow-md transition-all duration-200 ease-in-out font-medium select-none flex items-center justify-center text-sm"
         >
           Contact
         </button>
