@@ -1,10 +1,10 @@
 "use client";
 
 const questions = [
-  { text: "How can I get started?", emoji: "🚀" },
-  { text: "What topics can I ask about?", emoji: "🤔" },
-  { text: "How fast will I get a response?", emoji: "⚡" },
-  { text: "Is this service free?", emoji: "💎" }
+  { text: "What's your background and experience?", emoji: "👨‍💻" },
+  { text: "What kind of projects have you worked on?", emoji: "🛠️" },
+  { text: "What technologies do you specialize in?", emoji: "💡" },
+  { text: "What are your interests outside of coding?", emoji: "🌟" }
 ];
 
 export const FaqList = () => {
