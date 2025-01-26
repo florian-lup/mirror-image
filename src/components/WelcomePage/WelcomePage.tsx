@@ -1,5 +1,5 @@
-import { PageHeader } from './components/PageHeader';
-import { PageFooter } from './components/PageFooter';
+import { PageHeader } from './layouts/PageHeader';
+import { PageFooter } from './layouts/PageFooter';
 import { FaqList } from './components/FaqList';
 import { InputArea } from './components/InputArea';
 
