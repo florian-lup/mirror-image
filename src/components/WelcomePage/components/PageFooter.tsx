@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { PrivacyPopover } from './PrivacyPopover';
 
 export const PageFooter = () => {
   return (
@@ -16,26 +17,8 @@ export const PageFooter = () => {
           >
             GitHub
           </Link>
-          <Link 
-            href="https://linkedin.com" 
-            className="text-sm text-neutral-500 hover:text-neutral-300 transition-all duration-300 hover:scale-105"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            LinkedIn
-          </Link>
-          <Link 
-            href="https://twitter.com" 
-            className="text-sm text-neutral-500 hover:text-neutral-300 transition-all duration-300 hover:scale-105"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Twitter
-          </Link>
           <div className="h-4 w-px bg-neutral-800 mx-2" />
-          <button className="text-sm text-neutral-500 hover:text-neutral-300 transition-all duration-300">
-            Privacy
-          </button>
+          <PrivacyPopover />
         </div>
       </div>
     </footer>

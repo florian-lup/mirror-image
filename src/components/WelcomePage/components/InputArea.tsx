@@ -24,7 +24,7 @@ export const InputArea = () => {
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             placeholder="What do you want to know?"
-            className="min-w-0 flex-auto rounded-full bg-neutral-900 px-5 py-3 text-neutral-100 placeholder:text-neutral-400 focus:outline-none text-base"
+            className="min-w-0 flex-auto rounded-l-full rounded-r-none bg-neutral-900 px-5 py-3 text-neutral-100 placeholder:text-neutral-400 focus:outline-none text-base"
           />
           <button
             type="submit"
