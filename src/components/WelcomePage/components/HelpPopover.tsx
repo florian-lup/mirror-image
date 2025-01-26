@@ -2,18 +2,19 @@
 
 import * as React from 'react';
 import * as Popover from '@radix-ui/react-popover';
+import { HelpCircle } from 'lucide-react';
 
 export const HelpPopover = () => {
   return (
     <Popover.Root>
       <Popover.Trigger asChild>
-        <button 
-          className="h-9 w-9 rounded-full bg-neutral-800/40 text-neutral-300 hover:bg-neutral-700/60 hover:text-neutral-100 hover:shadow-lg hover:shadow-neutral-900/40 transition-all duration-300 ease-out flex items-center justify-center backdrop-blur-sm group relative overflow-hidden"
-          aria-label="Help information"
+        <button
+          type="button"
+          className="flex items-center justify-center w-10 h-10 rounded-full bg-neutral-800/40 hover:bg-neutral-700/60 transition-all duration-300 group relative overflow-hidden"
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-neutral-400/10 to-transparent opacity-0 group-hover:opacity-100 
-            transform translate-x-[-100%] animate-[sweep_2s_ease-in-out_infinite] pointer-events-none" />
-          <span className="text-sm font-medium select-none relative z-10">?</span>
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-neutral-300/25 to-transparent opacity-0 group-hover:opacity-100 
+            transform -translate-x-full animate-[sweep_1.5s_ease-in-out_infinite] pointer-events-none" />
+          <HelpCircle className="h-5 w-5 text-neutral-400 group-hover:text-neutral-300 relative z-10" />
         </button>
       </Popover.Trigger>
       <Popover.Portal>

@@ -7,7 +7,10 @@ export const PrivacyPopover = () => {
   return (
     <Popover.Root>
       <Popover.Trigger asChild>
-        <button className="text-sm text-neutral-500 hover:text-neutral-300 transition-all duration-300">
+        <button
+          type="button"
+          className="text-sm text-neutral-500 hover:text-neutral-300 transition-all duration-300 hover:scale-105"
+        >
           Privacy
         </button>
       </Popover.Trigger>

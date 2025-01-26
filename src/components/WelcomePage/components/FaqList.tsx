@@ -17,8 +17,8 @@ export const FaqList = () => {
             bg-neutral-800/40 hover:bg-neutral-700/60 
             group relative overflow-hidden"
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-neutral-400/10 to-transparent opacity-0 group-hover:opacity-100 
-            transform translate-x-[-100%] animate-[sweep_2s_ease-in-out_infinite] pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-neutral-300/25 to-transparent opacity-0 group-hover:opacity-100 
+            transform -translate-x-full animate-[sweep_1.5s_ease-in-out_infinite] pointer-events-none" />
           <span className="text-[13px] leading-relaxed text-neutral-300 group-hover:text-neutral-100 relative z-10">
             {question.text}
           </span>

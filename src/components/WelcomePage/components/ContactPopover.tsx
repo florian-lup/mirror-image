@@ -21,12 +21,13 @@ export const ContactPopover = () => {
   return (
     <Popover.Root>
       <Popover.Trigger asChild>
-        <button 
-          className="h-9 px-4 rounded-full bg-neutral-800/40 text-neutral-300 hover:bg-neutral-700/60 hover:text-neutral-100 hover:shadow-lg hover:shadow-neutral-900/40 transition-all duration-300 ease-out font-medium select-none flex items-center justify-center text-sm backdrop-blur-sm group relative overflow-hidden"
+        <button
+          type="button"
+          className="h-9 px-4 rounded-full bg-neutral-800/40 hover:bg-neutral-700/60 transition-all duration-300 group relative overflow-hidden"
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-neutral-400/10 to-transparent opacity-0 group-hover:opacity-100 
-            transform translate-x-[-100%] animate-[sweep_2s_ease-in-out_infinite] pointer-events-none" />
-          <span className="relative z-10">Contact</span>
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-neutral-300/25 to-transparent opacity-0 group-hover:opacity-100 
+            transform -translate-x-full animate-[sweep_1.5s_ease-in-out_infinite] pointer-events-none" />
+          <span className="text-sm font-medium text-neutral-400 group-hover:text-neutral-300 relative z-10">Contact</span>
         </button>
       </Popover.Trigger>
       <Popover.Portal>

@@ -16,7 +16,7 @@ export const InputArea = () => {
   return (
     <div className="max-w-2xl mx-auto px-4">
       <form onSubmit={handleSubmit} className="mt-8">
-        <div className={`flex items-center gap-x-1.5 p-1 rounded-full bg-gradient-to-r from-neutral-800/50 to-neutral-900/50 ${isFocused ? 'shadow-lg shadow-neutral-900/50 ring-1 ring-neutral-700' : ''} transition-all duration-300`}>
+        <div className={`flex items-center gap-x-1.5 p-1 rounded-full bg-neutral-800/50 ${isFocused ? 'shadow-lg shadow-neutral-900/50 ring-1 ring-neutral-700' : ''} transition-all duration-300`}>
           <input
             type="text"
             value={question}
@@ -39,9 +39,9 @@ export const InputArea = () => {
             disabled={!question.trim()}
             aria-label="Submit question"
           >
-            <div className={`absolute inset-0 bg-gradient-to-r from-transparent via-neutral-400/10 to-transparent opacity-0 group-hover:opacity-100 
-              transform translate-x-[-100%] animate-[sweep_2s_ease-in-out_infinite] pointer-events-none
-              ${question.trim() ? 'via-neutral-400/20' : ''}`}
+            <div className={`absolute inset-0 bg-gradient-to-r from-transparent via-neutral-300/25 to-transparent opacity-0 group-hover:opacity-100 
+              transform -translate-x-full animate-[sweep_1.5s_ease-in-out_infinite] pointer-events-none
+              ${question.trim() ? 'via-neutral-300/30' : ''}`}
             ></div>
             <Power className={`h-5 w-5 transition-all duration-300 relative z-10
               ${question.trim() ? 'text-neutral-100 scale-110' : 'text-neutral-400/50'}
