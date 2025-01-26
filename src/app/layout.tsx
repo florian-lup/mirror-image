@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   title: "Florian Lup",
   description: "Florian Lup",
   icons: {
-    icon: "/favicon.png",
+    icon: "/favicon.ico",
   },
 };
 

@@ -20,7 +20,7 @@ export const PageHeader = () => {
       <div className="flex justify-between items-center w-full">
         <div className="flex items-center">
           <Image
-            src="/logo.png"
+            src="/logo.svg"
             alt="Logo"
             width={28}
             height={28}
