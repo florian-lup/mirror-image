@@ -1,22 +1,25 @@
 "use client";
 
 const questions = [
-  { text: "What's your background and experience?", emoji: "👨‍💻" },
-  { text: "What kind of projects have you worked on?", emoji: "🛠️" },
-  { text: "What technologies do you specialize in?", emoji: "💡" },
-  { text: "What are your interests outside of coding?", emoji: "🌟" }
+  { text: "What's your background and experience?" },
+  { text: "What kind of projects have you worked on?" },
+  { text: "What technologies do you specialize in?" },
+  { text: "What are your interests outside of coding?" }
 ];
 
 export const FaqList = () => {
   return (
-    <div className="grid grid-cols-2 gap-4 max-w-2xl mx-auto mt-4">
+    <div className="grid sm:grid-cols-2 gap-2 max-w-xl mx-auto">
       {questions.map((question, index) => (
         <button
           key={index}
-          className="text-left p-3 bg-neutral-900 rounded-lg hover:bg-neutral-800 transition-colors border border-neutral-800 group"
+          className="text-left p-3 rounded-xl transition-all duration-300 backdrop-blur-sm
+            bg-neutral-800/40 hover:bg-neutral-700/60 
+            group relative overflow-hidden"
         >
-          <span className="text-sm text-neutral-300 flex items-center gap-2 group-hover:text-neutral-200">
-            <span className="text-lg">{question.emoji}</span>
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-neutral-400/10 to-transparent opacity-0 group-hover:opacity-100 
+            transform translate-x-[-100%] animate-[sweep_2s_ease-in-out_infinite] pointer-events-none" />
+          <span className="text-[13px] leading-relaxed text-neutral-300 group-hover:text-neutral-100 relative z-10">
             {question.text}
           </span>
         </button>
