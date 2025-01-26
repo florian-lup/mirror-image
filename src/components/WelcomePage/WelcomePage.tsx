@@ -12,10 +12,10 @@ export const WelcomePage = () => {
         <div className="h-full mx-auto px-4 sm:px-6 lg:px-8 flex flex-col">
           <PageHeader />
           
-          <main className="flex-1 flex flex-col justify-center -mt-20">
-            <div className="space-y-16">
+          <main className="flex-1 flex flex-col justify-center -mt-20 sm:-mt-20 md:-mt-16">
+            <div className="space-y-8 sm:space-y-16">
               <section>
-                <h1 className="text-4xl font-medium tracking-tight text-neutral-100 sm:text-5xl mb-16 text-center">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-neutral-100 mb-8 sm:mb-16 text-center px-4">
                   Ask me anything...
                 </h1>
                 <InputArea />

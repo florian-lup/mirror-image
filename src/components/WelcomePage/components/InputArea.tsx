@@ -14,9 +14,9 @@ export const InputArea = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto px-4">
-      <form onSubmit={handleSubmit} className="mt-8">
-        <div className={`flex items-center gap-x-1.5 p-1 rounded-full bg-neutral-800/50 ${isFocused ? 'shadow-lg shadow-neutral-900/50 ring-1 ring-neutral-700' : ''} transition-all duration-300`}>
+    <div className="max-w-2xl mx-auto px-2 sm:px-4">
+      <form onSubmit={handleSubmit} className="mt-4 sm:mt-8">
+        <div className={`flex items-center gap-x-1 sm:gap-x-1.5 p-0.5 sm:p-1 rounded-full bg-neutral-800/50 ${isFocused ? 'shadow-lg shadow-neutral-900/50 ring-1 ring-neutral-700' : ''} transition-all duration-300`}>
           <input
             type="text"
             value={question}
@@ -24,11 +24,11 @@ export const InputArea = () => {
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             placeholder="What do you want to know?"
-            className="min-w-0 flex-auto rounded-l-full rounded-r-none bg-neutral-900 px-5 py-3 text-neutral-100 placeholder:text-neutral-400 focus:outline-none text-base"
+            className="min-w-0 flex-auto rounded-l-full rounded-r-none bg-neutral-900 px-4 sm:px-5 py-2.5 sm:py-3 text-neutral-100 placeholder:text-neutral-400 focus:outline-none text-sm sm:text-base"
           />
           <button
             type="submit"
-            className={`flex items-center justify-center w-11 h-11 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-600 group transition-all duration-300 relative overflow-hidden
+            className={`flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-600 group transition-all duration-300 relative overflow-hidden
               ${question.trim() 
                 ? 'bg-neutral-700/60 text-neutral-100 hover:bg-neutral-600/70 hover:scale-[1.02] hover:shadow-lg hover:shadow-neutral-900/40 before:absolute before:inset-[-2px] before:rounded-full before:bg-gradient-to-r before:from-neutral-700/0 before:via-neutral-400/40 before:to-neutral-700/0 before:animate-[spin_2s_linear_infinite] before:border-2 before:border-transparent' 
                 : 'bg-neutral-800/20 text-neutral-400/50 hover:bg-neutral-700/40 hover:text-neutral-300 cursor-not-allowed opacity-50'
