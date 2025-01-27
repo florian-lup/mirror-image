@@ -3,15 +3,13 @@
 import * as React from 'react';
 import { HelpCircle } from 'lucide-react';
 import { BasePopover } from './BasePopover';
+import { NavButton } from '../components/NavButton';
 
 export const HelpPopover: React.FC = () => {
   const trigger = (
-    <button
-      type="button"
-      className="flex items-center justify-center w-10 h-10 rounded-full bg-neutral-800/40 relative overflow-hidden transition-colors duration-200 hover:bg-neutral-700/40"
-    >
+    <NavButton isIconButton>
       <HelpCircle className="h-5 w-5 text-neutral-400 relative z-10" />
-    </button>
+    </NavButton>
   );
 
   const content = (

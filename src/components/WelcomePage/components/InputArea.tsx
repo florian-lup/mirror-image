@@ -30,8 +30,8 @@ export const InputArea: React.FC = () => {
             type="submit"
             className={`flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-600 relative overflow-hidden backdrop-blur-sm disabled:pointer-events-none
               ${question.trim() 
-                ? 'bg-neutral-700/60 text-neutral-100' 
-                : 'bg-neutral-800/20 text-neutral-400/50 cursor-not-allowed opacity-50'
+                ? 'bg-neutral-800/50 text-neutral-100' 
+                : 'bg-neutral-800/50 text-neutral-400/50 cursor-not-allowed opacity-50'
               }
               ${isFocused ? 'ring-1 ring-neutral-600 shadow-lg shadow-neutral-900/30' : ''}`}
             disabled={!question.trim()}

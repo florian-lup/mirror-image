@@ -2,15 +2,13 @@
 
 import * as React from 'react';
 import { BasePopover } from './BasePopover';
+import { NavButton } from '../components/NavButton';
 
 export const PrivacyPopover: React.FC = () => {
   const trigger = (
-    <button
-      type="button"
-      className="text-xs sm:text-sm text-neutral-500"
-    >
+    <NavButton>
       Privacy
-    </button>
+    </NavButton>
   );
 
   const content = (

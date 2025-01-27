@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { Copy, Check } from 'lucide-react';
 import { BasePopover } from './BasePopover';
+import { NavButton } from '../components/NavButton';
 
 export const ContactPopover: React.FC = () => {
   const [copied, setCopied] = React.useState(false);
@@ -19,12 +20,9 @@ export const ContactPopover: React.FC = () => {
   };
 
   const trigger = (
-    <button
-      type="button"
-      className="h-9 px-4 rounded-full bg-neutral-800/40 relative overflow-hidden transition-colors duration-200 hover:bg-neutral-700/40"
-    >
-      <span className="text-sm font-medium text-neutral-400 relative z-10">Contact</span>
-    </button>
+    <NavButton>
+      Contact
+    </NavButton>
   );
 
   const content = (

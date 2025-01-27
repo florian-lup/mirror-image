@@ -1,12 +1,16 @@
 import { lazy, Suspense } from 'react';
-import Link from 'next/link';
+import { NavButton } from '../components/NavButton';
 
 const PrivacyPopover = lazy(() => import('../popovers/PrivacyPopover').then(module => ({ 
   default: module.PrivacyPopover 
 })));
 
+const HelpPopover = lazy(() => import('../popovers/HelpPopover').then(module => ({ 
+  default: module.HelpPopover 
+})));
+
 const PopoverFallback = () => (
-  <button className="text-xs sm:text-sm text-neutral-500">Loading...</button>
+  <button className="text-neutral-500">Loading...</button>
 );
 
 export const PageFooter = () => {
@@ -16,20 +20,21 @@ export const PageFooter = () => {
         <div className="text-xs sm:text-sm text-neutral-500">
           © {new Date().getFullYear()} Florian Lup
         </div>
-        <div className="flex items-center gap-x-4 sm:gap-x-6">
-          <Link 
-            href="https://github.com/florian-lup" 
-            className="text-xs sm:text-sm text-neutral-500"
+        <nav className="flex items-center gap-x-2">
+          <NavButton 
+            href="https://github.com/florian-lup"
             target="_blank"
             rel="noopener noreferrer"
           >
             GitHub
-          </Link>
-          <div className="h-3 sm:h-4 w-px bg-neutral-800" />
+          </NavButton>
+          <Suspense fallback={<PopoverFallback />}>
+            <HelpPopover />
+          </Suspense>
           <Suspense fallback={<PopoverFallback />}>
             <PrivacyPopover />
           </Suspense>
-        </div>
+        </nav>
       </div>
     </footer>
   );
