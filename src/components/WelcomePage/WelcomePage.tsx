@@ -6,7 +6,7 @@ import { InputArea } from './components/InputArea';
 export const WelcomePage = () => {
   return (
     <div className="h-screen bg-neutral-900 flex flex-col relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-neutral-800/50 via-neutral-900 to-neutral-900 pointer-events-none" />
+      <div className="absolute inset-0 bg-neutral-900 pointer-events-none" />
       
       <div className="flex-1 relative">
         <div className="h-full mx-auto px-4 sm:px-6 lg:px-8 flex flex-col">

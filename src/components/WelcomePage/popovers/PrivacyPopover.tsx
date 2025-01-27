@@ -2,13 +2,12 @@
 
 import * as React from 'react';
 import { BasePopover } from './BasePopover';
-import { styles } from '@/styles/shared';
 
 export const PrivacyPopover: React.FC = () => {
   const trigger = (
     <button
       type="button"
-      className={styles.popover.trigger}
+      className="text-xs sm:text-sm text-neutral-500"
     >
       Privacy
     </button>

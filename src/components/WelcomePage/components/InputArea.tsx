@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Power } from 'lucide-react';
 
-export const InputArea = () => {
+export const InputArea: React.FC = () => {
   const [question, setQuestion] = useState('');
   const [isFocused, setIsFocused] = useState(false);
 
@@ -16,7 +16,7 @@ export const InputArea = () => {
   return (
     <div className="max-w-2xl mx-auto px-2 sm:px-4">
       <form onSubmit={handleSubmit} className="mt-4 sm:mt-8">
-        <div className={`flex items-center gap-x-1 sm:gap-x-1.5 p-0.5 sm:p-1 rounded-full bg-neutral-800/50 ${isFocused ? 'shadow-lg shadow-neutral-900/50 ring-1 ring-neutral-700' : ''} transition-all duration-300`}>
+        <div className={`flex items-center gap-x-1 sm:gap-x-1.5 p-0.5 sm:p-1 rounded-full bg-neutral-800/50 ${isFocused ? 'shadow-lg shadow-neutral-900/50 ring-1 ring-neutral-700' : ''}`}>
           <input
             type="text"
             value={question}
@@ -28,26 +28,16 @@ export const InputArea = () => {
           />
           <button
             type="submit"
-            className={`flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-600 group transition-all duration-300 relative overflow-hidden
+            className={`flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-600 relative overflow-hidden backdrop-blur-sm disabled:pointer-events-none
               ${question.trim() 
-                ? 'bg-neutral-700/60 text-neutral-100 hover:bg-neutral-600/70 hover:scale-[1.02] hover:shadow-lg hover:shadow-neutral-900/40 before:absolute before:inset-[-2px] before:rounded-full before:bg-gradient-to-r before:from-neutral-700/0 before:via-neutral-400/40 before:to-neutral-700/0 before:animate-[spin_2s_linear_infinite] before:border-2 before:border-transparent' 
-                : 'bg-neutral-800/20 text-neutral-400/50 hover:bg-neutral-700/40 hover:text-neutral-300 cursor-not-allowed opacity-50'
+                ? 'bg-neutral-700/60 text-neutral-100' 
+                : 'bg-neutral-800/20 text-neutral-400/50 cursor-not-allowed opacity-50'
               }
-              ${isFocused ? 'ring-1 ring-neutral-600 shadow-lg shadow-neutral-900/30' : ''}
-              backdrop-blur-sm disabled:pointer-events-none
-            `}
+              ${isFocused ? 'ring-1 ring-neutral-600 shadow-lg shadow-neutral-900/30' : ''}`}
             disabled={!question.trim()}
             aria-label="Submit question"
           >
-            <div className={`absolute inset-0 bg-gradient-to-r from-transparent via-neutral-300/25 to-transparent opacity-0 group-hover:opacity-100 
-              transform -translate-x-full animate-[sweep_1.5s_ease-in-out_infinite] pointer-events-none
-              ${question.trim() ? 'via-neutral-300/30' : ''}`}
-            ></div>
-            <Power className={`h-5 w-5 transition-all duration-300 relative z-10
-              ${question.trim() ? 'text-neutral-100 scale-110' : 'text-neutral-400/50'}
-              group-hover:scale-110 group-hover:text-neutral-300 group-hover:rotate-90 stroke-[1.5]
-              motion-safe:transform motion-safe:transition-all motion-safe:duration-500`} 
-            />
+            <Power className="h-5 w-5 relative z-10 stroke-[1.5]" />
           </button>
         </div>
       </form>

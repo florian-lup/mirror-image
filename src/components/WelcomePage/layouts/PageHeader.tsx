@@ -1,6 +1,5 @@
 import { lazy, Suspense } from 'react';
 import Image from 'next/image';
-import { styles } from '@/styles/shared';
 
 const HelpPopover = lazy(() => import('../popovers/HelpPopover').then(module => ({ 
   default: module.HelpPopover 
@@ -11,7 +10,7 @@ const ContactPopover = lazy(() => import('../popovers/ContactPopover').then(modu
 })));
 
 const PopoverFallback = () => (
-  <button className={styles.popover.trigger}>Loading...</button>
+  <button className="text-xs sm:text-sm text-neutral-500 p-2.5 sm:p-3 rounded-xl backdrop-blur-sm relative overflow-hidden bg-neutral-800/40 transition-colors duration-200 hover:bg-neutral-700/40">Loading...</button>
 );
 
 export const PageHeader = () => {

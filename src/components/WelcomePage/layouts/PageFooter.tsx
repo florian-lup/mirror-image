@@ -1,13 +1,12 @@
 import { lazy, Suspense } from 'react';
 import Link from 'next/link';
-import { styles } from '@/styles/shared';
 
 const PrivacyPopover = lazy(() => import('../popovers/PrivacyPopover').then(module => ({ 
   default: module.PrivacyPopover 
 })));
 
 const PopoverFallback = () => (
-  <button className={styles.popover.trigger}>Loading...</button>
+  <button className="text-xs sm:text-sm text-neutral-500">Loading...</button>
 );
 
 export const PageFooter = () => {
@@ -20,13 +19,13 @@ export const PageFooter = () => {
         <div className="flex items-center gap-x-4 sm:gap-x-6">
           <Link 
             href="https://github.com/florian-lup" 
-            className={styles.link}
+            className="text-xs sm:text-sm text-neutral-500"
             target="_blank"
             rel="noopener noreferrer"
           >
             GitHub
           </Link>
-          <div className={styles.divider} />
+          <div className="h-3 sm:h-4 w-px bg-neutral-800" />
           <Suspense fallback={<PopoverFallback />}>
             <PrivacyPopover />
           </Suspense>
