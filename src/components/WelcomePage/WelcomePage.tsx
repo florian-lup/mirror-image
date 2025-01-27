@@ -1,9 +1,21 @@
+"use client";
+
+import { useState } from 'react';
 import { PageHeader } from './layouts/PageHeader';
-import { PageFooter } from './layouts/PageFooter';
-import { FaqList } from './components/FaqList';
 import { InputArea } from './components/InputArea';
+import { FaqList } from './components/FaqList';
+import { PageFooter } from './layouts/PageFooter';
+import { ChatInterface } from './components/ChatInterface';
 
 export const WelcomePage = () => {
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [chatQuestion, setChatQuestion] = useState('');
+
+  const handleOpenChat = (question: string) => {
+    setChatQuestion(question);
+    setIsChatOpen(true);
+  };
+
   return (
     <div className="h-screen bg-neutral-900 flex flex-col relative overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-neutral-800/50 via-neutral-900 to-neutral-900 pointer-events-none" />
@@ -18,16 +30,22 @@ export const WelcomePage = () => {
                 <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-neutral-300 mb-8 sm:mb-16 text-center px-4">
                   Ask me anything...
                 </h1>
-                <InputArea />
+                <InputArea onAskQuestion={handleOpenChat} />
               </section>
 
-              <FaqList />
+              <FaqList onQuestionClick={handleOpenChat} />
             </div>
           </main>
 
           <PageFooter />
         </div>
       </div>
+
+      <ChatInterface
+        isOpen={isChatOpen}
+        onClose={() => setIsChatOpen(false)}
+        initialQuestion={chatQuestion}
+      />
     </div>
   );
 };  
