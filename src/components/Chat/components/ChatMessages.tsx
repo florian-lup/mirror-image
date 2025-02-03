@@ -12,7 +12,8 @@ export const ChatMessages: React.FC<ChatMessagesProps> = ({
   error
 }) => {
   return (
-    <div className="flex-1 overflow-y-auto p-2.5 sm:p-3 md:p-4 space-y-2 sm:space-y-3">
+    <div className="flex-1 overflow-y-auto p-2.5 sm:p-3 md:p-4 space-y-2 sm:space-y-3 
+      scrollbar-thin scrollbar-track-neutral-900 scrollbar-thumb-emerald-800/60 hover:scrollbar-thumb-emerald-700/80">
       {messages.map((message) => (
         <div
           key={message.id}
