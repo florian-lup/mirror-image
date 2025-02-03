@@ -9,8 +9,8 @@ import { ChatPromptTemplate } from "@langchain/core/prompts";
 
 // Initialize the chat model
 const chatModel = new ChatOpenAI({
-  modelName: "gpt-3.5-turbo",
-  temperature: 0.7,
+  modelName: "gpt-4o",
+  temperature: 1,
 });
 
 // Initialize embeddings
