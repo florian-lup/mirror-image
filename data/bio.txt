@@ -1,0 +1,14 @@
+I am a software engineer with over 5 years of experience in full-stack development. My expertise lies in building scalable web applications using modern technologies like React, Node.js, and TypeScript. I graduated from the University of Technology with a degree in Computer Science in 2018.
+
+In my current role at TechCorp, I lead a team of developers working on cloud-native applications. We specialize in creating microservices architectures and implementing DevOps practices. I'm particularly passionate about clean code, software architecture, and mentoring junior developers.
+
+Outside of work, I contribute to open-source projects and write technical blog posts about software development best practices. I enjoy hiking on weekends and am an amateur photographer. I speak English and German fluently.
+
+My technical skills include:
+- Frontend: React, Vue.js, TypeScript, HTML5/CSS3
+- Backend: Node.js, Python, Java
+- Databases: PostgreSQL, MongoDB
+- Cloud: AWS, Docker, Kubernetes
+- Tools: Git, Jenkins, Terraform
+
+I'm always eager to learn new technologies and believe in continuous improvement. Currently, I'm exploring machine learning and AI applications in web development.

@@ -28,13 +28,25 @@ export const useChat = (): UseChatReturn => {
       };
       setMessages(prev => [...prev, userMessage]);
 
-      // TODO: Implement API call here
-      // const response = await fetch('/api/chat', ...);
+      // Call the chat API
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: content }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to get response');
+      }
       
       // Add assistant message
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
-        content: 'This is a placeholder response',
+        content: data.response,
         type: 'assistant',
         timestamp: new Date(),
       };
