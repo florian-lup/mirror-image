@@ -1,5 +1,22 @@
 import { lazy, Suspense } from 'react';
-import { NavButton } from '../components/NavButton';
+import Link from 'next/link';
+
+type BaseLinkProps = {
+  children: React.ReactNode;
+  className?: string;
+  href: string;
+  target?: string;
+  rel?: string;
+};
+
+const BaseLink = ({ children, className = '', ...props }: BaseLinkProps) => (
+  <Link
+    className={`bg-neutral-800/40 relative overflow-hidden transition-colors duration-200 hover:bg-neutral-700/40 border border-neutral-700/50 flex items-center justify-center h-9 px-4 rounded-full ${className}`}
+    {...props}
+  >
+    <span className="text-sm font-medium text-neutral-400 relative z-10">{children}</span>
+  </Link>
+);
 
 const PrivacyPopover = lazy(() => import('../popovers/PrivacyPopover').then(module => ({ 
   default: module.PrivacyPopover 
@@ -21,13 +38,13 @@ export const PageFooter = () => {
           © {new Date().getFullYear()} Florian Lup
         </div>
         <nav className="flex items-center gap-x-2">
-          <NavButton 
+          <BaseLink 
             href="https://github.com/florian-lup"
             target="_blank"
             rel="noopener noreferrer"
           >
             GitHub
-          </NavButton>
+          </BaseLink>
           <Suspense fallback={<PopoverFallback />}>
             <HelpPopover />
           </Suspense>

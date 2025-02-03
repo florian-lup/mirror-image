@@ -1,14 +1,32 @@
 "use client";
 
 import * as React from 'react';
-import { BasePopover } from './BasePopover';
-import { NavButton } from '../components/NavButton';
+import * as PopoverPrimitive from '@radix-ui/react-popover';
+import { usePopover } from '@/hooks';
+import { ComponentProps } from 'react';
+
+type BaseButtonProps = {
+  children: React.ReactNode;
+  className?: string;
+} & Omit<ComponentProps<'button'>, 'className'>;
+
+const BaseButton = ({ children, className = '', ...props }: BaseButtonProps) => (
+  <button
+    type="button"
+    className={`bg-neutral-800/40 relative overflow-hidden transition-colors duration-200 hover:bg-neutral-700/40 border border-neutral-700/50 flex items-center justify-center h-9 px-4 rounded-full ${className}`}
+    {...props}
+  >
+    <span className="text-sm font-medium text-neutral-400 relative z-10">{children}</span>
+  </button>
+);
 
 export const PrivacyPopover: React.FC = () => {
+  const { isOpen, toggle } = usePopover();
+
   const trigger = (
-    <NavButton>
+    <BaseButton>
       Privacy
-    </NavButton>
+    </BaseButton>
   );
 
   const content = (
@@ -41,11 +59,21 @@ export const PrivacyPopover: React.FC = () => {
   );
 
   return (
-    <BasePopover
-      content={content}
-      trigger={trigger}
-      className="w-[340px]"
-      side="top"
-    />
+    <PopoverPrimitive.Root open={isOpen} onOpenChange={toggle}>
+      <PopoverPrimitive.Trigger asChild>
+        {trigger}
+      </PopoverPrimitive.Trigger>
+      <PopoverPrimitive.Portal>
+        <PopoverPrimitive.Content
+          className="rounded-xl p-4 bg-neutral-800/95 backdrop-blur-sm shadow-xl shadow-neutral-900/50 border border-neutral-700/50 z-50 w-[340px]"
+          sideOffset={8}
+          align="end"
+          side="top"
+        >
+          {content}
+          <PopoverPrimitive.Arrow className="fill-neutral-800/95" />
+        </PopoverPrimitive.Content>
+      </PopoverPrimitive.Portal>
+    </PopoverPrimitive.Root>
   );
 }; 

@@ -5,7 +5,7 @@ import { PageHeader } from './layouts/PageHeader';
 import { InputArea } from './components/InputArea';
 import { FaqList } from './components/FaqList';
 import { PageFooter } from './layouts/PageFooter';
-import { ChatInterface } from './components/ChatInterface';
+import { ChatContainer } from '../Chat/ChatContainer';
 
 export const WelcomePage = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -41,7 +41,7 @@ export const WelcomePage = () => {
         </div>
       </div>
 
-      <ChatInterface
+      <ChatContainer
         isOpen={isChatOpen}
         onClose={() => setIsChatOpen(false)}
         initialQuestion={chatQuestion}
