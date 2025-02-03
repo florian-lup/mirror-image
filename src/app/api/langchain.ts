@@ -1,80 +1,62 @@
-import { ChatOpenAI } from "@langchain/openai";
-import { TextLoader } from "langchain/document_loaders/fs/text";
-import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
-import { MemoryVectorStore } from "langchain/vectorstores/memory";
-import { OpenAIEmbeddings } from "@langchain/openai";
-import { createStuffDocumentsChain } from "langchain/chains/combine_documents";
-import { createRetrievalChain } from "langchain/chains/retrieval";
+import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
+import { Index } from "@upstash/vector";
+
+interface VectorQueryResult {
+  id: string | number;
+  score: number;
+  data?: string;
+}
 
 // Initialize the chat model
-const chatModel = new ChatOpenAI({
-  modelName: "gpt-4o",
+const chatModel = new ChatGoogleGenerativeAI({
+  modelName: "gemini-1.5-flash",
   temperature: 1,
+  apiKey: process.env.GOOGLE_API_KEY,
 });
 
-// Initialize embeddings
-const embeddings = new OpenAIEmbeddings();
-
-// Create a vector store instance
-let vectorStore: MemoryVectorStore;
-
-// Initialize the RAG system
-export async function initializeRAG() {
-  try {
-    // Load the bio document
-    const loader = new TextLoader("data/bio.txt");
-    const docs = await loader.load();
-
-    // Split the text into chunks
-    const splitter = new RecursiveCharacterTextSplitter({
-      chunkSize: 500,
-      chunkOverlap: 50,
-    });
-    const splitDocs = await splitter.splitDocuments(docs);
-
-    // Create and populate the vector store
-    vectorStore = await MemoryVectorStore.fromDocuments(splitDocs, embeddings);
-
-    return true;
-  } catch (error) {
-    console.error("Error initializing RAG:", error);
-    return false;
-  }
-}
+// Initialize Upstash Vector index
+const vectorIndex = new Index({
+  url: process.env.BIO_UPSTASH_VECTOR_REST_URL!,
+  token: process.env.BIO_UPSTASH_VECTOR_REST_TOKEN!,
+});
 
 // Process a chat message
 export async function processMessage(message: string) {
   try {
+    // Query Upstash for similar chunks using the message directly
+    const results = await vectorIndex.query({
+      data: message,
+      topK: 3,
+      includeData: true
+    });
+
+    // Extract the content from the results
+    const relevantContent = results
+      .map((result: VectorQueryResult) => result.data ?? "")
+      .filter((content: string) => content !== "")
+      .join("\n\n");
+
     // Create a prompt template
     const prompt = ChatPromptTemplate.fromTemplate(`
-      Answer the following question based ONLY on the provided context. 
-      If you cannot answer the question based on the context, say "I don't have enough information to answer that question."
+      You are me (Florian). Answer the following question based ONLY on the provided context, speaking in first person ("I", "my", "me", etc.).
+      If you cannot find the specific information in the context, respond naturally like: "I'd be happy to tell you about that, but it seems that part of my background isn't included in my current knowledge base."
       
       Context: {context}
       
       Question: {question}
       
-      Answer: `);
+      Answer as me (Florian), in a friendly and professional tone: `);
 
-    // Create a document chain
-    const documentChain = await createStuffDocumentsChain({
-      llm: chatModel,
-      prompt,
+    // Get the response from the model
+    const formattedPrompt = await prompt.invoke({
+      context: relevantContent || "No relevant information found.",
+      question: message,
     });
 
-    // Create a retrieval chain
-    const retrievalChain = await createRetrievalChain({
-      combineDocsChain: documentChain,
-      retriever: vectorStore.asRetriever(),
-    });
-
-    // Process the message
-    const response = await retrievalChain.invoke({
-      input: message,
-    });
-
-    return response.answer;
+    const response = await chatModel.invoke(formattedPrompt);
+    
+    return response.content;
   } catch (error) {
     console.error("Error processing message:", error);
     return "Sorry, I encountered an error while processing your message.";
