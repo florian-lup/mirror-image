@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 
 interface InputAreaProps {
   onAskQuestion: (question: string) => void;
+  onStartNewChat?: () => void;
 }
 
 export const InputArea: React.FC<InputAreaProps> = ({ onAskQuestion }) => {
