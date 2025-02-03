@@ -1,13 +1,6 @@
 import { lazy, Suspense } from 'react';
 import Link from 'next/link';
-
-type BaseLinkProps = {
-  children: React.ReactNode;
-  className?: string;
-  href: string;
-  target?: string;
-  rel?: string;
-};
+import { BaseLinkProps } from '@/types';
 
 const BaseLink = ({ children, className = '', ...props }: BaseLinkProps) => (
   <Link

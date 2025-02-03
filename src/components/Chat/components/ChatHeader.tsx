@@ -1,8 +1,5 @@
 import { X } from 'lucide-react';
-
-interface ChatHeaderProps {
-  onClose: () => void;
-}
+import { ChatHeaderProps } from '@/types';
 
 export const ChatHeader: React.FC<ChatHeaderProps> = ({ onClose }) => {
   return (

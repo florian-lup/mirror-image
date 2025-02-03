@@ -3,12 +3,7 @@
 import * as React from 'react';
 import * as PopoverPrimitive from '@radix-ui/react-popover';
 import { usePopover } from '@/hooks';
-import { ComponentProps } from 'react';
-
-type BaseButtonProps = {
-  children: React.ReactNode;
-  className?: string;
-} & Omit<ComponentProps<'button'>, 'className'>;
+import { BaseButtonProps } from '@/types';
 
 const BaseButton = ({ children, className = '', ...props }: BaseButtonProps) => (
   <button

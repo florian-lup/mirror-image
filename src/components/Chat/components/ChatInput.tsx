@@ -1,10 +1,7 @@
 import { CircleArrowOutUpRight } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
-
-interface ChatInputProps {
-  onSubmit: (message: string) => void;
-}
+import { ChatInputProps } from '@/types';
 
 export const ChatInput: React.FC<ChatInputProps> = ({ onSubmit }) => {
   const [message, setMessage] = useState('');
