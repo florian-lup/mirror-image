@@ -1,4 +1,5 @@
 import { Message } from '@/types';
+import { MarkdownMessage } from './MarkdownMessage';
 
 interface ChatMessagesProps {
   messages: Message[];
@@ -22,7 +23,11 @@ export const ChatMessages: React.FC<ChatMessagesProps> = ({
               : 'bg-emerald-950/40 text-emerald-300'
           }`}
         >
-          {message.content}
+          {message.type === 'assistant' ? (
+            <MarkdownMessage content={message.content} />
+          ) : (
+            message.content
+          )}
         </div>
       ))}
 
