@@ -23,8 +23,8 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[100] flex items-center justify-center p-2 sm:p-4 md:p-6 lg:p-8">
-      <div className="bg-neutral-900 rounded-lg sm:rounded-xl md:rounded-2xl w-full max-w-[calc(100vw-1rem)] sm:max-w-xl md:max-w-2xl lg:max-w-3xl h-[95vh] sm:h-[90vh] md:h-[80vh] lg:h-[600px] flex flex-col relative border border-neutral-800">
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
+      <div className="bg-neutral-900 rounded-lg w-full max-w-[95%] h-[85vh] sm:h-[80vh] md:h-[70vh] lg:h-[600px] sm:w-[500px] md:w-[600px] flex flex-col relative border border-neutral-800">
         <ChatHeader onClose={onClose} />
         <ChatMessages 
           messages={messages}

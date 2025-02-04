@@ -40,13 +40,14 @@ export const InputArea: React.FC<InputAreaProps> = ({ onAskQuestion }) => {
               onBlur={() => setIsFocused(false)}
               placeholder="What do you want to know?"
               className="
-                w-full px-4 py-2.5 rounded-full text-sm
+                w-full px-4 py-2.5 rounded-full text-[16px] leading-normal md:text-sm
                 bg-neutral-900 text-neutral-100 pr-12
                 placeholder:text-neutral-400 
                 focus:outline-none
                 transition-colors duration-200
                 focus:bg-neutral-900
               "
+              autoComplete="off"
             />
             <button
               type="submit"
