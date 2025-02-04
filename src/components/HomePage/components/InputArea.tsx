@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { CircleArrowOutUpRight } from 'lucide-react';
+import { CircleGauge  } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface InputAreaProps {
@@ -60,9 +60,9 @@ export const InputArea: React.FC<InputAreaProps> = ({ onAskQuestion }) => {
               disabled={!isActive}
               aria-label="Submit question"
             >
-              <CircleArrowOutUpRight className={cn(
-                "h-4 w-4 relative transition-transform duration-500 ease-in-out",
-                isActive && "group-hover:rotate-[360deg]"
+              <CircleGauge className={cn(
+                "h-4 w-4 relative",
+                isActive && "text-emerald-400 animate-[spin_1s_linear_infinite]"
               )} />
             </button>
           </div>

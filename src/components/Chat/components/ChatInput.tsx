@@ -1,4 +1,4 @@
-import { CircleArrowOutUpRight } from 'lucide-react';
+import { CircleGauge } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { ChatInputProps } from '@/types';
@@ -36,9 +36,9 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSubmit }) => {
           disabled={!isActive}
           aria-label="Send message"
         >
-          <CircleArrowOutUpRight className={cn(
-            "h-3.5 w-3.5 relative transition-transform duration-500 ease-in-out",
-            isActive && "group-hover:rotate-[360deg]"
+          <CircleGauge className={cn(
+            "h-4 w-4 relative",
+            isActive && "text-emerald-400 animate-[spin_1s_linear_infinite]"
           )} />
         </button>
       </form>
