@@ -10,6 +10,7 @@ interface ChatContainerProps {
   isLoading: boolean;
   error: string | null;
   onSendMessage: (content: string) => Promise<void>;
+  stopLoading?: () => void;
 }
 
 export const ChatContainer: React.FC<ChatContainerProps> = ({
@@ -19,6 +20,7 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({
   isLoading,
   error,
   onSendMessage,
+  stopLoading,
 }) => {
   if (!isOpen) return null;
 
@@ -31,7 +33,7 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({
           isLoading={isLoading}
           error={error}
         />
-        <ChatInput onSubmit={onSendMessage} />
+        <ChatInput onSubmit={onSendMessage} isLoading={isLoading} stopLoading={stopLoading} />
       </div>
     </div>
   );

@@ -17,6 +17,8 @@ export interface ChatMessagesProps {
 
 export interface ChatInputProps {
   onSubmit: (message: string) => void;
+  isLoading?: boolean;
+  stopLoading?: () => void;
 }
 
 export interface Message {

@@ -31,7 +31,7 @@ export const ChatManager: React.FC<ChatManagerProps> = ({ children, onClose }) =
   const [isChatOpen, setIsChatOpen] = useState(false);
   
   // Get chat operations from hook
-  const { messages, isLoading, error, sendMessage, clearMessages } = useChat();
+  const { messages, isLoading, error, sendMessage, clearMessages, stopLoading } = useChat();
 
   /**
    * Opens the chat and sends the initial message.
@@ -51,6 +51,7 @@ export const ChatManager: React.FC<ChatManagerProps> = ({ children, onClose }) =
   const handleCloseChat = () => {
     setIsChatOpen(false);
     clearMessages();
+    stopLoading();
     onClose?.();
   };
 
@@ -67,6 +68,7 @@ export const ChatManager: React.FC<ChatManagerProps> = ({ children, onClose }) =
         isLoading={isLoading}
         error={error}
         onSendMessage={sendMessage}
+        stopLoading={stopLoading}
       />
     </>
   );
