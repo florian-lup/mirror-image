@@ -42,6 +42,13 @@ export const ChatMessages: React.FC<ChatMessagesProps> = ({
         </div>
       ))}
 
+      {isLoading && (
+        <div className="bg-emerald-950/40 rounded-lg p-2.5 text-sm text-emerald-300/80 flex items-center space-x-2">
+          <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
+          <span>thinking...</span>
+        </div>
+      )}
+
       {error && (
         <div className="bg-red-950/40 rounded-lg p-2.5 text-sm text-red-300">
           {error}
