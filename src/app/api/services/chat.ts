@@ -8,7 +8,7 @@ export async function generateChatResponse(message: string) {
     // Query Upstash for similar chunks using the message directly
     const results = await bioVectorIndex.query({
       data: message,
-      topK: 3,
+      topK: 2,
       includeData: true
     });
 
