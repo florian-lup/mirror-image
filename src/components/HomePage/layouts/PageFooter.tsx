@@ -25,8 +25,8 @@ const PopoverFallback = () => (
 
 export const PageFooter = () => {
   return (
-    <footer className="py-4 sm:py-6 px-4 sm:px-0">
-      <div className="flex flex-row justify-between items-center">
+    <footer className="h-16 sm:h-20 flex items-center bg-gradient-to-b from-neutral-900/80 to-neutral-900/0">
+      <div className="flex justify-between items-center w-full">
         <div className="text-xs sm:text-sm text-neutral-500">
           © {new Date().getFullYear()} Florian Lup
         </div>
@@ -49,8 +49,6 @@ export const PageFooter = () => {
     </footer>
   );
 };
-
-//add a copyright here
 
 //add a privacy policy here
 
