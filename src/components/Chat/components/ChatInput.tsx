@@ -1,4 +1,4 @@
-import { CircleGauge, CirclePause } from 'lucide-react';
+import { CircleGauge, CircleStop } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { ChatInputProps } from '@/types';
@@ -41,7 +41,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSubmit, isLoading = fals
           aria-label={isLoading ? "Stop loading" : "Send message"}
         >
           {isLoading ? (
-            <CirclePause className="h-4 w-4 text-red-400" />
+            <CircleStop className="h-4 w-4 text-red-400" />
           ) : (
             <CircleGauge className={cn(
               "h-4 w-4 relative",

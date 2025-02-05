@@ -1,4 +1,5 @@
 import { Message } from '@/types';
+import { useEffect, useRef } from 'react';
 import { MarkdownMessage } from './MarkdownMessage';
 
 interface ChatMessagesProps {
@@ -12,8 +13,18 @@ export const ChatMessages: React.FC<ChatMessagesProps> = ({
   isLoading,
   error
 }) => {
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, isLoading]); // Scroll when messages change or loading state changes
+
   return (
-    <div className="flex-1 overflow-y-auto p-3 space-y-2 scrollbar-thin scrollbar-track-neutral-900 scrollbar-thumb-emerald-800/60 hover:scrollbar-thumb-emerald-700/80">
+    <div className="flex-1 overflow-y-auto p-3 space-y-2 scrollbar-thin scrollbar-track-neutral-900 scrollbar-thumb-emerald-800/60 hover:scrollbar-thumb-emerald-700/80 scroll-smooth">
       {messages.map((message) => (
         <div
           key={message.id}
@@ -42,6 +53,7 @@ export const ChatMessages: React.FC<ChatMessagesProps> = ({
           {error}
         </div>
       )}
+      <div ref={messagesEndRef} />
     </div>
   );
 }; 
