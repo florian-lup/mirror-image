@@ -29,10 +29,10 @@ export const HelpPopover: React.FC = () => {
     <div className="space-y-2 text-sm">
       <h3 className="font-medium text-neutral-100">About this Website</h3>
       <p className="text-neutral-300 leading-relaxed">
-        This is an AI-powered personal website that uses Retrieval-Augmented Generation (RAG) to provide instant, accurate answers about my background, projects, and expertise.
+        This is an AI-powered personal website that uses Retrieval-Augmented Generation (RAG) to provide fast, accurate answers about my background, projects, and expertise.
       </p>
       <p className="text-neutral-300 leading-relaxed">
-        Feel free to ask anything or use the suggested questions below to get started.
+        Don&apos;t hesitate to ask anything or explore the suggested questions to get started.
       </p>
     </div>
   );
