@@ -9,18 +9,6 @@ A Next.js application that creates an AI-powered chat interface to interact with
 - **Vector Store**: Upstash Vector
 - **LLM Framework**: LangChain
 
-## Project Structure
-
-```
-src/app/api/
-├── types/        # TypeScript interfaces
-├── config/       # AI model configuration
-├── prompts/      # LLM prompt templates
-├── vector-stores/# Vector database setup
-├── services/     # Business logic
-└── chat/         # API route handlers
-```
-
 ## Setup
 
 1. Clone the repository
