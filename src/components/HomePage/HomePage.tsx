@@ -5,6 +5,7 @@ import { InputArea } from './components/InputArea';
 import { FaqList } from './components/FaqList';
 import { PageFooter } from './layouts/PageFooter';
 import { ChatManager } from '../Chat/ChatManager';
+import { faqQuestions } from '@/config/faq';
 
 export const WelcomePage = () => {
   return (
@@ -26,7 +27,7 @@ export const WelcomePage = () => {
                     <InputArea onAskQuestion={handleOpenChat} />
                   </section>
 
-                  <FaqList onQuestionClick={handleOpenChat} />
+                  <FaqList onQuestionClick={handleOpenChat} questions={faqQuestions} />
                 </div>
               </main>
 
