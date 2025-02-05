@@ -3,7 +3,7 @@ import { bioVectorIndex } from "../vector-stores/bio-vector-store";
 import { bioChatPrompt } from "../prompts/bio-chat-prompt";
 import type { VectorSearchResult } from "../types/chat";
 
-export async function generateChatResponse(message: string): Promise<string> {
+export async function generateChatResponse(message: string) {
   try {
     // Query Upstash for similar chunks using the message directly
     const results = await bioVectorIndex.query({
@@ -24,11 +24,10 @@ export async function generateChatResponse(message: string): Promise<string> {
       question: message,
     });
 
-    const response = await chatModel.invoke(formattedPrompt);
-    
-    return response.content.toString();
+    const stream = await chatModel.stream(formattedPrompt);
+    return stream;
   } catch (error) {
     console.error("Error generating chat response:", error);
-    throw error; // Let the route handler manage the error response
+    throw error;
   }
 } 

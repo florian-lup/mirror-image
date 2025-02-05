@@ -1,5 +1,6 @@
 import { useState, useCallback, useRef } from 'react';
 import { Message } from '@/types';
+import { streamResponse } from '@/utils/streamResponse';
 
 interface UseChatReturn {
   messages: Message[];
@@ -56,20 +57,34 @@ export const useChat = (): UseChatReturn => {
         signal: abortControllerRef.current.signal,
       });
 
-      const data = await response.json();
-
       if (!response.ok) {
+        const data = await response.json();
         throw new Error(data.error || 'Failed to get response');
       }
-      
-      // Add assistant message
+
+      // Create assistant message to replace the "thinking..." placeholder
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
-        content: data.response,
+        content: '',
         type: 'assistant',
         timestamp: new Date(),
       };
-      setMessages(prev => [...prev, assistantMessage]);
+
+      await streamResponse(response, (accumulatedContent) => {
+        // Update the assistant message with accumulated content
+        assistantMessage.content = accumulatedContent;
+        setMessages(prev => {
+          const newMessages = [...prev];
+          // Replace or add the assistant message
+          const lastIndex = newMessages.length - 1;
+          if (newMessages[lastIndex]?.type === 'assistant') {
+            newMessages[lastIndex] = assistantMessage;
+          } else {
+            newMessages.push(assistantMessage);
+          }
+          return newMessages;
+        });
+      });
     } catch (err) {
       // Don't set error if request was aborted
       if (err instanceof Error && err.name === 'AbortError') {
