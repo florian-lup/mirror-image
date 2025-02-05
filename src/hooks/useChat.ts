@@ -62,22 +62,29 @@ export const useChat = (): UseChatReturn => {
         throw new Error(data.error || 'Failed to get response');
       }
 
-      // Create assistant message to replace the "thinking..." placeholder
-      const assistantMessage: Message = {
+      let assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         content: '',
         type: 'assistant',
         timestamp: new Date(),
       };
 
+      // Stream the response and update messages as content arrives
       await streamResponse(response, (accumulatedContent) => {
-        // Update the assistant message with accumulated content
-        assistantMessage.content = accumulatedContent;
+        if (!accumulatedContent.trim()) return; // Don't update for empty content
+        
+        assistantMessage = {
+          ...assistantMessage,
+          content: accumulatedContent
+        };
+        
         setMessages(prev => {
           const newMessages = [...prev];
-          // Replace or add the assistant message
           const lastIndex = newMessages.length - 1;
-          if (newMessages[lastIndex]?.type === 'assistant') {
+          const lastMessage = newMessages[lastIndex];
+          
+          // Only update/add message if we have actual content
+          if (lastMessage?.type === 'assistant' && lastMessage.id === assistantMessage.id) {
             newMessages[lastIndex] = assistantMessage;
           } else {
             newMessages.push(assistantMessage);
