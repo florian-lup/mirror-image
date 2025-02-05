@@ -42,12 +42,6 @@ export const ChatMessages: React.FC<ChatMessagesProps> = ({
         </div>
       ))}
 
-      {isLoading && (
-        <div className="bg-neutral-800/40 rounded-lg p-2.5 text-sm text-neutral-400">
-          Thinking...
-        </div>
-      )}
-
       {error && (
         <div className="bg-red-950/40 rounded-lg p-2.5 text-sm text-red-300">
           {error}
