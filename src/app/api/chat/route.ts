@@ -15,26 +15,16 @@ export async function POST(req: Request) {
 
     const stream = await generateChatResponse(message);
     
-    const textEncoder = new TextEncoder();
-    const readable = new ReadableStream({
-      async start(controller) {
-        for await (const chunk of stream) {
-          controller.enqueue(textEncoder.encode(chunk.content.toString()));
-        }
-        controller.close();
-      },
-    });
-
-    return new Response(readable, {
+    // Just pass through the already encoded stream
+    return new Response(stream, {
       headers: {
         "Content-Type": "text/plain; charset=utf-8",
-        "Transfer-Encoding": "chunked",
       },
     });
   } catch (error) {
     console.error("API route error:", error);
     return NextResponse.json<ErrorResponse>(
-      { error: "Failed to process chat message" },
+      { error: "Failed to generate response" },
       { status: 500 }
     );
   }

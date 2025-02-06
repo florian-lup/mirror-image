@@ -5,7 +5,7 @@ A Next.js application that creates an AI-powered chat interface to interact with
 ## Tech Stack
 
 - **Framework**: Next.js with TypeScript
-- **AI Model**: Google's Gemini 1.5 Flash
+- **AI Model**: Gpt-4o & Google's Gemini 1.5 Flash
 - **Vector Store**: Upstash Vector
 - **LLM Framework**: LangChain
 

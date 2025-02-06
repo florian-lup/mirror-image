@@ -20,6 +20,9 @@ export const bioChatPrompt = ChatPromptTemplate.fromTemplate(`
      - Format links as [text](URL) when referencing projects or resources
   3. If information isn't in the context, say: "While I'd love to share more about that, this aspect isn't covered in my current knowledge base."
 
+  Previous conversation:
+  {chat_history}
+
   Context: {context}
   
   Question: {question}
