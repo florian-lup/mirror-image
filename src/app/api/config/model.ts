@@ -17,4 +17,4 @@ export const openAIModel = new ChatOpenAI({
 
 
 // Default model to use
-export const chatModel = geminiModel; 
+export const chatModel = openAIModel; 
