@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { HiSpeakerWave } from "react-icons/hi2";
-import { PiPaperPlaneFill } from "react-icons/pi";
+import { PiPaperPlaneFill, PiMicrophoneFill } from "react-icons/pi";
 import * as Tooltip from '@radix-ui/react-tooltip';
 
 interface ChatInputProps {
@@ -55,10 +55,30 @@ export default function ChatInput({ onSendMessage }: ChatInputProps) {
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
               onKeyDown={handleKeyPress}
-              placeholder="Message me..."
+              placeholder="Start a conversation..."
               className="flex-1 bg-transparent outline-none text-[15px] text-gray-200 placeholder-gray-400"
             />
-            <PiPaperPlaneFill className="text-xl text-gray-400 cursor-pointer hover:text-gray-300" />
+            <button type="submit" className="flex items-center justify-center">
+              <PiPaperPlaneFill className="text-xl text-gray-400 cursor-pointer hover:text-gray-300" />
+            </button>
+            <Tooltip.Provider delayDuration={0}>
+              <Tooltip.Root delayDuration={0}>
+                <Tooltip.Trigger asChild>
+                  <button type="button" className="flex items-center justify-center">
+                    <PiMicrophoneFill className="text-xl text-gray-400 cursor-pointer hover:text-gray-300" />
+                  </button>
+                </Tooltip.Trigger>
+                <Tooltip.Portal>
+                  <Tooltip.Content
+                    className="bg-white text-gray-900 px-3 py-1.5 rounded-md text-sm"
+                    sideOffset={5}
+                  >
+                    Voice input coming soon
+                    <Tooltip.Arrow className="fill-white" />
+                  </Tooltip.Content>
+                </Tooltip.Portal>
+              </Tooltip.Root>
+            </Tooltip.Provider>
           </div>
         </form>
       </div>

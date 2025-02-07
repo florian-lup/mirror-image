@@ -39,7 +39,7 @@ export default function ChatMessages({ messages }: ChatMessagesProps) {
                 className="opacity-20"
                 priority
               />
-              <p className="text-gray-500 mt-4 text-sm">Start a conversation...</p>
+              <p className="text-gray-500 mt-4 text-sm">Mirror Image</p>
             </div>
           ) : (
             messages.map((message) => (
