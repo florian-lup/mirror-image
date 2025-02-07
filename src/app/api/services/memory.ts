@@ -1,30 +1,16 @@
 import { chatMemory } from "../config/memory";
 import { BaseMessage } from "@langchain/core/messages";
 
-type MessageContent = {
+type MessageLike = string | BaseMessage | {
   content?: string;
   kwargs?: {
     content: string;
-    additional_kwargs: Record<string, unknown>;
-    response_metadata: Record<string, unknown>;
   };
 };
 
-function formatMessages(messages: MessageContent[] | string | BaseMessage[]): string {
-  if (typeof messages === 'string') return messages;
-  if (!Array.isArray(messages)) return '';
-  
-  return messages.map(msg => {
-    if (typeof msg === 'string') return msg;
-    if ('content' in msg && msg.content) return String(msg.content);
-    if ('kwargs' in msg && msg.kwargs?.content) return String(msg.kwargs.content);
-    return JSON.stringify(msg);
-  }).join("\n");
-}
-
 export async function getConversationHistory() {
   console.log("\n2. Loading Chat Memory...");
-  const vars = await chatMemory.loadMemoryVariables();
+  const vars = await chatMemory.loadMemoryVariables({});
   const messages = vars.chat_history || [];
   const hasHistory = Array.isArray(messages) && messages.length > 0;
   
@@ -36,8 +22,16 @@ export async function getConversationHistory() {
     );
   }
 
+  // Convert messages to a simple string format
+  const history = messages.map((msg: MessageLike) => {
+    if (typeof msg === 'string') return msg;
+    if ('content' in msg && msg.content) return String(msg.content);
+    if ('kwargs' in msg && msg.kwargs?.content) return String(msg.kwargs.content);
+    return JSON.stringify(msg);
+  }).join("\n");
+
   return {
-    history: formatMessages(messages),
+    history,
     hasHistory
   };
 }
