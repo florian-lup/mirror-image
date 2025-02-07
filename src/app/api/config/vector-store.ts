@@ -6,7 +6,7 @@ export interface VectorQueryResult {
   data?: string;
 }
 
-export const bioVectorIndex = new Index({
+export const vectorIndex = new Index({
   url: process.env.BIO_UPSTASH_VECTOR_REST_URL!,
   token: process.env.BIO_UPSTASH_VECTOR_REST_TOKEN!,
 }); 

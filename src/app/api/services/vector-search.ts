@@ -1,11 +1,11 @@
-import { bioVectorIndex, VectorQueryResult } from "../config/bio-vector-store";
+import { vectorIndex, VectorQueryResult } from "../config/vector-store";
 
 // Minimum similarity score (0 to 1) - higher means more relevant
 const MIN_SIMILARITY_SCORE = 0.6;
 
 export async function searchRelevantContent(query: string) {
   console.log("\n1. Querying Vector Database...");
-  const results = await bioVectorIndex.query({
+  const results = await vectorIndex.query({
     data: query,
     topK: 3,
     includeData: true
