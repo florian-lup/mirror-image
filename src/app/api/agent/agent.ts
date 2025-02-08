@@ -25,7 +25,7 @@ Thought: I now know the final answer
 Final Answer: the final answer to the original input question
 
 Question: {input}
-Thought: Let's approach this step by step`);
+{agent_scratchpad}`);
 
 // Create the agent
 const agent = await createReactAgent({
@@ -38,7 +38,7 @@ const agent = await createReactAgent({
 const agentExecutor = AgentExecutor.fromAgentAndTools({
   agent,
   tools,
-  maxIterations: 5,
+  maxIterations: 3,
 });
 
 // Function to run the agent
