@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@langchain/community": "^0.3.29",
+    "@langchain/google-genai": "^0.1.8",
     "@langchain/langgraph": "^0.2.45",
     "@langchain/openai": "^0.4.2",
     "@radix-ui/react-tooltip": "^1.1.8",
