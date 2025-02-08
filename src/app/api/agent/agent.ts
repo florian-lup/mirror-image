@@ -18,8 +18,8 @@ function getModel(modelProvider: 'openai' | 'gemini' = 'openai'): BaseChatModel 
       }
       console.log('✨ Creating Gemini model instance');
       return new ChatGoogleGenerativeAI({
-        modelName: "gemini-2.0-flash",
-        temperature: 0,
+        modelName: "gemini-1.5-pro",
+        temperature: 0.1,
         apiKey: process.env.GOOGLE_API_KEY,
       });
 
@@ -32,7 +32,7 @@ function getModel(modelProvider: 'openai' | 'gemini' = 'openai'): BaseChatModel 
       console.log('✨ Creating OpenAI model instance');
       return new ChatOpenAI({
         modelName: "gpt-4o-mini",
-        temperature: 0,
+        temperature: 0.1,
       });
   }
 }
@@ -47,8 +47,6 @@ IMPORTANT: Your knowledge might not be up to date. ALWAYS use your tools to get 
 TOOL QUERY GUIDELINES:
 - For perplexity_assistant:
   - Ask about REAL, CURRENT events and facts only
-  - Include specific dates or timeframes
-  - NEVER ask about hypotheticals or "what ifs"
   - Example: "What are Donald Trump's current activities and statements?"
 - For pinecone_assistant:
   - Ask about specific documents or known events
@@ -83,11 +81,10 @@ If you use an Action, wait for the result before giving a Final Answer.
 
 REMEMBER:
 - ALWAYS use perplexity_assistant to verify current events and facts
-- Use pinecone_assistant to get specific details from your documents
+- Use pinecone_assistant to get specific details about your background
 - Don't rely on your own knowledge as it might be outdated
 - For questions about events or facts, use AT LEAST ONE tool before giving a Final Answer
 - If a tool can't provide information, try a different query or tool
-- When asking about current events, be specific about timeframes and real events
 
 Question: {input}
 {agent_scratchpad}`);
@@ -119,39 +116,67 @@ async function createAgent(modelProvider: 'openai' | 'gemini' = 'openai') {
 
 // Function to run the agent
 export async function runAgent(input: string, modelProvider: 'openai' | 'gemini' = 'openai'): Promise<string> {
-  console.log('\n🚀 Starting agent execution');
-  console.log(`📝 Input: "${input}"`);
+  console.log('\n🤖 Agent Execution Started');
+  console.log('📝 Query:', input);
+  console.log('🔧 Model:', modelProvider);
   
   try {
-    console.log('⚙️ Creating agent executor');
     const agentExecutor = await createAgent(modelProvider);
-    
-    console.log('🤖 Invoking agent');
     const result = await agentExecutor.invoke({
       input,
     });
     
-    console.log('📊 Agent execution completed');
-    console.log('📤 Final output:', result.output);
-    
-    if (result.intermediateSteps) {
-      console.log('\n🔍 Execution steps:');
+    // Log steps in a more concise way
+    if (result.intermediateSteps?.length > 0) {
+      console.log('\n📋 Steps:');
       result.intermediateSteps.forEach((step: AgentStep, index: number) => {
-        console.log(`\nStep ${index + 1}:`);
         if (step.action) {
-          console.log(`- Tool Used: ${step.action.tool}`);
-          console.log(`- Tool Input: ${JSON.stringify(step.action.toolInput, null, 2)}`);
+          console.log(`\n${index + 1}. ${step.action.tool}`);
+          console.log(`   Query: ${typeof step.action.toolInput === 'string' 
+            ? step.action.toolInput 
+            : JSON.stringify(step.action.toolInput)}`);
         }
+        
         if (step.observation) {
-          console.log(`- Observation: ${step.observation}`);
+          try {
+            const observation = JSON.parse(step.observation);
+            if (observation.success) {
+              console.log('   Status: ✓');
+              if (observation.answer) {
+                // Remove thinking process and format answer
+                const cleanAnswer = observation.answer
+                  .replace(/<think>[\s\S]*?<\/think>/g, '')
+                  .replace(/\n+/g, '\n')
+                  .trim();
+                console.log('   Answer:', cleanAnswer);
+              }
+            } else {
+              console.log('   Status: ✗');
+              console.log('   Error:', observation.message);
+            }
+          } catch {
+            // If not JSON, show truncated observation
+            const truncated = step.observation.length > 200 
+              ? step.observation.substring(0, 200) + '...'
+              : step.observation;
+            console.log('   Result:', truncated);
+          }
         }
       });
     }
     
+    console.log('\n💬 Final Response:');
+    console.log(result.output);
+    
+    console.log('\n✅ Agent Execution Complete\n');
     return result.output;
+    
   } catch (error) {
-    console.error('❌ Agent error:', error);
-    console.error('Stack trace:', error instanceof Error ? error.stack : 'No stack trace available');
+    console.error('\n❌ Error:', error instanceof Error ? error.message : 'Unknown error');
+    if (error instanceof Error && error.stack) {
+      console.error('Stack:', error.stack.split('\n').slice(0, 3).join('\n'));
+    }
+    console.log('\n❌ Agent Execution Failed\n');
     return "Sorry, I encountered an error while processing your request.";
   }
 } 
