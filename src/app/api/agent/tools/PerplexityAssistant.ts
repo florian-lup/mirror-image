@@ -1,11 +1,13 @@
 import { DynamicStructuredTool } from "@langchain/core/tools";
 import { z } from "zod";
 
-const PerplexitySchema = z.object({
-  query: z.string().describe('The question or query to send to Perplexity AI for real-time information')
-});
-
-type PerplexityInput = z.infer<typeof PerplexitySchema>;
+// Accept either a string or an object with a query property
+const PerplexitySchema = z.union([
+  z.string().describe('The question or query to send to Perplexity AI'),
+  z.object({
+    query: z.string().describe('The question or query to send to Perplexity AI')
+  })
+]);
 
 interface PerplexityMessage {
   role: 'system' | 'user' | 'assistant';
@@ -16,7 +18,7 @@ interface Citation {
   url?: string;
   text?: string;
   title?: string;
-  [key: string]: string | undefined; // For any additional fields
+  [key: string]: string | undefined;
 }
 
 /**
@@ -30,7 +32,12 @@ export class PerplexityAssistant {
       name: 'perplexity_assistant',
       description: 'Use Perplexity AI to get real-time information and answers about current events, facts, or any general knowledge questions.',
       schema: PerplexitySchema,
-      func: async ({ query }: PerplexityInput) => {
+      func: async (input) => {
+        // Parse and validate the input
+        const parsedInput = PerplexitySchema.parse(input);
+        // Extract query from either string or object input
+        const query = typeof parsedInput === 'string' ? parsedInput : parsedInput.query;
+        
         console.log('\n🧠 Perplexity Assistant Tool - Starting request');
         console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
         console.log(`📝 Query: "${query}"`);
@@ -60,8 +67,6 @@ export class PerplexityAssistant {
             messages,
             max_tokens: 1024,
             temperature: 0.7,
-            presence_penalty: 0.5,
-            frequency_penalty: 0.5,
             return_related_questions: true,
             search_recency_filter: 'day'
           };

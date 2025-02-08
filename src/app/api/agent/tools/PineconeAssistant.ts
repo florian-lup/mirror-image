@@ -1,11 +1,13 @@
 import { DynamicStructuredTool } from "@langchain/core/tools";
 import { z } from "zod";
 
-const PineconeSchema = z.object({
-  query: z.string().describe('The message to send to the Pinecone Assistant to search through your documents')
-});
-
-type PineconeInput = z.infer<typeof PineconeSchema>;
+// Accept either a string or an object with a query property
+const PineconeSchema = z.union([
+  z.string().describe('The message to send to the Pinecone Assistant'),
+  z.object({
+    query: z.string().describe('The message to send to the Pinecone Assistant')
+  })
+]);
 
 /**
  * Tool for interacting with Pinecone Assistant to get information from indexed documents
@@ -16,7 +18,12 @@ export class PineconeAssistant {
       name: 'pinecone_assistant',
       description: 'Chat with your Pinecone Assistant to get answers based on your uploaded documents. Only use this for querying existing document content, not for hypothetical or future events.',
       schema: PineconeSchema,
-      func: async ({ query }: PineconeInput) => {
+      func: async (input) => {
+        // Parse and validate the input
+        const parsedInput = PineconeSchema.parse(input);
+        // Extract query from either string or object input
+        const query = typeof parsedInput === 'string' ? parsedInput : parsedInput.query;
+
         console.log('🤖 Pinecone Assistant Tool - Starting chat request');
         console.log(`📤 Query: "${query}"`);
 
