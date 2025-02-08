@@ -12,9 +12,10 @@ interface Message {
 
 interface ChatMessagesProps {
   messages: Message[];
+  isLoading?: boolean;
 }
 
-export default function ChatMessages({ messages }: ChatMessagesProps) {
+export default function ChatMessages({ messages, isLoading }: ChatMessagesProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -23,7 +24,7 @@ export default function ChatMessages({ messages }: ChatMessagesProps) {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [messages, isLoading]);
 
   return (
     <div className="flex-1 overflow-y-auto min-h-0 flex justify-center overflow-x-hidden custom-scrollbar">
@@ -42,20 +43,33 @@ export default function ChatMessages({ messages }: ChatMessagesProps) {
               <p className="text-gray-400 mt-6 text-base font-semibold tracking-widest uppercase font-[var(--font-chakra-petch)] letter-spacing-[0.25em]">Mirror Image</p>
             </div>
           ) : (
-            messages.map((message) => (
-              <div
-                key={message.id}
-                className="w-full py-1.5"
-              >
+            <>
+              {messages.map((message) => (
                 <div
-                  className={`w-full bg-[#343541] px-3 py-2.5 rounded-lg`}
+                  key={message.id}
+                  className="w-full py-1.5"
                 >
-                  <p className="text-[15px] leading-relaxed text-gray-200 break-words whitespace-pre-wrap">
-                    {message.content}
-                  </p>
+                  <div
+                    className={`w-full bg-[#343541] px-3 py-2.5 rounded-lg`}
+                  >
+                    <p className="text-[15px] leading-relaxed text-gray-200 break-words whitespace-pre-wrap">
+                      {message.content}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))
+              ))}
+              {isLoading && (
+                <div className="w-full py-1.5">
+                  <div className="w-full bg-[#343541] px-3 py-2.5 rounded-lg">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                    </div>
+                  </div>
+                </div>
+              )}
+            </>
           )}
           <div ref={messagesEndRef} />
         </div>

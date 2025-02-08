@@ -7,14 +7,15 @@ import * as Tooltip from '@radix-ui/react-tooltip';
 
 interface ChatInputProps {
   onSendMessage: (message: string) => void;
+  isLoading: boolean;
 }
 
-export default function ChatInput({ onSendMessage }: ChatInputProps) {
+export default function ChatInput({ onSendMessage, isLoading }: ChatInputProps) {
   const [inputMessage, setInputMessage] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!inputMessage.trim()) return;
+    if (!inputMessage.trim() || isLoading) return;
     
     onSendMessage(inputMessage);
     setInputMessage('');
@@ -35,8 +36,8 @@ export default function ChatInput({ onSendMessage }: ChatInputProps) {
             <Tooltip.Provider delayDuration={0}>
               <Tooltip.Root delayDuration={0}>
                 <Tooltip.Trigger asChild>
-                  <button type="button">
-                    <HiSpeakerWave className="text-xl text-gray-400 cursor-pointer hover:text-gray-300" />
+                  <button type="button" disabled={isLoading}>
+                    <HiSpeakerWave className={`text-xl ${isLoading ? 'text-gray-600' : 'text-gray-400 hover:text-gray-300'} cursor-pointer`} />
                   </button>
                 </Tooltip.Trigger>
                 <Tooltip.Portal>
@@ -55,17 +56,26 @@ export default function ChatInput({ onSendMessage }: ChatInputProps) {
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
               onKeyDown={handleKeyPress}
-              placeholder="Start a conversation..."
-              className="flex-1 bg-transparent outline-none text-[15px] text-gray-200 placeholder-gray-400"
+              placeholder={isLoading ? "Waiting for response..." : "Start a conversation..."}
+              disabled={isLoading}
+              className="flex-1 bg-transparent outline-none text-[15px] text-gray-200 placeholder-gray-400 disabled:text-gray-500 disabled:placeholder-gray-600"
             />
-            <button type="submit" className="flex items-center justify-center">
-              <PiPaperPlaneFill className="text-xl text-gray-400 cursor-pointer hover:text-gray-300" />
+            <button 
+              type="submit" 
+              className="flex items-center justify-center" 
+              disabled={isLoading}
+            >
+              <PiPaperPlaneFill className={`text-xl ${isLoading ? 'text-gray-600' : 'text-gray-400 hover:text-gray-300'} cursor-pointer`} />
             </button>
             <Tooltip.Provider delayDuration={0}>
               <Tooltip.Root delayDuration={0}>
                 <Tooltip.Trigger asChild>
-                  <button type="button" className="flex items-center justify-center">
-                    <PiMicrophoneFill className="text-xl text-gray-400 cursor-pointer hover:text-gray-300" />
+                  <button 
+                    type="button" 
+                    className="flex items-center justify-center"
+                    disabled={isLoading}
+                  >
+                    <PiMicrophoneFill className={`text-xl ${isLoading ? 'text-gray-600' : 'text-gray-400 hover:text-gray-300'} cursor-pointer`} />
                   </button>
                 </Tooltip.Trigger>
                 <Tooltip.Portal>
