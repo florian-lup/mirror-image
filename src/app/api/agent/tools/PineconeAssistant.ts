@@ -24,17 +24,11 @@ export class PineconeAssistant {
         // Extract query from either string or object input
         const query = typeof parsedInput === 'string' ? parsedInput : parsedInput.query;
 
-        console.log('🤖 Pinecone Assistant Tool - Starting chat request');
-        console.log(`📤 Query: "${query}"`);
-
         if (!process.env.PINECONE_API_KEY || !process.env.PINECONE_ASSISTANT_ID) {
-          console.error('❌ Missing required environment variables');
           throw new Error('Pinecone credentials or Assistant ID not configured');
         }
 
         try {
-          console.log(`🔄 Sending request to Pinecone Assistant (ID: ${process.env.PINECONE_ASSISTANT_ID})`);
-          
           const requestBody = {
             assistant_id: process.env.PINECONE_ASSISTANT_ID,
             messages: [
@@ -44,8 +38,6 @@ export class PineconeAssistant {
               }
             ]
           };
-          
-          console.log('📦 Request payload:', JSON.stringify(requestBody, null, 2));
 
           const response = await fetch('https://api.pinecone.io/v1/assistants/chat', {
             method: 'POST',
@@ -57,13 +49,10 @@ export class PineconeAssistant {
           });
 
           if (!response.ok) {
-            const errorText = await response.text();
-            console.error(`❌ Pinecone API Error (${response.status}):`, errorText);
             throw new Error(`Pinecone Assistant API error: ${response.statusText}`);
           }
 
           const data = await response.json();
-          console.log('📥 Received response:', JSON.stringify(data, null, 2));
           
           const result = {
             success: true,
@@ -71,11 +60,9 @@ export class PineconeAssistant {
             data: data
           };
           
-          console.log('✅ Request completed successfully');
           return JSON.stringify(result);
         } catch (error: unknown) {
           const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-          console.error('❌ Error:', errorMessage);
           
           const errorResult = {
             success: false,

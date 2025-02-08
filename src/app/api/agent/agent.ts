@@ -40,14 +40,16 @@ function getModel(modelProvider: 'openai' | 'gemini' = 'openai'): BaseChatModel 
 // Create the prompt template
 const prompt = ChatPromptTemplate.fromTemplate(`You are Donald Trump. Always respond in my characteristic speaking style, using phrases like "believe me", "tremendous", "huge", and other signature expressions. Speak in the first person ("I", "me", "my") and maintain my confident, direct manner of speech. Remember to occasionally mention how successful and smart I am.
 
-IMPORTANT: Your knowledge might not be up to date. ALWAYS use your tools to get current information:
+IMPORTANT: Your knowledge might not be up to date. Use your tools to get current information:
 - Use perplexity_assistant for real-time facts and current events (NEVER ask about hypotheticals)
 - Use pinecone_assistant to search through uploaded documents about specific details
 
 TOOL QUERY GUIDELINES:
 - For perplexity_assistant:
   - Ask about REAL, CURRENT events and facts only
-  - Example: "What are Donald Trump's current activities and statements?"
+  - Make your queries specific and comprehensive
+  - Avoid multiple queries for the same information
+  - Example: "What is Donald Trump's current role and recent activities?"
 - For pinecone_assistant:
   - Ask about specific documents or known events
   - Reference concrete details or dates
@@ -67,7 +69,7 @@ RESPONSE FORMAT RULES (VERY IMPORTANT):
 OPTION 1 - If you need more information:
 Thought: [explain why you need more information]
 Action: [must be one of: {tool_names}]
-Action Input: [your specific query]
+Action Input: [your specific query - make it comprehensive to avoid multiple queries]
 
 OR
 
@@ -80,11 +82,11 @@ Each response must end with EITHER an Action OR a Final Answer, never both.
 If you use an Action, wait for the result before giving a Final Answer.
 
 REMEMBER:
-- ALWAYS use perplexity_assistant to verify current events and facts
-- Use pinecone_assistant to get specific details about your background
+- Use perplexity_assistant for current facts, but make queries comprehensive
+- Use pinecone_assistant for specific document details
 - Don't rely on your own knowledge as it might be outdated
-- For questions about events or facts, use AT LEAST ONE tool before giving a Final Answer
-- If a tool can't provide information, try a different query or tool
+- Try to get all needed information in a single, well-formed query
+- Only make additional queries if the first response was insufficient
 
 Question: {input}
 {agent_scratchpad}`);
@@ -109,16 +111,15 @@ async function createAgent(modelProvider: 'openai' | 'gemini' = 'openai') {
     agent,
     tools,
     maxIterations: 5,
-    verbose: true, // Enable built-in LangChain verbose logging
+    verbose: false, // Disable built-in LangChain verbose logging
     returnIntermediateSteps: true, // This will help us log the steps
   });
 }
 
 // Function to run the agent
 export async function runAgent(input: string, modelProvider: 'openai' | 'gemini' = 'openai'): Promise<string> {
-  console.log('\n🤖 Agent Execution Started');
-  console.log('📝 Query:', input);
-  console.log('🔧 Model:', modelProvider);
+  console.log('\n🤖 Started:', input);
+  console.log('🔧 Using:', modelProvider);
   
   try {
     const agentExecutor = await createAgent(modelProvider);
@@ -126,57 +127,54 @@ export async function runAgent(input: string, modelProvider: 'openai' | 'gemini'
       input,
     });
     
-    // Log steps in a more concise way
+    // Log steps in a minimal way
     if (result.intermediateSteps?.length > 0) {
       console.log('\n📋 Steps:');
       result.intermediateSteps.forEach((step: AgentStep, index: number) => {
         if (step.action) {
-          console.log(`\n${index + 1}. ${step.action.tool}`);
-          console.log(`   Query: ${typeof step.action.toolInput === 'string' 
-            ? step.action.toolInput 
-            : JSON.stringify(step.action.toolInput)}`);
+          console.log(`${index + 1}. ${step.action.tool}: "${step.action.toolInput}"`);
         }
         
         if (step.observation) {
           try {
             const observation = JSON.parse(step.observation);
             if (observation.success) {
-              console.log('   Status: ✓');
-              if (observation.answer) {
-                // Remove thinking process and format answer
-                const cleanAnswer = observation.answer
-                  .replace(/<think>[\s\S]*?<\/think>/g, '')
-                  .replace(/\n+/g, '\n')
-                  .trim();
-                console.log('   Answer:', cleanAnswer);
+              // Show success indicator
+              console.log(`   ✓ Success`);
+              
+              // Show the full answer for Perplexity and Pinecone responses
+              if (step.action?.tool === 'perplexity_assistant' || step.action?.tool === 'pinecone_assistant') {
+                console.log('   Response:');
+                console.log('   --------');
+                console.log('  ', observation.answer || observation.data?.response || '');
+                console.log('   --------');
+              } else {
+                // For other tools, keep the truncated format
+                const answer = observation.answer || observation.message || '';
+                const truncated = answer.length > 150 
+                  ? answer.substring(0, 150) + '...'
+                  : answer;
+                console.log(`   ${truncated}`);
               }
             } else {
-              console.log('   Status: ✗');
-              console.log('   Error:', observation.message);
+              console.log(`   ✗ ${observation.message}`);
             }
           } catch {
-            // If not JSON, show truncated observation
-            const truncated = step.observation.length > 200 
-              ? step.observation.substring(0, 200) + '...'
-              : step.observation;
-            console.log('   Result:', truncated);
+            // If not JSON, show minimal error
+            console.log('   ✗ Failed to parse response');
           }
         }
       });
     }
     
-    console.log('\n💬 Final Response:');
+    console.log('\n💬 Response:');
     console.log(result.output);
-    
-    console.log('\n✅ Agent Execution Complete\n');
+    console.log('\n✅ Complete\n');
     return result.output;
     
   } catch (error) {
     console.error('\n❌ Error:', error instanceof Error ? error.message : 'Unknown error');
-    if (error instanceof Error && error.stack) {
-      console.error('Stack:', error.stack.split('\n').slice(0, 3).join('\n'));
-    }
-    console.log('\n❌ Agent Execution Failed\n');
+    console.log('\n❌ Failed\n');
     return "Sorry, I encountered an error while processing your request.";
   }
 } 
