@@ -2,15 +2,16 @@
 
 import { useState } from 'react';
 import { HiSpeakerWave } from "react-icons/hi2";
-import { PiPaperPlaneFill, PiMicrophoneFill } from "react-icons/pi";
+import { PiPaperPlaneFill, PiMicrophoneFill, PiStopCircleBold } from "react-icons/pi";
 import * as Tooltip from '@radix-ui/react-tooltip';
 
 interface ChatInputProps {
   onSendMessage: (message: string) => void;
+  onStop: () => void;
   isLoading: boolean;
 }
 
-export default function ChatInput({ onSendMessage, isLoading }: ChatInputProps) {
+export default function ChatInput({ onSendMessage, onStop, isLoading }: ChatInputProps) {
   const [inputMessage, setInputMessage] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -61,11 +62,16 @@ export default function ChatInput({ onSendMessage, isLoading }: ChatInputProps) 
               className="flex-1 bg-transparent outline-none text-[15px] text-gray-200 placeholder-gray-400 disabled:text-gray-500 disabled:placeholder-gray-600"
             />
             <button 
-              type="submit" 
+              type="button" 
               className="flex items-center justify-center" 
-              disabled={isLoading}
+              onClick={isLoading ? onStop : handleSubmit}
+              disabled={!isLoading && !inputMessage.trim()}
             >
-              <PiPaperPlaneFill className={`text-xl ${isLoading ? 'text-gray-600' : 'text-gray-400 hover:text-gray-300'} cursor-pointer`} />
+              {isLoading ? (
+                <PiStopCircleBold className="text-red-500 hover:text-red-400 text-xl cursor-pointer" />
+              ) : (
+                <PiPaperPlaneFill className={`text-xl ${!inputMessage.trim() ? 'text-gray-600' : 'text-gray-400 hover:text-gray-300'} cursor-pointer`} />
+              )}
             </button>
             <Tooltip.Provider delayDuration={0}>
               <Tooltip.Root delayDuration={0}>
