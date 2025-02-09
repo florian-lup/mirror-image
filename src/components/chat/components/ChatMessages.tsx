@@ -50,7 +50,9 @@ export default function ChatMessages({ messages, isLoading }: ChatMessagesProps)
                   className="w-full py-1.5"
                 >
                   <div
-                    className={`w-full bg-[#343541] px-3 py-2.5 rounded-lg`}
+                    className={`w-full px-3 py-2.5 rounded-lg ${
+                      message.sender === 'user' ? 'bg-[#343541]' : ''
+                    }`}
                   >
                     <p className="text-[15px] leading-relaxed text-gray-200 break-words whitespace-pre-wrap">
                       {message.content}
@@ -60,12 +62,13 @@ export default function ChatMessages({ messages, isLoading }: ChatMessagesProps)
               ))}
               {isLoading && (
                 <div className="w-full py-1.5">
-                  <div className="w-full bg-[#343541] px-3 py-2.5 rounded-lg">
+                  <div className="w-full px-3 py-2.5 rounded-lg">
                     <div className="flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                      <div className="w-1.5 h-1.5 bg-gray-300 rounded-full animate-bounce" />
+                      <div className="w-1.5 h-1.5 bg-gray-300 rounded-full animate-bounce [animation-delay:200ms]" />
+                      <div className="w-1.5 h-1.5 bg-gray-300 rounded-full animate-bounce [animation-delay:400ms]" />
                     </div>
+
                   </div>
                 </div>
               )}
