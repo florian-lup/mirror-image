@@ -1,7 +1,7 @@
-import { PineconeAssistant } from './PineconeAssistant';
-import { PerplexityAssistant } from './PerplexityAssistant';
+import { KnowledgeBase } from './KnowledgeBase';
+import { DeepResearch } from './DeepResearch';
 
 export const tools = [
-  PineconeAssistant.create(),
-  PerplexityAssistant.create()
+  KnowledgeBase.create(),
+  DeepResearch.create()
 ]; 
