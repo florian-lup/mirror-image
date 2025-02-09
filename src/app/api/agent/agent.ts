@@ -188,9 +188,11 @@ export async function runAgent(
     }
     
     console.log('\n💬 Response:');
-    console.log(result.output);
+    // Remove the "Question: ..." line from the output
+    const cleanedOutput = result.output.replace(/^Question:.*?\n/, '').trim();
+    console.log(cleanedOutput);
     console.log('\n✅ Complete\n');
-    return result.output;
+    return cleanedOutput;
     
   } catch (error) {
     console.error('\n❌ Error:', error instanceof Error ? error.message : 'Unknown error');
