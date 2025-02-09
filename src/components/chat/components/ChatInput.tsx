@@ -146,7 +146,9 @@ export default function ChatInput({ onSendMessage, onStop, isLoading }: ChatInpu
               onKeyDown={handleKeyPress}
               placeholder={isLoading ? "Waiting for response..." : "Start a conversation..."}
               disabled={isLoading}
-              className="flex-1 bg-transparent outline-none text-[15px] text-gray-200 placeholder-gray-400 disabled:text-gray-500 disabled:placeholder-gray-600"
+              className="flex-1 bg-transparent outline-none text-[16px] text-gray-200 placeholder-gray-400 disabled:text-gray-500 disabled:placeholder-gray-600"
+              style={{ fontSize: '16px' }}
+              autoComplete="off"
             />
             <button 
               type="button" 
