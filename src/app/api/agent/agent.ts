@@ -5,9 +5,15 @@ import { ChatPromptTemplate } from "@langchain/core/prompts";
 import { BaseChatModel } from "@langchain/core/language_models/chat_models";
 import { AgentStep } from "@langchain/core/agents";
 import { tools } from "./tools/tools";
+import { 
+  ModelProvider, 
+  AgentConfig, 
+  AgentResult, 
+  ToolObservation
+} from "@/types/agent";
 
 // Function to get the appropriate model based on configuration
-function getModel(modelProvider: 'openai' | 'gemini' = 'openai'): BaseChatModel {
+function getModel(modelProvider: ModelProvider = 'openai'): BaseChatModel {
   console.log(`🤖 Initializing ${modelProvider} model`);
   
   switch (modelProvider) {
@@ -18,10 +24,11 @@ function getModel(modelProvider: 'openai' | 'gemini' = 'openai'): BaseChatModel 
       }
       console.log('✨ Creating Gemini model instance');
       return new ChatGoogleGenerativeAI({
-        modelName: "gemini-1.5-pro",
+        modelName: "gemini-2.0-flash",
         temperature: 0.1,
         apiKey: process.env.GOOGLE_API_KEY,
       });
+
 
     case 'openai':
     default:
@@ -31,7 +38,7 @@ function getModel(modelProvider: 'openai' | 'gemini' = 'openai'): BaseChatModel 
       }
       console.log('✨ Creating OpenAI model instance');
       return new ChatOpenAI({
-        modelName: "gpt-4o-mini",
+        modelName: "gpt-4o",
         temperature: 0.1,
       });
   }
@@ -100,7 +107,7 @@ Question: {input}
 {agent_scratchpad}`);
 
 // Create the agent with specified model
-async function createAgent(modelProvider: 'openai' | 'gemini' = 'openai') {
+async function createAgent(modelProvider: ModelProvider = 'openai', config?: Partial<AgentConfig>) {
   console.log('🛠️ Creating agent with the following configuration:');
   console.log(`- Model Provider: ${modelProvider}`);
   console.log(`- Available Tools: ${tools.map(t => t.name).join(', ')}`);
@@ -118,34 +125,39 @@ async function createAgent(modelProvider: 'openai' | 'gemini' = 'openai') {
   return AgentExecutor.fromAgentAndTools({
     agent,
     tools,
-    maxIterations: 5,
-    verbose: false, // Disable built-in LangChain verbose logging
-    returnIntermediateSteps: true, // This will help us log the steps
+    maxIterations: config?.maxIterations ?? 5,
+    verbose: config?.verbose ?? false,
+    returnIntermediateSteps: config?.returnIntermediateSteps ?? true,
   });
 }
 
 // Function to run the agent
-export async function runAgent(input: string, modelProvider: 'openai' | 'gemini' = 'openai'): Promise<string> {
+export async function runAgent(
+  input: string, 
+  modelProvider: ModelProvider = 'openai',
+  config?: Partial<AgentConfig>
+): Promise<string> {
   console.log('\n🤖 Started:', input);
   console.log('🔧 Using:', modelProvider);
   
   try {
-    const agentExecutor = await createAgent(modelProvider);
+    const agentExecutor = await createAgent(modelProvider, config);
     const result = await agentExecutor.invoke({
       input,
-    });
+    }) as AgentResult;
     
     // Log steps in a minimal way
-    if (result.intermediateSteps?.length > 0) {
+    const steps = result.intermediateSteps;
+    if (steps && steps.length > 0) {
       console.log('\n📋 Steps:');
-      result.intermediateSteps.forEach((step: AgentStep, index: number) => {
+      steps.forEach((step: AgentStep, index: number) => {
         if (step.action) {
           console.log(`${index + 1}. ${step.action.tool}: "${step.action.toolInput}"`);
         }
         
         if (step.observation) {
           try {
-            const observation = JSON.parse(step.observation);
+            const observation: ToolObservation = JSON.parse(step.observation);
             if (observation.success) {
               // Show success indicator
               console.log(`   ✓ Success`);

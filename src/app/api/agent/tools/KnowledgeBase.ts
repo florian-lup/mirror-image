@@ -1,6 +1,7 @@
 import { DynamicStructuredTool } from "@langchain/core/tools";
 import { z } from "zod";
 import { Index } from "@upstash/vector";
+import { ToolResponse, ToolInput, VectorSearchResult, VectorSearchConfig } from "@/types/agent";
 
 // Accept either a string or an object with a query property
 const KnowledgeBaseSchema = z.union([
@@ -8,7 +9,7 @@ const KnowledgeBaseSchema = z.union([
   z.object({
     query: z.string().describe('The query to send to the knowledge base')
   })
-]);
+]) satisfies z.ZodType<ToolInput>;
 
 /**
  * Tool for querying the knowledge base to get information from indexed documents
@@ -19,7 +20,7 @@ export class KnowledgeBase {
       name: 'knowledge_base',
       description: 'Query your knowledge base to get relevant information from your documents. Only use this for querying existing document content.',
       schema: KnowledgeBaseSchema,
-      func: async (input) => {
+      func: async (input): Promise<string> => {
         try {
           // Parse and validate the input
           const parsedInput = KnowledgeBaseSchema.parse(input);
@@ -27,11 +28,12 @@ export class KnowledgeBase {
           const query = typeof parsedInput === 'string' ? parsedInput : parsedInput.query;
 
           if (!process.env.UPSTASH_VECTOR_REST_URL || !process.env.UPSTASH_VECTOR_REST_TOKEN) {
-            return JSON.stringify({
+            const errorResponse: ToolResponse = {
               success: false,
               message: 'Knowledge base credentials not configured',
               response: 'Error: Knowledge base credentials not configured'
-            });
+            };
+            return JSON.stringify(errorResponse);
           }
 
           // Initialize index
@@ -41,13 +43,15 @@ export class KnowledgeBase {
           });
 
           // Query the vector store using the text directly
-          const results = await index.query({
-            data: query, // Use the text query directly, Upstash will handle embedding
-            topK: 5, // Get top 5 most relevant results
-            includeMetadata: false, // We don't need metadata
+          const searchConfig: VectorSearchConfig = {
+            data: query,
+            topK: 5,
+            includeMetadata: false,
             includeVectors: false,
-            includeData: true, // Include the original text data
-          });
+            includeData: true,
+          };
+
+          const results = await index.query(searchConfig) as VectorSearchResult[];
           
           // Filter and format results
           const relevantResults = results.filter(result => {
@@ -57,11 +61,12 @@ export class KnowledgeBase {
           });
           
           if (relevantResults.length === 0) {
-            return JSON.stringify({
+            const emptyResponse: ToolResponse = {
               success: false,
               message: 'No relevant information found',
               response: 'I could not find any relevant information about that in my knowledge base.'
-            });
+            };
+            return JSON.stringify(emptyResponse);
           }
 
           // Combine all relevant content into one answer
@@ -71,27 +76,30 @@ export class KnowledgeBase {
             .join('\n\n');
 
           if (!combinedContent.trim()) {
-            return JSON.stringify({
+            const noContentResponse: ToolResponse = {
               success: false,
               message: 'No content found in results',
               response: 'I found some matches but they did not contain any readable content.'
-            });
+            };
+            return JSON.stringify(noContentResponse);
           }
 
-          return JSON.stringify({
+          const successResponse: ToolResponse = {
             success: true,
             message: 'Successfully retrieved information',
             response: combinedContent
-          });
+          };
+          return JSON.stringify(successResponse);
           
         } catch (error: unknown) {
-          return JSON.stringify({
+          const errorResponse: ToolResponse = {
             success: false,
             message: error instanceof Error 
               ? `Error querying knowledge base: ${error.message}`
               : 'Unknown error occurred while querying knowledge base',
             response: 'Sorry, I encountered an error while searching the knowledge base.'
-          });
+          };
+          return JSON.stringify(errorResponse);
         }
       }
     });

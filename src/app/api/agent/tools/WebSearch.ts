@@ -1,5 +1,6 @@
 import { DynamicStructuredTool } from "@langchain/core/tools";
 import { z } from "zod";
+import { SearchResult, ToolResponse, ToolInput, SerpApiResponse } from "@/types/agent";
 
 // Accept either a string or an object with a query property
 const WebSearchSchema = z.union([
@@ -7,13 +8,7 @@ const WebSearchSchema = z.union([
   z.object({
     query: z.string().describe('The search query to find relevant web results')
   })
-]);
-
-interface SearchResult {
-  title: string;
-  snippet: string;
-  link: string;
-}
+]) satisfies z.ZodType<ToolInput>;
 
 /**
  * Tool for searching the web using SERP API to get current information from across the internet
@@ -24,7 +19,7 @@ export class WebSearch {
       name: 'web_search',
       description: 'Search the web to find current information from websites and news sources. Use this for finding specific facts, news, or information from across the internet.',
       schema: WebSearchSchema,
-      func: async (input) => {
+      func: async (input): Promise<string> => {
         try {
           // Parse and validate the input
           const parsedInput = WebSearchSchema.parse(input);
@@ -32,11 +27,12 @@ export class WebSearch {
           const query = typeof parsedInput === 'string' ? parsedInput : parsedInput.query;
 
           if (!process.env.SERP_API_KEY) {
-            return JSON.stringify({
+            const errorResponse: ToolResponse = {
               success: false,
               message: 'SERP API credentials not configured',
               response: 'Error: Web search service not available'
-            });
+            };
+            return JSON.stringify(errorResponse);
           }
 
           // Construct the SERP API URL with parameters
@@ -48,27 +44,29 @@ export class WebSearch {
             hl: 'en' // Set language to English
           });
 
-          const response = await fetch(`https://serpapi.com/search.json?${params.toString()}`);
+          const fetchResponse = await fetch(`https://serpapi.com/search.json?${params.toString()}`);
 
-          if (!response.ok) {
-            return JSON.stringify({
+          if (!fetchResponse.ok) {
+            const errorResponse: ToolResponse = {
               success: false,
-              message: `Web search error: ${response.statusText}`,
+              message: `Web search error: ${fetchResponse.statusText}`,
               response: 'Sorry, I encountered an error while searching the web.'
-            });
+            };
+            return JSON.stringify(errorResponse);
           }
 
-          const data = await response.json();
+          const data = await fetchResponse.json() as SerpApiResponse;
           
           // Extract organic search results
-          const organicResults = (data.organic_results || []) as SearchResult[];
+          const organicResults = data.organic_results || [];
           
           if (organicResults.length === 0) {
-            return JSON.stringify({
+            const emptyResponse: ToolResponse = {
               success: false,
               message: 'No search results found',
               response: 'I could not find any relevant web search results for your query.'
-            });
+            };
+            return JSON.stringify(emptyResponse);
           }
 
           // Format the results into a readable summary
@@ -78,20 +76,22 @@ export class WebSearch {
             })
             .join('\n');
 
-          return JSON.stringify({
+          const successResponse: ToolResponse = {
             success: true,
             message: 'Successfully retrieved web search results',
             response: formattedResults
-          });
+          };
+          return JSON.stringify(successResponse);
           
         } catch (error: unknown) {
-          return JSON.stringify({
+          const errorResponse: ToolResponse = {
             success: false,
             message: error instanceof Error 
               ? `Error performing web search: ${error.message}`
               : 'Unknown error occurred while searching the web',
             response: 'Sorry, I encountered an error while processing your web search.'
-          });
+          };
+          return JSON.stringify(errorResponse);
         }
       }
     });

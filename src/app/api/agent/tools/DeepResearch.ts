@@ -1,5 +1,6 @@
 import { DynamicStructuredTool } from "@langchain/core/tools";
 import { z } from "zod";
+import { ResearchMessage, ToolResponse, ToolInput, PerplexityResponse } from "@/types/agent";
 
 // Accept either a string or an object with a query property
 const DeepResearchSchema = z.union([
@@ -7,12 +8,7 @@ const DeepResearchSchema = z.union([
   z.object({
     query: z.string().describe('The research query to get detailed, up-to-date information')
   })
-]);
-
-interface ResearchMessage {
-  role: 'system' | 'user' | 'assistant';
-  content: string;
-}
+]) satisfies z.ZodType<ToolInput>;
 
 /**
  * Tool for conducting deep research using AI to get comprehensive, real-time information
@@ -23,7 +19,7 @@ export class DeepResearch {
       name: 'deep_research',
       description: 'Conduct deep research to get comprehensive, real-time information about current events, facts, or any general knowledge questions. Only use this for current, factual queries, not hypotheticals.',
       schema: DeepResearchSchema,
-      func: async (input) => {
+      func: async (input): Promise<string> => {
         try {
           // Parse and validate the input
           const parsedInput = DeepResearchSchema.parse(input);
@@ -31,11 +27,12 @@ export class DeepResearch {
           const query = typeof parsedInput === 'string' ? parsedInput : parsedInput.query;
           
           if (!process.env.PERPLEXITY_API_KEY) {
-            return JSON.stringify({
+            const errorResponse: ToolResponse = {
               success: false,
               message: 'Research service credentials not configured',
               response: 'Error: Unable to access research service'
-            });
+            };
+            return JSON.stringify(errorResponse);
           }
 
           const messages: ResearchMessage[] = [
@@ -58,7 +55,7 @@ export class DeepResearch {
             search_recency_filter: 'day'
           };
 
-          const response = await fetch('https://api.perplexity.ai/chat/completions', {
+          const fetchResponse = await fetch('https://api.perplexity.ai/chat/completions', {
             method: 'POST',
             headers: {
               'Authorization': `Bearer ${process.env.PERPLEXITY_API_KEY}`,
@@ -67,39 +64,43 @@ export class DeepResearch {
             body: JSON.stringify(requestBody)
           });
 
-          if (!response.ok) {
-            return JSON.stringify({
+          if (!fetchResponse.ok) {
+            const errorResponse: ToolResponse = {
               success: false,
-              message: `Research service error: ${response.statusText}`,
+              message: `Research service error: ${fetchResponse.statusText}`,
               response: 'Sorry, I encountered an error while conducting research.'
-            });
+            };
+            return JSON.stringify(errorResponse);
           }
 
-          const data = await response.json();
+          const data = await fetchResponse.json() as PerplexityResponse;
           
           const content = data.choices[0]?.message?.content;
           if (!content) {
-            return JSON.stringify({
+            const emptyResponse: ToolResponse = {
               success: false,
               message: 'No content in research response',
               response: 'I completed the research but found no useful information.'
-            });
+            };
+            return JSON.stringify(emptyResponse);
           }
           
-          return JSON.stringify({
+          const successResponse: ToolResponse = {
             success: true,
             message: 'Successfully completed research query',
             response: content
-          });
+          };
+          return JSON.stringify(successResponse);
           
         } catch (error: unknown) {
-          return JSON.stringify({
+          const errorResponse: ToolResponse = {
             success: false,
             message: error instanceof Error 
               ? `Error conducting research: ${error.message}`
               : 'Unknown error occurred while conducting research',
             response: 'Sorry, I encountered an error while researching your query.'
-          });
+          };
+          return JSON.stringify(errorResponse);
         }
       }
     });
