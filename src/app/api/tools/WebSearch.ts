@@ -1,6 +1,6 @@
 import { DynamicStructuredTool } from "@langchain/core/tools";
 import { z } from "zod";
-import { SearchResult, ToolResponse, ToolInput, SerpApiResponse } from "@/types/agent";
+import { SearchResult, ToolResponse, ToolInput, SerpApiResponse } from "@/types/tools";
 
 // Accept either a string or an object with a query property
 const WebSearchSchema = z.union([

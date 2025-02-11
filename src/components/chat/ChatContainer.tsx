@@ -39,7 +39,7 @@ export default function Chat() {
     abortControllerRef.current = new AbortController();
 
     try {
-      const response = await fetch('/api/agent', {
+      const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1,6 +1,6 @@
 import { DynamicStructuredTool } from "@langchain/core/tools";
 import { z } from "zod";
-import { ResearchMessage, ToolResponse, ToolInput, PerplexityResponse } from "@/types/agent";
+import { ResearchMessage, ToolResponse, ToolInput, PerplexityResponse } from "@/types/tools";
 
 // Accept either a string or an object with a query property
 const DeepResearchSchema = z.union([

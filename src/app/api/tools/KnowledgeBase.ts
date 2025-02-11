@@ -1,7 +1,7 @@
 import { DynamicStructuredTool } from "@langchain/core/tools";
 import { z } from "zod";
 import { Index } from "@upstash/vector";
-import { ToolResponse, ToolInput, VectorSearchResult, VectorSearchConfig } from "@/types/agent";
+import { ToolResponse, ToolInput, VectorSearchResult, VectorSearchConfig } from "@/types/tools";
 
 // Accept either a string or an object with a query property
 const KnowledgeBaseSchema = z.union([
