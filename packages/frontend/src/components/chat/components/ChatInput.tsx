@@ -59,7 +59,7 @@ export default function ChatInput({ onSendMessage, onStop, isLoading }: ChatInpu
     <div className="px-4 py-4 bg-[#1E1F1F]">
       <div className="max-w-2xl mx-auto">
         <form onSubmit={handleSubmit}>
-          <div className="flex items-start gap-3 bg-[#343541] rounded-lg px-4 py-3">
+          <div className="flex items-end gap-3 bg-[#343541] rounded-lg px-4 py-3">
             <Tooltip.Provider delayDuration={0}>
               <Tooltip.Root delayDuration={0}>
                 <Tooltip.Trigger asChild>
