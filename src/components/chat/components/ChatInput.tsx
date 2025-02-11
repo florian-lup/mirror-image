@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { HiSpeakerWave } from "react-icons/hi2";
 import { PiPaperPlaneFill, PiMicrophoneFill, PiStopCircleBold } from "react-icons/pi";
 import * as Tooltip from '@radix-ui/react-tooltip';
@@ -56,6 +56,20 @@ export default function ChatInput({ onSendMessage, onStop, isLoading }: ChatInpu
   const [isListening, setIsListening] = useState(false);
   const [recognition, setRecognition] = useState<SpeechRecognition | null>(null);
   const [isSupported, setIsSupported] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  // Auto-resize textarea
+  const adjustTextareaHeight = () => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = 'auto';
+      textarea.style.height = Math.min(textarea.scrollHeight, 200) + 'px';
+    }
+  };
+
+  useEffect(() => {
+    adjustTextareaHeight();
+  }, [inputMessage]);
 
   // Initialize speech recognition
   useEffect(() => {
@@ -116,15 +130,19 @@ export default function ChatInput({ onSendMessage, onStop, isLoading }: ChatInpu
     }
   }, [recognition, isListening]);
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInputMessage(e.target.value);
+  };
+
   return (
     <div className="px-4 py-4 bg-[#1E1F1F]">
       <div className="max-w-2xl mx-auto">
         <form onSubmit={handleSubmit}>
-          <div className="flex items-center gap-2 bg-[#343541] rounded-lg px-3 py-2">
+          <div className="flex items-start gap-3 bg-[#343541] rounded-lg px-4 py-3">
             <Tooltip.Provider delayDuration={0}>
               <Tooltip.Root delayDuration={0}>
                 <Tooltip.Trigger asChild>
-                  <button type="button" disabled={isLoading}>
+                  <button type="button" disabled={isLoading} className="flex h-[34px] items-center">
                     <HiSpeakerWave className={`text-xl ${isLoading ? 'text-gray-600' : 'text-gray-400 hover:text-gray-300'} cursor-pointer`} />
                   </button>
                 </Tooltip.Trigger>
@@ -139,62 +157,65 @@ export default function ChatInput({ onSendMessage, onStop, isLoading }: ChatInpu
                 </Tooltip.Portal>
               </Tooltip.Root>
             </Tooltip.Provider>
-            <input
-              type="text"
+            <textarea
+              ref={textareaRef}
+              rows={1}
               value={inputMessage}
-              onChange={(e) => setInputMessage(e.target.value)}
+              onChange={handleInputChange}
               onKeyDown={handleKeyPress}
               placeholder={isLoading ? "Waiting for response..." : "Start a conversation..."}
               disabled={isLoading}
-              className="flex-1 bg-transparent outline-none text-[16px] text-gray-200 placeholder-gray-400 disabled:text-gray-500 disabled:placeholder-gray-600"
+              className="flex-1 bg-transparent outline-none text-[16px] text-gray-200 placeholder-gray-400 disabled:text-gray-500 disabled:placeholder-gray-600 resize-none px-2 py-1.5 min-h-[34px] max-h-[200px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent leading-6"
               style={{ fontSize: '16px' }}
               autoComplete="off"
             />
-            <button 
-              type="button" 
-              className="flex items-center justify-center" 
-              onClick={isLoading ? onStop : handleSubmit}
-              disabled={!isLoading && !inputMessage.trim()}
-            >
-              {isLoading ? (
-                <PiStopCircleBold className="text-red-500 hover:text-red-400 text-xl cursor-pointer" />
-              ) : (
-                <PiPaperPlaneFill className={`text-xl ${!inputMessage.trim() ? 'text-gray-600' : 'text-gray-400 hover:text-gray-300'} cursor-pointer`} />
-              )}
-            </button>
-            <Tooltip.Provider delayDuration={0}>
-              <Tooltip.Root delayDuration={0}>
-                <Tooltip.Trigger asChild>
-                  <button 
-                    type="button" 
-                    className="flex items-center justify-center"
-                    disabled={isLoading || !isSupported}
-                    onClick={toggleListening}
-                  >
-                    <PiMicrophoneFill className={`text-xl ${
-                      isLoading || !isSupported
-                        ? 'text-gray-600' 
-                        : isListening
-                          ? 'text-red-500 hover:text-red-400'
-                          : 'text-gray-400 hover:text-gray-300'
-                    } cursor-pointer`} />
-                  </button>
-                </Tooltip.Trigger>
-                <Tooltip.Portal>
-                  <Tooltip.Content
-                    className="bg-white text-gray-900 px-3 py-1.5 rounded-md text-sm"
-                    sideOffset={5}
-                  >
-                    {!isSupported 
-                      ? "Your browser doesn't support voice input"
-                      : isListening 
-                        ? "Click to stop listening" 
-                        : "Click to start voice input"}
-                    <Tooltip.Arrow className="fill-white" />
-                  </Tooltip.Content>
-                </Tooltip.Portal>
-              </Tooltip.Root>
-            </Tooltip.Provider>
+            <div className="flex items-center gap-3 h-[34px]">
+              <button 
+                type="button" 
+                className="flex items-center justify-center h-full" 
+                onClick={isLoading ? onStop : handleSubmit}
+                disabled={!isLoading && !inputMessage.trim()}
+              >
+                {isLoading ? (
+                  <PiStopCircleBold className="text-red-500 hover:text-red-400 text-xl cursor-pointer" />
+                ) : (
+                  <PiPaperPlaneFill className={`text-xl ${!inputMessage.trim() ? 'text-gray-600' : 'text-gray-400 hover:text-gray-300'} cursor-pointer`} />
+                )}
+              </button>
+              <Tooltip.Provider delayDuration={0}>
+                <Tooltip.Root delayDuration={0}>
+                  <Tooltip.Trigger asChild>
+                    <button 
+                      type="button" 
+                      className="flex items-center justify-center h-full"
+                      disabled={isLoading || !isSupported}
+                      onClick={toggleListening}
+                    >
+                      <PiMicrophoneFill className={`text-xl ${
+                        isLoading || !isSupported
+                          ? 'text-gray-600' 
+                          : isListening
+                            ? 'text-red-500 hover:text-red-400'
+                            : 'text-gray-400 hover:text-gray-300'
+                      } cursor-pointer`} />
+                    </button>
+                  </Tooltip.Trigger>
+                  <Tooltip.Portal>
+                    <Tooltip.Content
+                      className="bg-white text-gray-900 px-3 py-1.5 rounded-md text-sm"
+                      sideOffset={5}
+                    >
+                      {!isSupported 
+                        ? "Your browser doesn't support voice input"
+                        : isListening 
+                          ? "Click to stop listening" 
+                          : "Click to start voice input"}
+                      <Tooltip.Arrow className="fill-white" />
+                    </Tooltip.Content>
+                  </Tooltip.Portal>
+                </Tooltip.Root>
+              </Tooltip.Provider>
+            </div>
           </div>
         </form>
       </div>
