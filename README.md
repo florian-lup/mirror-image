@@ -11,13 +11,8 @@ mirror-image/
 │   │   ├── src/        # Source code
 │   │   ├── public/     # Static files
 │   │   └── ...
-│   ├── backend/        # Express backend service
-│   │   ├── src/        # Source code
-│   │   └── ...
-│   └── shared/         # Shared types and utilities
-│       ├── src/
-│       │   ├── types/  # Shared TypeScript types
-│       │   └── utils/  # Shared utility functions
+│   └── backend/        # Express backend service
+│       ├── src/        # Source code
 │       └── ...
 ```
 
@@ -58,126 +53,38 @@ cp .env.example .env
 
 ## Development
 
-### Running the Development Servers
-
-To run all packages (shared, frontend, and backend):
+Run the development servers:
 
 ```bash
+# Run all services
 npm run dev:all
-```
 
-To run services individually:
-
-```bash
-# Shared package in watch mode
-npm run dev:shared
-
-# Frontend only (http://localhost:3000)
+# Or run services individually
 npm run dev:frontend
-
-# Backend only (http://localhost:3001)
 npm run dev:backend
 ```
 
-### Building for Production
-
-Build all packages:
+## Building for Production
 
 ```bash
+# Build all services
 npm run build
-```
 
-Build individual packages:
-
-```bash
-npm run build:shared
+# Or build services individually
 npm run build:frontend
 npm run build:backend
 ```
 
-### Production Start
-
-Start all services:
+## Starting Production Services
 
 ```bash
+# Start all services
 npm run start:all
-```
 
-Start services individually:
-
-```bash
+# Or start services individually
 npm run start:frontend
 npm run start:backend
 ```
-
-## Environment Variables
-
-### Frontend (.env.local)
-
-- `OPENAI_API_KEY`: Your OpenAI API key
-- `GOOGLE_API_KEY`: Your Google API key
-- `SERPAPI_API_KEY`: Your SerpAPI key
-- `NEXT_PUBLIC_API_URL`: Backend API URL
-- `NEXT_PUBLIC_ANALYTICS_ID`: Analytics ID (optional)
-- `UPSTASH_VECTOR_REST_URL`: Upstash Vector DB URL
-- `UPSTASH_VECTOR_REST_TOKEN`: Upstash Vector DB token
-
-### Backend (.env)
-
-- `PORT`: Server port (default: 3001)
-- `NODE_ENV`: Environment (development/production)
-- `CORS_ORIGIN`: Frontend URL for CORS
-- `OPENAI_API_KEY`: Your OpenAI API key (if needed)
-- `DATABASE_URL`: Database connection URL (if needed)
-
-## Available Scripts
-
-### Root Directory
-
-- `npm run dev:all`: Start all services in development mode
-- `npm run dev:shared`: Start shared package in watch mode
-- `npm run dev:frontend`: Start frontend in development mode
-- `npm run dev:backend`: Start backend in development mode
-- `npm run build`: Build all packages
-- `npm run start:all`: Start all services in production mode
-
-### Shared Package
-
-- `npm run dev`: Start TypeScript compiler in watch mode
-- `npm run build`: Build TypeScript code
-- `npm run clean`: Remove build artifacts
-- `npm run lint`: Run ESLint
-
-### Frontend Package
-
-- `npm run dev`: Start development server
-- `npm run build`: Build for production
-- `npm run start`: Start production server
-- `npm run lint`: Run ESLint
-
-### Backend Package
-
-- `npm run dev`: Start development server
-- `npm run build`: Build TypeScript code
-- `npm run start`: Start production server
-- `npm run lint`: Run ESLint
-
-## Shared Types and Utilities
-
-The `@mirror-image/shared` package contains common code used by both frontend and backend:
-
-### Types
-
-- `ApiResponse<T>`: Generic API response wrapper
-- `ApiError`: Common error structure
-- `PaginationParams`: Common pagination parameters
-- `SortParams`: Common sorting parameters
-
-### Utilities
-
-- `createSuccessResponse`: Create a successful API response
-- `createErrorResponse`: Create an error API response
-- `validatePaginationParams`: Validate pagination parameters
 
 ## Contributing
 
