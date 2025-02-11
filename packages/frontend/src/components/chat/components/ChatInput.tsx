@@ -1,61 +1,29 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { HiSpeakerWave } from "react-icons/hi2";
 import { PiPaperPlaneFill, PiMicrophoneFill, PiStopCircleBold } from "react-icons/pi";
 import * as Tooltip from '@radix-ui/react-tooltip';
-import { 
-  ChatInputProps, 
-  SpeechRecognition, 
-} from '@/types/chat';
+import { ChatInputProps } from '@/types/chat';
+import { useAutoResize } from '@/hooks/useAutoResize';
+import { useSpeechRecognition } from '@/hooks/useSpeechRecognition';
 
 export default function ChatInput({ onSendMessage, onStop, isLoading }: ChatInputProps) {
   const [inputMessage, setInputMessage] = useState('');
-  const [isListening, setIsListening] = useState(false);
-  const [recognition, setRecognition] = useState<SpeechRecognition | null>(null);
-  const [isSupported, setIsSupported] = useState(false);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  // Auto-resize textarea
-  const adjustTextareaHeight = () => {
-    const textarea = textareaRef.current;
-    if (textarea) {
-      textarea.style.height = 'auto';
-      textarea.style.height = Math.min(textarea.scrollHeight, 200) + 'px';
-    }
-  };
+  const textareaRef = useAutoResize(inputMessage);
+  const {
+    isListening,
+    isSupported,
+    startListening,
+    stopListening,
+    transcript
+  } = useSpeechRecognition();
 
   useEffect(() => {
-    adjustTextareaHeight();
-  }, [inputMessage]);
-
-  // Initialize speech recognition
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (SpeechRecognition) {
-        const recognition = new SpeechRecognition();
-        recognition.continuous = true;
-        recognition.interimResults = true;
-        recognition.lang = 'en-US';
-
-        recognition.onresult = (event) => {
-          const transcript = Array.from(event.results)
-            .map(result => result[0])
-            .map(result => result.transcript)
-            .join('');
-          setInputMessage(transcript);
-        };
-
-        recognition.onend = () => {
-          setIsListening(false);
-        };
-
-        setRecognition(recognition);
-        setIsSupported(true);
-      }
+    if (transcript) {
+      setInputMessage(transcript);
     }
-  }, []);
+  }, [transcript]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,9 +31,8 @@ export default function ChatInput({ onSendMessage, onStop, isLoading }: ChatInpu
     
     onSendMessage(inputMessage);
     setInputMessage('');
-    if (recognition && isListening) {
-      recognition.stop();
-      setIsListening(false);
+    if (isListening) {
+      stopListening();
     }
   };
 
@@ -76,17 +43,13 @@ export default function ChatInput({ onSendMessage, onStop, isLoading }: ChatInpu
     }
   };
 
-  const toggleListening = useCallback(() => {
-    if (!recognition) return;
-
+  const toggleListening = () => {
     if (isListening) {
-      recognition.stop();
-      setIsListening(false);
+      stopListening();
     } else {
-      recognition.start();
-      setIsListening(true);
+      startListening();
     }
-  }, [recognition, isListening]);
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputMessage(e.target.value);

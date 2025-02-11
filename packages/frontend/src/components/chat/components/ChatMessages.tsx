@@ -1,19 +1,17 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useMemo } from 'react';
 import Image from 'next/image';
 import { ChatMessagesProps } from '@/types/chat';
+import { useAutoScroll } from '@/hooks/useAutoScroll';
 
-export default function ChatMessages({ messages, isLoading }: ChatMessagesProps) {
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages, isLoading]);
+export default function ChatMessages({ messages, isLoading = false }: ChatMessagesProps) {
+  const shouldScroll = useMemo(() => 
+    messages.length > 0 || isLoading, 
+    [messages.length, isLoading]
+  );
+  
+  const messagesEndRef = useAutoScroll<HTMLDivElement>(shouldScroll);
 
   return (
     <div className="flex-1 overflow-y-auto min-h-0 flex justify-center overflow-x-hidden custom-scrollbar">
