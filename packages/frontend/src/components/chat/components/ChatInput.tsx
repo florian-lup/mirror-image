@@ -4,52 +4,10 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { HiSpeakerWave } from "react-icons/hi2";
 import { PiPaperPlaneFill, PiMicrophoneFill, PiStopCircleBold } from "react-icons/pi";
 import * as Tooltip from '@radix-ui/react-tooltip';
-
-interface ChatInputProps {
-  onSendMessage: (message: string) => void;
-  onStop: () => void;
-  isLoading: boolean;
-}
-
-// TypeScript declarations for Web Speech API
-interface SpeechRecognitionEvent extends Event {
-  results: SpeechRecognitionResultList;
-}
-
-interface SpeechRecognitionResultList {
-  length: number;
-  item(index: number): SpeechRecognitionResult;
-  [index: number]: SpeechRecognitionResult;
-}
-
-interface SpeechRecognitionResult {
-  isFinal: boolean;
-  length: number;
-  item(index: number): SpeechRecognitionAlternative;
-  [index: number]: SpeechRecognitionAlternative;
-}
-
-interface SpeechRecognitionAlternative {
-  transcript: string;
-  confidence: number;
-}
-
-interface SpeechRecognition extends EventTarget {
-  continuous: boolean;
-  interimResults: boolean;
-  lang: string;
-  onresult: (event: SpeechRecognitionEvent) => void;
-  onend: () => void;
-  start: () => void;
-  stop: () => void;
-}
-
-declare global {
-  interface Window {
-    SpeechRecognition?: new () => SpeechRecognition;
-    webkitSpeechRecognition?: new () => SpeechRecognition;
-  }
-}
+import { 
+  ChatInputProps, 
+  SpeechRecognition, 
+} from '@/types/chat';
 
 export default function ChatInput({ onSendMessage, onStop, isLoading }: ChatInputProps) {
   const [inputMessage, setInputMessage] = useState('');

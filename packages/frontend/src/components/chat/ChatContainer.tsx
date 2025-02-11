@@ -3,13 +3,7 @@
 import { useState, useRef } from 'react';
 import ChatInput from './components/ChatInput';
 import ChatMessages from './components/ChatMessages';
-
-interface Message {
-  id: string;
-  content: string;
-  sender: 'user' | 'assistant';
-  timestamp: Date;
-}
+import { Message } from '@/types/chat';
 
 export default function Chat() {
   const [messages, setMessages] = useState<Message[]>([]);

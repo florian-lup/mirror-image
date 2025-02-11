@@ -2,18 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import Image from 'next/image';
-
-interface Message {
-  id: string;
-  content: string;
-  sender: 'user' | 'assistant';
-  timestamp: Date;
-}
-
-interface ChatMessagesProps {
-  messages: Message[];
-  isLoading?: boolean;
-}
+import { ChatMessagesProps } from '@/types/chat';
 
 export default function ChatMessages({ messages, isLoading }: ChatMessagesProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
