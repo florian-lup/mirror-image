@@ -5,19 +5,25 @@ import { FaEnvelope, FaSquareXTwitter } from 'react-icons/fa6';
 export default function LandingPage() {
   return (
     <div className="min-h-screen flex flex-col bg-[var(--background)] text-[var(--foreground)] relative">
-      {/* Subtle background effects */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-50/5 via-transparent to-green-50/5 dark:from-blue-900/5 dark:to-green-900/5" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(0,0,255,0.02),transparent_40%),radial-gradient(circle_at_70%_50%,rgba(0,255,0,0.02),transparent_40%)]" />
+      {/* Subtle background tint */}
+      <div className="absolute inset-0 bg-blue-50/50 dark:bg-blue-950/10" />
       
       {/* Tech-inspired background pattern with fade */}
       <div className="absolute inset-0">
+        {/* Grid pattern */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[var(--background)] via-transparent to-[var(--background)]" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[var(--background)] via-transparent to-[var(--background)]" />
+        
+        {/* Vertical fade masks */}
+        <div className="absolute inset-y-0 left-0 w-[20vw] bg-gradient-to-r from-[var(--background)] to-transparent" />
+        <div className="absolute inset-y-0 right-0 w-[20vw] bg-gradient-to-l from-[var(--background)] to-transparent" />
+        
+        {/* Horizontal fade masks */}
+        <div className="absolute inset-x-0 top-0 h-[20vh] bg-gradient-to-b from-[var(--background)] to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-[20vh] bg-gradient-to-t from-[var(--background)] to-transparent" />
       </div>
 
       {/* Header */}
-      <header className="relative z-10 w-full px-4 py-6 flex justify-between items-center border-b border-gray-200/10">
+      <header className="relative z-10 w-full px-4 py-3 flex justify-between items-center border-b border-gray-200/10">
         <div className="flex items-center gap-2">
           <Image
             src="/mirror-image.svg"
@@ -116,19 +122,17 @@ export default function LandingPage() {
       </main>
 
       {/* Footer */}
-      <footer className="relative z-10 w-full px-4 py-6 border-t border-gray-200/10">
-        <div className="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
-          <div className="text-sm text-gray-600 dark:text-gray-400">
-            © {new Date().getFullYear()} Mirror Image. All rights reserved.
-          </div>
-          <div className="flex gap-6 text-sm text-gray-600 dark:text-gray-400">
-            <Link href="/privacy" className="hover:text-gray-800 dark:hover:text-gray-200 transition-colors">
-              Privacy Policy
-            </Link>
-            <Link href="/terms" className="hover:text-gray-800 dark:hover:text-gray-200 transition-colors">
-              Terms of Service
-            </Link>
-          </div>
+      <footer className="relative z-10 w-full px-4 py-3 flex justify-between items-center border-t border-gray-200/10">
+        <div className="text-sm text-gray-600 dark:text-gray-400">
+          © {new Date().getFullYear()} Mirror Image
+        </div>
+        <div className="flex items-center gap-6 text-sm text-gray-600 dark:text-gray-400">
+          <Link href="/privacy" className="hover:text-gray-800 dark:hover:text-gray-200 transition-colors">
+            Privacy
+          </Link>
+          <Link href="/terms" className="hover:text-gray-800 dark:hover:text-gray-200 transition-colors">
+            Terms
+          </Link>
         </div>
       </footer>
     </div>
