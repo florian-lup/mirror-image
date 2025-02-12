@@ -166,13 +166,78 @@ export default function LandingPage() {
           </div>
 
           {/* Project Description */}
-          <div className="space-y-6 relative">
-            <div className="prose dark:prose-invert mx-auto">
-              <p className="text-xl leading-relaxed max-w-2xl mx-auto">
-                Mirror Image is a cutting-edge research project that enables you to create
-                AI clones of yourself, preserving your thoughts, mannerisms, and communication style
-                in a digital format.
-              </p>
+          <div className="space-y-12 relative">
+            {/* Top border with gradient */}
+            <div className="rounded-2xl bg-gradient-to-r from-blue-600/10 via-blue-400/10 to-green-400/10 p-[1px] mb-12 max-w-4xl mx-auto">
+              <div className="bg-white/[0.02] dark:bg-gray-900/[0.02] backdrop-blur-[2px] h-0" />
+            </div>
+
+            <div className="max-w-4xl mx-auto">
+              <div className="relative rounded-2xl bg-gradient-to-r from-blue-600/10 via-blue-400/10 to-green-400/10 p-[1px]">
+                <div className="relative bg-background-light/50 dark:bg-background-dark/50 rounded-2xl border border-blue-400/10">
+                  <p className="text-xl leading-relaxed px-8 py-6 text-foreground-light/90 dark:text-foreground-dark/90 font-geist-sans text-center">
+                    Mirror Image enables you to create interactive AI clones of yourself, preserving your thoughts, memories, and communication style
+                    in a digital format.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Feature Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+              {/* Multimodal Interactions Card */}
+              <div className="group relative h-full">
+                <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-blue-600/20 to-green-400/20 group-hover:from-blue-600/30 group-hover:to-green-400/30 transition-all duration-300" />
+                <div className="relative h-full bg-background-light/50 dark:bg-background-dark/50 p-6 rounded-2xl border border-blue-400/10 flex flex-col items-center">
+                  <div className="h-12 w-12 rounded-xl bg-gradient-to-r from-blue-600/10 to-green-400/10 flex items-center justify-center mb-4">
+                    <svg className="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2 font-chakra-petch bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-green-400 text-center">
+                    Multimodal Interactions
+                  </h3>
+                  <p className="text-foreground-light/80 dark:text-foreground-dark/80 flex-grow text-center">
+                    Experience voice and video avatars that speak with your voice, featuring realistic lip-syncing and natural gestures.
+                  </p>
+                </div>
+              </div>
+
+              {/* Emotional Depth Card */}
+              <div className="group relative h-full">
+                <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-blue-600/20 to-green-400/20 group-hover:from-blue-600/30 group-hover:to-green-400/30 transition-all duration-300" />
+                <div className="relative h-full bg-background-light/50 dark:bg-background-dark/50 p-6 rounded-2xl border border-blue-400/10 flex flex-col items-center">
+                  <div className="h-12 w-12 rounded-xl bg-gradient-to-r from-blue-600/10 to-green-400/10 flex items-center justify-center mb-4">
+                    <svg className="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2 font-chakra-petch bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-green-400 text-center">
+                    Emotional Depth
+                  </h3>
+                  <p className="text-foreground-light/80 dark:text-foreground-dark/80 flex-grow text-center">
+                    Your AI clone learns and grows with you, capturing quirks, flaws, and inside jokes, not just facts and information.
+                  </p>
+                </div>
+              </div>
+
+              {/* Ownership Control Card */}
+              <div className="group relative h-full">
+                <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-blue-600/20 to-green-400/20 group-hover:from-blue-600/30 group-hover:to-green-400/30 transition-all duration-300" />
+                <div className="relative h-full bg-background-light/50 dark:bg-background-dark/50 p-6 rounded-2xl border border-blue-400/10 flex flex-col items-center">
+                  <div className="h-12 w-12 rounded-xl bg-gradient-to-r from-blue-600/10 to-green-400/10 flex items-center justify-center mb-4">
+                    <svg className="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2 font-chakra-petch bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-green-400 text-center">
+                    Full Ownership
+                  </h3>
+                  <p className="text-foreground-light/80 dark:text-foreground-dark/80 flex-grow text-center">
+                    Maintain complete control over your data, training process, and access rights to your digital self.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
