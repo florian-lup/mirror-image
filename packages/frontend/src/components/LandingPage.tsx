@@ -1,8 +1,14 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { FaEnvelope, FaSquareXTwitter } from 'react-icons/fa6';
+import { useState } from 'react';
+import * as Tooltip from '@radix-ui/react-tooltip';
 
 export default function LandingPage() {
+  const [isDisclaimerAccepted, setIsDisclaimerAccepted] = useState(false);
+
   return (
     <div className="min-h-screen flex flex-col bg-[var(--background)] text-[var(--foreground)] relative">
       {/* Subtle background tint */}
@@ -30,9 +36,8 @@ export default function LandingPage() {
             alt="Mirror Image Logo"
             width={32}
             height={32}
-            className="opacity-90"
           />
-          <span className="font-chakra-petch font-semibold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-green-400">
+          <span className="font-chakra-petch font-semibold dark:text-gray-300">
             Mirror Image
           </span>
         </div>
@@ -61,25 +66,121 @@ export default function LandingPage() {
         <div className="max-w-4xl w-full space-y-16 text-center relative z-10">
           {/* Hero Section */}
           <div className="space-y-8">
-            <div className="flex justify-center mb-6">
-              <Image
-                src="/mirror-image.svg"
-                alt="Mirror Image Logo"
-                width={80}
-                height={80}
-                className="opacity-90"
-              />
-            </div>
-            <h1 className="text-6xl font-bold font-chakra-petch bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-green-400">
-              Mirror Image
-            </h1>
-            <p className="text-2xl text-gray-600 dark:text-gray-300 font-geist-sans">
-              Create AI-powered digital replicas of yourself
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-green-400 text-xl font-bold font-chakra-petch">
+              Immortality 2.0
+            </span>
+            <p className="text-7xl font-bold text-gray-600 dark:text-gray-300 font-geist-sans">
+              Live Forever as Your Digital Self
             </p>
           </div>
 
+          {/* Disclaimer */}
+          <div className="relative">
+            <div className="p-[1px] rounded-2xl bg-gradient-to-r from-blue-600/20 via-blue-400/20 to-green-400/20">
+              <div className="bg-white/5 dark:bg-gray-800/50 backdrop-blur-xl p-8 rounded-2xl border-t border-blue-200/10 text-left">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="h-2 w-2 rounded-full bg-blue-500 animate-pulse" />
+                  <h2 className="text-2xl font-semibold font-chakra-petch bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-green-400">
+                    Important Disclaimer
+                  </h2>
+                </div>
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
+                  This is a research project intended for ethical and educational purposes only.
+                  We strictly prohibit any malicious use, impersonation, or misrepresentation.
+                  By using this platform, you agree to use it responsibly and in accordance with all
+                  applicable laws and regulations.
+                </p>
+                <button
+                  onClick={() => setIsDisclaimerAccepted(true)}
+                  className={`w-full py-3.5 px-6 rounded-xl font-medium transition-colors duration-300 ${
+                    isDisclaimerAccepted
+                      ? 'bg-green-400/10 text-green-400 border border-green-400/20'
+                      : 'bg-gradient-to-r from-blue-600/20 to-green-400/20 hover:from-blue-600/30 hover:to-green-400/30 text-gray-700 dark:text-gray-200 border border-blue-400/20'
+                  }`}
+                  disabled={isDisclaimerAccepted}
+                >
+                  {isDisclaimerAccepted ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      Disclaimer Accepted
+                    </span>
+                  ) : (
+                    'I Accept the Disclaimer'
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* CTA Buttons */}
+          <div className="pt-8 flex items-center justify-center gap-4">
+            <Tooltip.Provider delayDuration={0}>
+              <Tooltip.Root>
+                <Tooltip.Trigger asChild>
+                  <Link
+                    href={isDisclaimerAccepted ? "/chat" : "#"}
+                    className={`group relative inline-block font-geist-sans ${!isDisclaimerAccepted ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    onClick={(e) => !isDisclaimerAccepted && e.preventDefault()}
+                    aria-disabled={!isDisclaimerAccepted}
+                  >
+                    <div className={`absolute -inset-1 rounded-lg bg-gradient-to-r from-blue-600 to-green-400 ${isDisclaimerAccepted ? 'opacity-70 group-hover:opacity-100' : 'opacity-30'} transition-opacity duration-200`} />
+                    <div className={`relative rounded-lg bg-[var(--background)] px-12 py-4 transition-all duration-200 ${isDisclaimerAccepted ? 'group-hover:scale-[0.98] group-hover:translate-y-0.5' : ''}`}>
+                      <span className="relative bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-green-400 text-lg font-semibold">
+                        Start Chatting
+                      </span>
+                    </div>
+                  </Link>
+                </Tooltip.Trigger>
+                {!isDisclaimerAccepted && (
+                  <Tooltip.Portal>
+                    <Tooltip.Content
+                      className="bg-white text-gray-900 px-3 py-1.5 rounded-md text-sm"
+                      sideOffset={5}
+                    >
+                      Please accept the disclaimer first
+                      <Tooltip.Arrow className="fill-white" />
+                    </Tooltip.Content>
+                  </Tooltip.Portal>
+                )}
+              </Tooltip.Root>
+            </Tooltip.Provider>
+
+            <Tooltip.Provider delayDuration={0}>
+              <Tooltip.Root>
+                <Tooltip.Trigger asChild>
+                  <Link
+                    href={isDisclaimerAccepted ? "/waitlist" : "#"}
+                    className={`group relative inline-block font-geist-sans ${!isDisclaimerAccepted ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    onClick={(e) => !isDisclaimerAccepted && e.preventDefault()}
+                    aria-disabled={!isDisclaimerAccepted}
+                  >
+                    <div className={`absolute -inset-1 rounded-lg bg-gradient-to-r from-blue-600/20 to-green-400/20 ${isDisclaimerAccepted ? 'opacity-70 group-hover:opacity-100' : 'opacity-30'} transition-opacity duration-200`} />
+                    <div className={`relative rounded-lg border border-blue-400/20 px-12 py-4 transition-all duration-200 ${isDisclaimerAccepted ? 'group-hover:scale-[0.98] group-hover:translate-y-0.5' : ''}`}>
+                      <span className="relative text-gray-700 dark:text-gray-200 text-lg font-semibold">
+                        Join Waitlist
+                      </span>
+                    </div>
+                  </Link>
+                </Tooltip.Trigger>
+                {!isDisclaimerAccepted && (
+                  <Tooltip.Portal>
+                    <Tooltip.Content
+                      className="bg-white text-gray-900 px-3 py-1.5 rounded-md text-sm"
+                      sideOffset={5}
+                    >
+                      Please accept the disclaimer first
+                      <Tooltip.Arrow className="fill-white" />
+                    </Tooltip.Content>
+                  </Tooltip.Portal>
+                )}
+              </Tooltip.Root>
+            </Tooltip.Provider>
+          </div>
+
           {/* Project Description */}
-          <div className="space-y-6">
+          <div className="space-y-6 relative">
             <div className="prose dark:prose-invert mx-auto">
               <p className="text-xl leading-relaxed max-w-2xl mx-auto">
                 Mirror Image is a cutting-edge research project that enables you to create
@@ -87,36 +188,6 @@ export default function LandingPage() {
                 in a digital format.
               </p>
             </div>
-          </div>
-
-          {/* Disclaimer */}
-          <div className="relative">
-            <div className="bg-white/10 dark:bg-gray-800/50 backdrop-blur-lg p-8 rounded-xl max-w-2xl mx-auto border border-blue-200/20">
-              <h2 className="text-2xl font-semibold mb-4 font-chakra-petch bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-green-400">
-                Important Disclaimer
-              </h2>
-              <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                This is a research project intended for ethical and educational purposes only.
-                We strictly prohibit any malicious use, impersonation, or misrepresentation.
-                By using this platform, you agree to use it responsibly and in accordance with all
-                applicable laws and regulations.
-              </p>
-            </div>
-          </div>
-
-          {/* CTA Button */}
-          <div className="pt-8">
-            <Link
-              href="/chat"
-              className="group relative inline-block font-geist-sans"
-            >
-              <div className="absolute -inset-1 rounded-lg bg-gradient-to-r from-blue-600 to-green-400 opacity-70 group-hover:opacity-100 transition-opacity duration-200" />
-              <div className="relative rounded-lg bg-[var(--background)] px-12 py-4 transition-all duration-200 group-hover:translate-x-1 group-hover:translate-y-1">
-                <span className="relative bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-green-400 text-lg font-semibold">
-                  Start Chatting
-                </span>
-              </div>
-            </Link>
           </div>
         </div>
       </main>
