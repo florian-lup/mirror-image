@@ -42,24 +42,8 @@ export default function LandingPage() {
             Mirror Image
           </span>
         </div>
-        <nav className="flex items-center gap-6">
+        <nav className="flex items-center">
           <ThemeToggle />
-          <a 
-            href="mailto:contact@mirror-image.com"
-            className="text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
-            aria-label="Email us"
-          >
-            <FaEnvelope className="w-5 h-5" />
-          </a>
-          <a 
-            href="https://twitter.com/mirror_image"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
-            aria-label="Follow us on Twitter"
-          >
-            <FaSquareXTwitter className="w-5 h-5" />
-          </a>
         </nav>
       </header>
 
@@ -195,17 +179,73 @@ export default function LandingPage() {
       </main>
 
       {/* Footer */}
-      <footer className="relative z-10 w-full px-4 py-3 flex justify-between items-center border-t border-gray-200/10">
-        <div className="text-sm text-foreground-light dark:text-foreground-dark">
-          © {new Date().getFullYear()} Mirror Image
-        </div>
-        <div className="flex items-center gap-6 text-sm text-foreground-light dark:text-foreground-dark">
-          <Link href="/privacy" className="hover:text-gray-800 dark:hover:text-gray-200 transition-colors">
-            Privacy
-          </Link>
-          <Link href="/terms" className="hover:text-gray-800 dark:hover:text-gray-200 transition-colors">
-            Terms
-          </Link>
+      <footer className="relative z-10 w-full px-6 py-8 mt-auto">
+        <div className="max-w-7xl mx-auto">
+          {/* Top border with gradient */}
+          <div className="rounded-2xl bg-gradient-to-r from-blue-600/10 via-blue-400/10 to-green-400/10 p-[1px] mb-8">
+            <div className="bg-white/[0.02] dark:bg-gray-900/[0.02] backdrop-blur-[2px] h-0" />
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-8 md:gap-16">
+            {/* Company Info */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <Image
+                  src="/mirror-image.svg"
+                  alt="Mirror Image Logo"
+                  width={24}
+                  height={24}
+                  className="opacity-80"
+                />
+                <span className="font-chakra-petch font-bold text-sm text-foreground-light/80 dark:text-foreground-dark/80">
+                  Mirror Image
+                </span>
+              </div>
+              <p className="text-sm text-foreground-light/60 dark:text-foreground-dark/60">
+                © {new Date().getFullYear()} Mirror Image. All rights reserved.
+              </p>
+            </div>
+
+            {/* Quick Links */}
+            <div className="space-y-4">
+              <h3 className="font-chakra-petch text-sm font-semibold text-foreground-light/80 dark:text-foreground-dark/80 text-center">
+                Quick Links
+              </h3>
+              <div className="flex gap-6 items-center justify-center">
+                <Link href="/privacy" className="text-sm text-foreground-light/60 dark:text-foreground-dark/60 hover:text-foreground-light dark:hover:text-foreground-dark transition-colors">
+                  Privacy
+                </Link>
+                <Link href="/terms" className="text-sm text-foreground-light/60 dark:text-foreground-dark/60 hover:text-foreground-light dark:hover:text-foreground-dark transition-colors">
+                  Terms
+                </Link>
+              </div>
+            </div>
+
+            {/* Connect */}
+            <div className="space-y-4 md:flex md:flex-col md:items-end">
+              <h3 className="font-chakra-petch text-sm font-semibold text-foreground-light/80 dark:text-foreground-dark/80 md:text-right">
+                Connect
+              </h3>
+              <div className="flex gap-4 justify-center md:justify-end">
+                <a 
+                  href="mailto:contact@mirror-image.com"
+                  className="text-foreground-light/60 dark:text-foreground-dark/60 hover:text-foreground-light dark:hover:text-foreground-dark transition-colors"
+                  aria-label="Email us"
+                >
+                  <FaEnvelope className="w-5 h-5" />
+                </a>
+                <a 
+                  href="https://twitter.com/mirror_image"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-foreground-light/60 dark:text-foreground-dark/60 hover:text-foreground-light dark:hover:text-foreground-dark transition-colors"
+                  aria-label="Follow us on Twitter"
+                >
+                  <FaSquareXTwitter className="w-5 h-5" />
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </footer>
     </div>
