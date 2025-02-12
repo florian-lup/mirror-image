@@ -101,23 +101,28 @@ export default function LandingPage() {
           </div>
 
           {/* CTA Buttons */}
-          <div className="pt-8 flex items-center justify-center gap-4">
+          <div className="pt-8 flex items-center justify-center gap-8">
             <Tooltip.Provider delayDuration={0}>
               <Tooltip.Root>
                 <Tooltip.Trigger asChild>
-                  <Link
-                    href={isDisclaimerAccepted ? "/chat" : "#"}
-                    className={`group relative inline-block font-geist-sans ${!isDisclaimerAccepted ? 'opacity-50 cursor-not-allowed' : ''}`}
-                    onClick={(e) => !isDisclaimerAccepted && e.preventDefault()}
-                    aria-disabled={!isDisclaimerAccepted}
-                  >
-                    <div className={`absolute -inset-1 rounded-lg bg-gradient-to-r from-blue-600/80 to-green-400/80 ${isDisclaimerAccepted ? 'opacity-70 group-hover:opacity-100' : 'opacity-30'} transition-opacity duration-200`} />
-                    <div className={`relative rounded-lg bg-background-light dark:bg-background-dark px-12 py-4 transition-all duration-200 ${isDisclaimerAccepted ? 'group-hover:scale-[0.98] group-hover:translate-y-0.5' : ''}`}>
-                      <span className="relative bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-green-400 font-semibold text-lg">
-                        Start Chatting
-                      </span>
-                    </div>
-                  </Link>
+                  <div className="flex flex-col items-center gap-2">
+                    <Link
+                      href={isDisclaimerAccepted ? "/chat" : "#"}
+                      className={`group relative inline-block font-geist-sans ${!isDisclaimerAccepted ? 'opacity-50 cursor-not-allowed' : ''}`}
+                      onClick={(e) => !isDisclaimerAccepted && e.preventDefault()}
+                      aria-disabled={!isDisclaimerAccepted}
+                    >
+                      <div className={`absolute -inset-1 rounded-lg bg-gradient-to-r from-blue-600/80 to-green-400/80 ${isDisclaimerAccepted ? 'opacity-70 group-hover:opacity-100' : 'opacity-30'} transition-opacity duration-200`} />
+                      <div className={`relative rounded-lg bg-background-light dark:bg-background-dark px-16 py-3 transition-all duration-200 ${isDisclaimerAccepted ? 'group-hover:scale-[0.98] group-hover:translate-y-0.5' : ''}`}>
+                        <span className="relative bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-green-400 font-semibold text-lg">
+                          Chat Now
+                        </span>
+                      </div>
+                    </Link>
+                    <p className="text-sm text-foreground-light/60 dark:text-foreground-dark/60">
+                      One-on-one chat with president Trump
+                    </p>
+                  </div>
                 </Tooltip.Trigger>
                 {!isDisclaimerAccepted && (
                   <Tooltip.Portal>
@@ -136,19 +141,24 @@ export default function LandingPage() {
             <Tooltip.Provider delayDuration={0}>
               <Tooltip.Root>
                 <Tooltip.Trigger asChild>
-                  <Link
-                    href={isDisclaimerAccepted ? "/waitlist" : "#"}
-                    className={`group relative inline-block font-geist-sans ${!isDisclaimerAccepted ? 'opacity-50 cursor-not-allowed' : ''}`}
-                    onClick={(e) => !isDisclaimerAccepted && e.preventDefault()}
-                    aria-disabled={!isDisclaimerAccepted}
-                  >
-                    <div className={`absolute -inset-1 rounded-lg bg-gradient-to-r from-blue-600/15 to-green-400/15 ${isDisclaimerAccepted ? 'opacity-70 group-hover:opacity-100' : 'opacity-30'} transition-opacity duration-200`} />
-                    <div className={`relative rounded-lg bg-background-light/50 dark:bg-background-dark/50 border border-blue-400/20 px-12 py-4 transition-all duration-200 ${isDisclaimerAccepted ? 'group-hover:scale-[0.98] group-hover:translate-y-0.5' : ''}`}>
-                      <span className="relative text-foreground-light/90 dark:text-foreground-dark/90 font-semibold text-lg">
-                        Join Waitlist
-                      </span>
-                    </div>
-                  </Link>
+                  <div className="flex flex-col items-center gap-2">
+                    <Link
+                      href={isDisclaimerAccepted ? "/waitlist" : "#"}
+                      className={`group relative inline-block font-geist-sans ${!isDisclaimerAccepted ? 'opacity-50 cursor-not-allowed' : ''}`}
+                      onClick={(e) => !isDisclaimerAccepted && e.preventDefault()}
+                      aria-disabled={!isDisclaimerAccepted}
+                    >
+                      <div className={`absolute -inset-1 rounded-lg bg-gradient-to-r from-blue-600/15 to-green-400/15 ${isDisclaimerAccepted ? 'opacity-70 group-hover:opacity-100' : 'opacity-30'} transition-opacity duration-200`} />
+                      <div className={`relative rounded-lg bg-background-light/50 dark:bg-background-dark/50 border border-blue-400/20 px-16 py-3 transition-all duration-200 ${isDisclaimerAccepted ? 'group-hover:scale-[0.98] group-hover:translate-y-0.5' : ''}`}>
+                        <span className="relative text-foreground-light/90 dark:text-foreground-dark/90 font-semibold text-lg">
+                          Sign Up
+                        </span>
+                      </div>
+                    </Link>
+                    <p className="text-sm text-foreground-light/60 dark:text-foreground-dark/60">
+                      Join the waitlist to get your mirror image
+                    </p>
+                  </div>
                 </Tooltip.Trigger>
                 {!isDisclaimerAccepted && (
                   <Tooltip.Portal>
