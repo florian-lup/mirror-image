@@ -37,7 +37,7 @@ export default function LandingPage() {
             width={32}
             height={32}
           />
-          <span className="font-chakra-petch font-semibold dark:text-gray-300">
+          <span className="font-chakra-petch font-bold text-gray-600 dark:text-gray-200">
             Mirror Image
           </span>
         </div>
@@ -76,8 +76,8 @@ export default function LandingPage() {
 
           {/* Disclaimer */}
           <div className="relative">
-            <div className="p-[1px] rounded-2xl bg-gradient-to-r from-blue-600/20 via-blue-400/20 to-green-400/20">
-              <div className="bg-white/5 dark:bg-gray-800/50 backdrop-blur-xl p-8 rounded-2xl border-t border-blue-200/10 text-left">
+            <div className="rounded-2xl bg-gradient-to-r from-blue-600/10 via-blue-400/10 to-green-400/10 p-[1px]">
+              <div className="bg-white/[0.02] dark:bg-gray-900/[0.02] backdrop-blur-[2px] p-8 rounded-2xl border border-blue-400/10 text-left">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="h-2 w-2 rounded-full bg-blue-500 animate-pulse" />
                   <h2 className="text-2xl font-semibold font-chakra-petch bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-green-400">
