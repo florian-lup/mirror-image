@@ -5,12 +5,13 @@ import Image from 'next/image';
 import { FaEnvelope, FaSquareXTwitter } from 'react-icons/fa6';
 import { useState } from 'react';
 import * as Tooltip from '@radix-ui/react-tooltip';
+import { ThemeToggle } from './theme';
 
 export default function LandingPage() {
   const [isDisclaimerAccepted, setIsDisclaimerAccepted] = useState(false);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[var(--background)] text-[var(--foreground)] relative">
+    <div className="min-h-screen flex flex-col bg-background-light dark:bg-background-dark text-foreground-light dark:text-foreground-dark relative">
       {/* Subtle background tint */}
       <div className="absolute inset-0 bg-blue-50/50 dark:bg-blue-950/10" />
       
@@ -20,16 +21,16 @@ export default function LandingPage() {
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
         
         {/* Vertical fade masks */}
-        <div className="absolute inset-y-0 left-0 w-[20vw] bg-gradient-to-r from-[var(--background)] to-transparent" />
-        <div className="absolute inset-y-0 right-0 w-[20vw] bg-gradient-to-l from-[var(--background)] to-transparent" />
+        <div className="absolute inset-y-0 left-0 w-[20vw] bg-gradient-to-r from-background-light dark:from-background-dark to-transparent" />
+        <div className="absolute inset-y-0 right-0 w-[20vw] bg-gradient-to-l from-background-light dark:from-background-dark to-transparent" />
         
         {/* Horizontal fade masks */}
-        <div className="absolute inset-x-0 top-0 h-[20vh] bg-gradient-to-b from-[var(--background)] to-transparent" />
-        <div className="absolute inset-x-0 bottom-0 h-[20vh] bg-gradient-to-t from-[var(--background)] to-transparent" />
+        <div className="absolute inset-x-0 top-0 h-[20vh] bg-gradient-to-b from-background-light dark:from-background-dark to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-[20vh] bg-gradient-to-t from-background-light dark:from-background-dark to-transparent" />
       </div>
 
       {/* Header */}
-      <header className="relative z-10 w-full px-4 py-3 flex justify-between items-center border-b border-gray-200/10">
+      <header className="relative z-10 w-full px-4 py-3 flex justify-between items-center">
         <div className="flex items-center gap-2">
           <Image
             src="/mirror-image.svg"
@@ -37,11 +38,12 @@ export default function LandingPage() {
             width={32}
             height={32}
           />
-          <span className="font-chakra-petch font-bold text-gray-600 dark:text-gray-200">
+          <span className="font-chakra-petch font-bold text-foreground-light dark:text-foreground-dark">
             Mirror Image
           </span>
         </div>
         <nav className="flex items-center gap-6">
+          <ThemeToggle />
           <a 
             href="mailto:contact@mirror-image.com"
             className="text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
@@ -69,7 +71,7 @@ export default function LandingPage() {
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-green-400 text-xl font-bold font-chakra-petch">
               Immortality 2.0
             </span>
-            <p className="text-7xl font-bold text-gray-600 dark:text-gray-300 font-geist-sans">
+            <p className="text-7xl font-bold text-foreground-light dark:text-foreground-dark font-geist-sans">
               Live Forever as Your Digital Self
             </p>
           </div>
@@ -125,9 +127,9 @@ export default function LandingPage() {
                     onClick={(e) => !isDisclaimerAccepted && e.preventDefault()}
                     aria-disabled={!isDisclaimerAccepted}
                   >
-                    <div className={`absolute -inset-1 rounded-lg bg-gradient-to-r from-blue-600 to-green-400 ${isDisclaimerAccepted ? 'opacity-70 group-hover:opacity-100' : 'opacity-30'} transition-opacity duration-200`} />
-                    <div className={`relative rounded-lg bg-[var(--background)] px-12 py-4 transition-all duration-200 ${isDisclaimerAccepted ? 'group-hover:scale-[0.98] group-hover:translate-y-0.5' : ''}`}>
-                      <span className="relative bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-green-400 text-lg font-semibold">
+                    <div className={`absolute -inset-1 rounded-lg bg-gradient-to-r from-blue-600/80 to-green-400/80 ${isDisclaimerAccepted ? 'opacity-70 group-hover:opacity-100' : 'opacity-30'} transition-opacity duration-200`} />
+                    <div className={`relative rounded-lg bg-background-light dark:bg-background-dark px-12 py-4 transition-all duration-200 ${isDisclaimerAccepted ? 'group-hover:scale-[0.98] group-hover:translate-y-0.5' : ''}`}>
+                      <span className="relative bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-green-400 font-semibold text-lg">
                         Start Chatting
                       </span>
                     </div>
@@ -156,9 +158,9 @@ export default function LandingPage() {
                     onClick={(e) => !isDisclaimerAccepted && e.preventDefault()}
                     aria-disabled={!isDisclaimerAccepted}
                   >
-                    <div className={`absolute -inset-1 rounded-lg bg-gradient-to-r from-blue-600/20 to-green-400/20 ${isDisclaimerAccepted ? 'opacity-70 group-hover:opacity-100' : 'opacity-30'} transition-opacity duration-200`} />
-                    <div className={`relative rounded-lg border border-blue-400/20 px-12 py-4 transition-all duration-200 ${isDisclaimerAccepted ? 'group-hover:scale-[0.98] group-hover:translate-y-0.5' : ''}`}>
-                      <span className="relative text-gray-700 dark:text-gray-200 text-lg font-semibold">
+                    <div className={`absolute -inset-1 rounded-lg bg-gradient-to-r from-blue-600/15 to-green-400/15 ${isDisclaimerAccepted ? 'opacity-70 group-hover:opacity-100' : 'opacity-30'} transition-opacity duration-200`} />
+                    <div className={`relative rounded-lg bg-background-light/50 dark:bg-background-dark/50 border border-blue-400/20 px-12 py-4 transition-all duration-200 ${isDisclaimerAccepted ? 'group-hover:scale-[0.98] group-hover:translate-y-0.5' : ''}`}>
+                      <span className="relative text-foreground-light/90 dark:text-foreground-dark/90 font-semibold text-lg">
                         Join Waitlist
                       </span>
                     </div>
@@ -194,10 +196,10 @@ export default function LandingPage() {
 
       {/* Footer */}
       <footer className="relative z-10 w-full px-4 py-3 flex justify-between items-center border-t border-gray-200/10">
-        <div className="text-sm text-gray-600 dark:text-gray-400">
+        <div className="text-sm text-foreground-light dark:text-foreground-dark">
           © {new Date().getFullYear()} Mirror Image
         </div>
-        <div className="flex items-center gap-6 text-sm text-gray-600 dark:text-gray-400">
+        <div className="flex items-center gap-6 text-sm text-foreground-light dark:text-foreground-dark">
           <Link href="/privacy" className="hover:text-gray-800 dark:hover:text-gray-200 transition-colors">
             Privacy
           </Link>
