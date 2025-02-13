@@ -250,6 +250,57 @@ export default function LandingPage() {
               </div>
             </div>
           </div>
+
+          {/* Technical Specs */}
+          <div className="space-y-8 sm:space-y-12 relative">
+            {/* Top border with gradient */}
+            <div className="rounded-2xl bg-gradient-to-r from-blue-600/10 via-blue-400/10 to-green-400/10 p-[1px] mb-8 sm:mb-12 max-w-4xl mx-auto">
+              <div className="bg-white/[0.02] dark:bg-gray-900/[0.02] backdrop-blur-[2px] h-0" />
+            </div>
+
+            {/* Technical Overview */}
+            <div className="max-w-4xl mx-auto px-4 sm:px-0">
+              <div className="relative rounded-2xl bg-gradient-to-r from-blue-600/10 via-blue-400/10 to-green-400/10 p-[1px]">
+                <div className="relative bg-background-light/50 dark:bg-background-dark/50 rounded-2xl border border-blue-400/10 p-6 sm:p-8">
+                  <h2 className="text-2xl sm:text-3xl font-bold mb-6 font-chakra-petch bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-green-400 text-center">
+                    Technical Specifications
+                  </h2>
+                  <p className="text-lg sm:text-xl leading-relaxed text-foreground-light/90 dark:text-foreground-dark/90 font-geist-sans text-center mb-8">
+                    Your mirror image is an autonomous agent that can learn and grow just like a normal person
+                  </p>
+
+                  {/* Technical Features Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Dynamic Memory */}
+                    <div className="group relative">
+                      <div className="absolute -inset-1 rounded-xl bg-gradient-to-r from-blue-600/20 to-green-400/20 group-hover:from-blue-600/30 group-hover:to-green-400/30 transition-all duration-300" />
+                      <div className="relative h-full bg-background-light/50 dark:bg-background-dark/50 p-6 sm:p-8 rounded-xl border border-blue-400/10">
+                        <h3 className="text-lg font-semibold mb-2 font-chakra-petch bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-green-400">
+                          Dynamic Memory
+                        </h3>
+                        <p className="text-sm text-foreground-light/80 dark:text-foreground-dark/80">
+                          Features an advanced neural memory system that continuously evolves through interactions. Your digital self remembers past conversations, learns from new experiences, and adapts its responses based on accumulated context, creating an ever-growing personal knowledge base that becomes more refined over time.
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Research Capabilities */}
+                    <div className="group relative">
+                      <div className="absolute -inset-1 rounded-xl bg-gradient-to-r from-blue-600/20 to-green-400/20 group-hover:from-blue-600/30 group-hover:to-green-400/30 transition-all duration-300" />
+                      <div className="relative h-full bg-background-light/50 dark:bg-background-dark/50 p-6 sm:p-8 rounded-xl border border-blue-400/10">
+                        <h3 className="text-lg font-semibold mb-2 font-chakra-petch bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-green-400">
+                          Research Capabilities
+                        </h3>
+                        <p className="text-sm text-foreground-light/80 dark:text-foreground-dark/80">
+                          Equipped with autonomous research abilities to stay current and expand knowledge. Your digital self can analyze information from various sources, form connections between different topics, and integrate new insights with existing knowledge, ensuring responses are always well-informed and up-to-date.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
 
