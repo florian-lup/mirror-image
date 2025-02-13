@@ -208,7 +208,7 @@ export default function LandingPage() {
                     Multimodal Interactions
                   </h3>
                   <p className="text-sm sm:text-base text-foreground-light/80 dark:text-foreground-dark/80 flex-grow text-center">
-                    Experience audio and video avatars that speak with your realistic lip-syncing voice.
+                    Experience text, audio and video avatars that speak with your voice and style.
                   </p>
                 </div>
               </div>
@@ -226,7 +226,7 @@ export default function LandingPage() {
                     Emotional Depth
                   </h3>
                   <p className="text-sm sm:text-base text-foreground-light/80 dark:text-foreground-dark/80 flex-grow text-center">
-                    Your AI clone learns and grows with you, capturing quirks, flaws, and inside jokes, not just facts.
+                    The AI clone can capture your quirks, flaws, and inside jokes, not just facts.
                   </p>
                 </div>
               </div>
@@ -244,7 +244,7 @@ export default function LandingPage() {
                     Full Ownership
                   </h3>
                   <p className="text-sm sm:text-base text-foreground-light/80 dark:text-foreground-dark/80 flex-grow text-center">
-                    Maintain complete control over your data, training process, and access rights to your digital self.
+                    Maintain complete control over your data and access rights to your digital self.
                   </p>
                 </div>
               </div>
