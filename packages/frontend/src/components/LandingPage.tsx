@@ -270,7 +270,7 @@ export default function LandingPage() {
                   </p>
 
                   {/* Technical Features Grid */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 gap-6">
                     {/* Dynamic Memory */}
                     <div className="group relative">
                       <div className="absolute -inset-1 rounded-xl bg-gradient-to-r from-blue-600/20 to-green-400/20 group-hover:from-blue-600/30 group-hover:to-green-400/30 transition-all duration-300" />
