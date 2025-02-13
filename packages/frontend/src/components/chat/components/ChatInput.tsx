@@ -56,7 +56,7 @@ export default function ChatInput({ onSendMessage, onStop, isLoading }: ChatInpu
   };
 
   return (
-    <div className="px-4 py-4 bg-[#1E1F1F]">
+    <div className="px-4 py-4 pb-6 sm:pb-4 bg-[#1E1F1F]">
       <div className="max-w-2xl mx-auto">
         <form onSubmit={handleSubmit}>
           <div className="flex items-end gap-3 bg-[#343541] rounded-lg px-4 py-3">
