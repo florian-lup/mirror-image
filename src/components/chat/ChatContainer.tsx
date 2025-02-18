@@ -5,12 +5,9 @@ import ChatInput from './components/ChatInput';
 import ChatMessages from './components/ChatMessages';
 import { Message } from '@/types/chat';
 
-type ModelProvider = 'openai' | 'gemini';
-
 export default function Chat() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [modelProvider, setModelProvider] = useState<ModelProvider>('openai');
   const abortControllerRef = useRef<AbortController | null>(null);
 
   const handleStop = () => {
@@ -19,10 +16,6 @@ export default function Chat() {
       abortControllerRef.current = null;
       setIsLoading(false);
     }
-  };
-
-  const handleModelChange = (provider: ModelProvider) => {
-    setModelProvider(provider);
   };
 
   const handleSendMessage = async (content: string) => {
@@ -45,10 +38,7 @@ export default function Chat() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ 
-          message: content,
-          modelProvider 
-        }),
+        body: JSON.stringify({ message: content }),
         signal: abortControllerRef.current.signal
       });
 
@@ -96,28 +86,6 @@ export default function Chat() {
 
   return (
     <div className="flex flex-col h-screen bg-[#1E1F1F] text-white">
-      <div className="flex justify-end p-2 space-x-2 bg-[#2D2E2E]">
-        <button
-          onClick={() => handleModelChange('openai')}
-          className={`px-3 py-1 rounded ${
-            modelProvider === 'openai' 
-              ? 'bg-blue-600 text-white' 
-              : 'bg-[#3D3E3E] text-gray-300'
-          }`}
-        >
-          OpenAI
-        </button>
-        <button
-          onClick={() => handleModelChange('gemini')}
-          className={`px-3 py-1 rounded ${
-            modelProvider === 'gemini' 
-              ? 'bg-blue-600 text-white' 
-              : 'bg-[#3D3E3E] text-gray-300'
-          }`}
-        >
-          Gemini
-        </button>
-      </div>
       <ChatMessages messages={messages} isLoading={isLoading} />
       <ChatInput onSendMessage={handleSendMessage} onStop={handleStop} isLoading={isLoading} />
     </div>
