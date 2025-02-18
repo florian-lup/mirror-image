@@ -24,7 +24,7 @@ const chakraPetch = Chakra_Petch({
 
 export const metadata: Metadata = {
   title: "Mirror Image",
-  description: "Digital copies of your memories",
+  description: "AI clones that preserve your thoughts, memories, and communication style, creating a virtual extension of yourself.",
 };
 
 export default function RootLayout({

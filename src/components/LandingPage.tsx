@@ -185,6 +185,9 @@ export default function LandingPage() {
             <div className="max-w-4xl mx-auto px-4 sm:px-0">
               <div className="relative rounded-2xl bg-gradient-to-r from-blue-600/10 via-blue-400/10 to-green-400/10 p-[1px]">
                 <div className="relative bg-background-light/50 dark:bg-background-dark/50 rounded-2xl border border-blue-400/10">
+                  <h3 className="text-2xl sm:text-3xl font-bold pt-4 sm:pt-6 font-chakra-petch bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-green-400 text-center">
+                    Create a Virtual Extension of Yourself
+                  </h3>
                   <p className="text-lg sm:text-xl leading-relaxed px-4 sm:px-8 py-4 sm:py-6 text-foreground-light/90 dark:text-foreground-dark/90 font-geist-sans text-center">
                     Mirror Image enables you to create interactive AI clones, preserving your thoughts, memories, and communication style
                     in a digital format.
@@ -263,10 +266,10 @@ export default function LandingPage() {
               <div className="relative rounded-2xl bg-gradient-to-r from-blue-600/10 via-blue-400/10 to-green-400/10 p-[1px]">
                 <div className="relative bg-background-light/50 dark:bg-background-dark/50 rounded-2xl border border-blue-400/10 p-6 sm:p-8">
                   <h2 className="text-2xl sm:text-3xl font-bold mb-6 font-chakra-petch bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-green-400 text-center">
-                    Technical Specifications
+                    Autonomous Learning & Growth
                   </h2>
                   <p className="text-lg sm:text-xl leading-relaxed text-foreground-light/90 dark:text-foreground-dark/90 font-geist-sans text-center mb-8">
-                    Your mirror image is an autonomous agent that can learn and grow just like a normal person
+                    Your mirror image is an autonomous agent that can learn and grow just like a normal person. It can use its own knowledge base, as well as the doing internet research.
                   </p>
 
                   {/* Technical Features Grid */}
