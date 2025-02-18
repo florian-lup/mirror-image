@@ -17,7 +17,7 @@ export class DeepResearch {
   static create() {
     return new DynamicStructuredTool({
       name: 'deep_research',
-      description: 'Conduct deep research to get comprehensive, real-time information about current events, facts, or any general knowledge questions. Only use this for current, factual queries, not hypotheticals.',
+      description: 'Conduct deep research to get comprehensive, real-time information about current events and facts. Only use this for current, factual queries, not hypotheticals.',
       schema: DeepResearchSchema,
       func: async (input): Promise<string> => {
         try {

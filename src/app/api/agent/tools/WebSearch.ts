@@ -1,6 +1,6 @@
 import { DynamicStructuredTool } from "@langchain/core/tools";
 import { z } from "zod";
-import { SearchResult, ToolResponse, ToolInput, SerpApiResponse } from "@/types/agent";
+import { ToolResponse, ToolInput } from "@/types/agent";
 
 // Accept either a string or an object with a query property
 const WebSearchSchema = z.union([
@@ -10,14 +10,25 @@ const WebSearchSchema = z.union([
   })
 ]) satisfies z.ZodType<ToolInput>;
 
+interface TavilySearchResult {
+  title: string;
+  url: string;
+  content: string;
+}
+
+interface TavilyResponse {
+  results: TavilySearchResult[];
+  query: string;
+}
+
 /**
- * Tool for searching the web using SERP API to get current information from across the internet
+ * Tool for searching the web using Tavily API to get current information from across the internet
  */
 export class WebSearch {
   static create() {
     return new DynamicStructuredTool({
       name: 'web_search',
-      description: 'Search the web to find current information from websites and news sources. Use this for finding specific facts, news, or information from across the internet.',
+      description: 'Search the web for background information and historical events. Use this tool when you need to find information about past events, company histories, biographical details, or any historical context and background information.',
       schema: WebSearchSchema,
       func: async (input): Promise<string> => {
         try {
@@ -26,41 +37,47 @@ export class WebSearch {
           // Extract query from either string or object input
           const query = typeof parsedInput === 'string' ? parsedInput : parsedInput.query;
 
-          if (!process.env.SERP_API_KEY) {
+          if (!process.env.TAVILY_API_KEY) {
             const errorResponse: ToolResponse = {
               success: false,
-              message: 'SERP API credentials not configured',
+              message: 'Tavily API credentials not configured',
               response: 'Error: Web search service not available'
             };
             return JSON.stringify(errorResponse);
           }
 
-          // Construct the SERP API URL with parameters
-          const params = new URLSearchParams({
-            api_key: process.env.SERP_API_KEY,
-            q: query,
-            num: '5', // Get top 5 results
-            gl: 'us', // Set region to US
-            hl: 'en' // Set language to English
+          const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${process.env.TAVILY_API_KEY}`
+          };
+
+          const fetchResponse = await fetch('https://api.tavily.com/search', {
+            method: 'POST',
+            headers,
+            body: JSON.stringify({
+              query: query,
+              search_depth: "basic",
+              max_results: 5
+            })
           });
-
-          const fetchResponse = await fetch(`https://serpapi.com/search.json?${params.toString()}`);
-
+          
           if (!fetchResponse.ok) {
+            const responseText = await fetchResponse.text();
             const errorResponse: ToolResponse = {
               success: false,
-              message: `Web search error: ${fetchResponse.statusText}`,
-              response: 'Sorry, I encountered an error while searching the web.'
+              message: fetchResponse.status === 401 
+                ? 'Invalid or missing Tavily API key'
+                : `Web search error: ${fetchResponse.statusText}`,
+              response: fetchResponse.status === 401
+                ? 'Error: Please check your Tavily API key configuration.'
+                : 'Sorry, I encountered an error while searching the web.'
             };
             return JSON.stringify(errorResponse);
           }
 
-          const data = await fetchResponse.json() as SerpApiResponse;
+          const data = await fetchResponse.json() as TavilyResponse;
           
-          // Extract organic search results
-          const organicResults = data.organic_results || [];
-          
-          if (organicResults.length === 0) {
+          if (data.results.length === 0) {
             const emptyResponse: ToolResponse = {
               success: false,
               message: 'No search results found',
@@ -70,9 +87,9 @@ export class WebSearch {
           }
 
           // Format the results into a readable summary
-          const formattedResults = organicResults
-            .map((result: SearchResult) => {
-              return `${result.title}\n${result.snippet}\nSource: ${result.link}\n`;
+          const formattedResults = data.results
+            .map((result: TavilySearchResult) => {
+              return `${result.title}\n${result.content}\nSource: ${result.url}\n`;
             })
             .join('\n');
 
