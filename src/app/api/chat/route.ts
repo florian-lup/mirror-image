@@ -12,14 +12,10 @@ export async function POST(req: Request) {
       );
     }
 
-    const stream = await generateChatResponse(message);
+    const response = await generateChatResponse(message);
     
-    // Just pass through the already encoded stream
-    return new Response(stream, {
-      headers: {
-        "Content-Type": "text/plain; charset=utf-8",
-      },
-    });
+    // Return JSON response
+    return NextResponse.json({ response });
   } catch (error) {
     console.error("API route error:", error);
     return NextResponse.json<ErrorResponse>(

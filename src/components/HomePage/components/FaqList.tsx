@@ -1,19 +1,21 @@
 "use client";
 
-interface Question {
-  text: string;
-}
-
 interface FaqListProps {
   onQuestionClick: (question: string) => void;
-  questions: Question[];
 }
 
-export const FaqList: React.FC<FaqListProps> = ({ onQuestionClick, questions }) => {
+const faqQuestions = [
+  { text: "What's your background and experience?" },
+  { text: "What kind of projects have you worked on?" },
+  { text: "What technologies do you specialize in?" },
+  { text: "What are your interests outside of work?" }
+];
+
+export const FaqList: React.FC<FaqListProps> = ({ onQuestionClick }) => {
   return (
     <div className="max-w-2xl mx-auto px-2 sm:px-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 sm:gap-2">
-        {questions.map((question, index) => (
+        {faqQuestions.map((question, index) => (
           <button
             key={index}
             onClick={() => onQuestionClick(question.text)}

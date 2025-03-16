@@ -1,6 +1,5 @@
 import { useState, useCallback, useRef } from 'react';
 import { Message } from '@/types';
-import { streamResponse } from '@/utils/streamResponse';
 
 interface UseChatReturn {
   messages: Message[];
@@ -62,36 +61,18 @@ export const useChat = (): UseChatReturn => {
         throw new Error(data.error || 'Failed to get response');
       }
 
-      let assistantMessage: Message = {
+      // Parse the JSON response
+      const data = await response.json();
+      
+      // Add assistant message
+      const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
-        content: '',
+        content: data.response,
         type: 'assistant',
         timestamp: new Date(),
       };
-
-      // Stream the response and update messages as content arrives
-      await streamResponse(response, (accumulatedContent) => {
-        if (!accumulatedContent.trim()) return; // Don't update for empty content
-        
-        assistantMessage = {
-          ...assistantMessage,
-          content: accumulatedContent
-        };
-        
-        setMessages(prev => {
-          const newMessages = [...prev];
-          const lastIndex = newMessages.length - 1;
-          const lastMessage = newMessages[lastIndex];
-          
-          // Only update/add message if we have actual content
-          if (lastMessage?.type === 'assistant' && lastMessage.id === assistantMessage.id) {
-            newMessages[lastIndex] = assistantMessage;
-          } else {
-            newMessages.push(assistantMessage);
-          }
-          return newMessages;
-        });
-      });
+      
+      setMessages(prev => [...prev, assistantMessage]);
     } catch (err) {
       // Don't set error if request was aborted
       if (err instanceof Error && err.name === 'AbortError') {

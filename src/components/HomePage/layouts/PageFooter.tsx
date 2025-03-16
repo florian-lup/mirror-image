@@ -15,8 +15,8 @@ const PrivacyPopover = lazy(() => import('../popovers/PrivacyPopover').then(modu
   default: module.PrivacyPopover 
 })));
 
-const HelpPopover = lazy(() => import('../popovers/HelpPopover').then(module => ({ 
-  default: module.HelpPopover 
+const ContactPopover = lazy(() => import('../popovers/ContactPopover').then(module => ({ 
+  default: module.ContactPopover 
 })));
 
 const PopoverFallback = () => (
@@ -39,7 +39,7 @@ export const PageFooter = () => {
             GitHub
           </BaseLink>
           <Suspense fallback={<PopoverFallback />}>
-            <HelpPopover />
+            <ContactPopover />
           </Suspense>
           <Suspense fallback={<PopoverFallback />}>
             <PrivacyPopover />

@@ -1,8 +1,8 @@
 import { lazy, Suspense } from 'react';
 import Image from 'next/image';
 
-const ContactPopover = lazy(() => import('../popovers/ContactPopover').then(module => ({ 
-  default: module.ContactPopover 
+const HelpPopover = lazy(() => import('../popovers/HelpPopover').then(module => ({ 
+  default: module.HelpPopover 
 })));
 
 const PopoverFallback = () => (
@@ -24,7 +24,7 @@ export const PageHeader = () => {
         </div>
         <nav className="flex items-center">
           <Suspense fallback={<PopoverFallback />}>
-            <ContactPopover />
+            <HelpPopover />
           </Suspense>
         </nav>
       </div>

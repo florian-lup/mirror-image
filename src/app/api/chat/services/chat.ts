@@ -23,14 +23,14 @@ export interface ErrorResponse {
 export const geminiModel = new ChatGoogleGenerativeAI({
   modelName: "gemini-2.0-flash",
   temperature: 0.7,
-  streaming: true,
+  streaming: false,
   apiKey: process.env.GOOGLE_API_KEY,
 });
 
 export const openAIModel = new ChatOpenAI({
   modelName: "gpt-4o",
   temperature: 0.7,
-  streaming: true,
+  streaming: false,
   openAIApiKey: process.env.OPENAI_API_KEY,
 });
 
@@ -100,16 +100,6 @@ export async function generateModelResponse({
   return responseText;
 }
 
-export function createResponseStream(text: string): ReadableStream {
-  const encoder = new TextEncoder();
-  return new ReadableStream({
-    start(controller) {
-      controller.enqueue(encoder.encode(text));
-      controller.close();
-    },
-  });
-}
-
 export async function generateChatResponse(message: string) {
   try {
     console.log("\n=== Starting Chat Response Generation ===");
@@ -133,8 +123,8 @@ export async function generateChatResponse(message: string) {
 
     console.log("\n=== Chat Response Generation Complete ===\n");
 
-    // Create and return stream
-    return createResponseStream(responseText);
+    // Return the response text directly
+    return responseText;
   } catch (error) {
     console.error("\n❌ Error in chat response generation:", error);
     throw error;
