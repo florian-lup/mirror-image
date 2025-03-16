@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import { generateChatResponse } from "../services/chat";
-import type { ChatRequest, ErrorResponse } from "../types/chat";
+import { generateChatResponse, ChatRequest, ErrorResponse } from "./services/chat";
 
 export async function POST(req: Request) {
   try {

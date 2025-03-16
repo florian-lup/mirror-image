@@ -1,13 +1,31 @@
-import { vectorIndex, VectorQueryResult } from "../config/vector-store";
+import { Index } from "@upstash/vector";
+
+export interface VectorQueryResult {
+  id: string | number;
+  score: number;
+  data?: string;
+}
+
+// Additional search result type
+export interface VectorSearchResult {
+  id: string | number;
+  score: number;
+  data?: string;
+}
+
+export const vectorIndex = new Index({
+  url: process.env.BIO_UPSTASH_VECTOR_REST_URL!,
+  token: process.env.BIO_UPSTASH_VECTOR_REST_TOKEN!,
+});
 
 // Minimum similarity score (0 to 1) - higher means more relevant
-const MIN_SIMILARITY_SCORE = 0.6;
+const MIN_SIMILARITY_SCORE = 0.7;
 
 export async function searchRelevantContent(query: string) {
   console.log("\n1. Querying Vector Database...");
   const results = await vectorIndex.query({
     data: query,
-    topK: 3,
+    topK: 10,
     includeData: true
   });
 
