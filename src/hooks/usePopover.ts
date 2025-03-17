@@ -1,11 +1,5 @@
 import { useState, useCallback } from 'react';
-
-interface UsePopoverReturn {
-  isOpen: boolean;
-  open: () => void;
-  close: () => void;
-  toggle: () => void;
-}
+import { UsePopoverReturn } from '@/types';
 
 export const usePopover = (initialState = false): UsePopoverReturn => {
   const [isOpen, setIsOpen] = useState(initialState);

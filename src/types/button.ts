@@ -11,4 +11,5 @@ export type BaseLinkProps = {
   href: string;
   target?: string;
   rel?: string;
+  icon?: React.ReactNode;
 }; 
