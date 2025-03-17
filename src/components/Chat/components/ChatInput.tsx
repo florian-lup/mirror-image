@@ -26,8 +26,10 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSubmit, isLoading = fals
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Ask follow-up questions..."
-          className="w-full bg-background border border-border rounded-lg px-3 sm:px-4 py-2 sm:py-2.5 pr-10 text-sm sm:text-base text-foreground placeholder:text-muted-foreground/70 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+          className="w-full bg-background border border-border rounded-lg px-3 sm:px-4 py-2 sm:py-2.5 pr-10 text-base text-foreground placeholder:text-muted-foreground/70 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
           autoComplete="off"
+          inputMode="text"
+          enterKeyHint="send"
         />
         <button
           type="submit"
