@@ -73,8 +73,10 @@ export const ContactPopover: React.FC = () => {
         <PopoverPrimitive.Content
           className="rounded-lg p-4 bg-card shadow-md border border-border z-50 w-72"
           sideOffset={8}
-          align="end"
-          side="bottom"
+          align="center"
+          side="top"
+          avoidCollisions={true}
+          collisionPadding={16}
         >
           {content}
           <PopoverPrimitive.Arrow className="fill-card" />

@@ -68,10 +68,12 @@ export const PrivacyPopover: React.FC = () => {
       </PopoverPrimitive.Trigger>
       <PopoverPrimitive.Portal>
         <PopoverPrimitive.Content
-          className="rounded-lg p-4 bg-card shadow-md border border-border z-50 w-[340px]"
+          className="rounded-lg p-4 bg-card shadow-md border border-border z-50 w-[340px] max-w-[95vw]"
           sideOffset={8}
-          align="end"
+          align="center"
           side="top"
+          avoidCollisions={true}
+          collisionPadding={16}
         >
           {content}
           <PopoverPrimitive.Arrow className="fill-card" />
