@@ -4,18 +4,79 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #37352f;
+  --muted: #e4e2dd;
+  --muted-foreground: #78757a;
+  --border: #eceaea;
+  --card: #f7f6f3;
+  --card-foreground: #37352f;
+  --primary: #2383e2;
+  --primary-foreground: #ffffff;
+  --secondary: #f1f0ee;
+  --secondary-foreground: #37352f;
+  --accent: #f7f3eb;
+  --accent-foreground: #eb5757;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #111111;
+    --foreground: #ffffff;
+    --muted: #1e1e1e;
+    --muted-foreground: #a0a0a0;
+    --border: #333333;
+    --card: #1e1e1e;
+    --card-foreground: #ffffff;
+    --primary: #2383e2;
+    --primary-foreground: #ffffff;
+    --secondary: #222222;
+    --secondary-foreground: #ffffff;
+    --accent: #2a2a2a;
+    --accent-foreground: #eb5757;
   }
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  line-height: 1.5;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  -webkit-font-smoothing: antialiased;
+}
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 600;
+  }
+
+  h1 {
+    font-size: 2rem;
+    line-height: 2.5rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+}
+
+@layer components {
+  .card-hover {
+    @apply transition-all duration-200 hover:bg-secondary hover:shadow-sm;
+  }
+
+  .focus-ring {
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-opacity-50;
+  }
 }

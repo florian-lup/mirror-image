@@ -10,23 +10,25 @@ export const WelcomePage = () => {
   return (
     <ChatManager>
       {({ handleOpenChat }) => (
-        <div className="h-screen bg-neutral-900 flex flex-col relative overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-neutral-800/50 via-neutral-900 to-neutral-900 pointer-events-none" />
-          
-          <div className="flex-1 relative">
-            <div className="h-full mx-auto px-4 sm:px-6 lg:px-8 flex flex-col">
+        <div className="min-h-screen bg-background flex flex-col">
+          <div className="flex-1 flex flex-col">
+            <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 flex flex-col min-h-screen">
               <PageHeader />
               
-              <main className="flex-1 flex flex-col justify-center -mt-20 sm:-mt-20 md:-mt-16">
-                <div className="space-y-8 sm:space-y-16">
+              <main className="flex-1 flex flex-col justify-center py-4 sm:py-8">
+                <div className="space-y-6 sm:space-y-10">
                   <section>
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-neutral-300 mb-8 sm:mb-16 text-center px-4">
+                    <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-foreground mb-4 sm:mb-6 md:mb-8 text-center">
                       Ask me anything...
                     </h1>
-                    <InputArea onAskQuestion={handleOpenChat} />
+                    <div className="max-w-2xl mx-auto px-4 sm:px-0">
+                      <InputArea onAskQuestion={handleOpenChat} />
+                    </div>
                   </section>
 
-                  <FaqList onQuestionClick={handleOpenChat} />
+                  <section className="max-w-2xl mx-auto w-full px-4 sm:px-0">
+                    <FaqList onQuestionClick={handleOpenChat} />
+                  </section>
                 </div>
               </main>
 

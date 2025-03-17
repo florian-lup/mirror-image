@@ -6,21 +6,22 @@ const HelpPopover = lazy(() => import('../popovers/HelpPopover').then(module => 
 })));
 
 const PopoverFallback = () => (
-  <button className="text-neutral-500">Loading...</button>
+  <button className="text-muted-foreground">Loading...</button>
 );
 
 export const PageHeader = () => {
   return (
-    <header className="h-16 sm:h-20 flex items-center bg-gradient-to-b from-neutral-900/80 to-neutral-900/0">
+    <header className="py-5 flex items-center">
       <div className="flex justify-between items-center w-full">
-        <div className="flex items-center">
+        <div className="flex items-center gap-2">
           <Image
             src="/logo.svg"
             alt="Logo"
             width={28}
             height={28}
-            className="object-contain sm:w-[30px] sm:h-[30px]"
+            className="object-contain"
           />
+          <span className="text-base font-medium text-foreground">Florian Lup</span>
         </div>
         <nav className="flex items-center">
           <Suspense fallback={<PopoverFallback />}>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { CircleGauge  } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface InputAreaProps {
@@ -23,49 +23,44 @@ export const InputArea: React.FC<InputAreaProps> = ({ onAskQuestion }) => {
   const isActive = question.trim().length > 0;
 
   return (
-    <div className="max-w-2xl mx-auto px-2 sm:px-4">
-      <form onSubmit={handleSubmit} className="mt-4 sm:mt-8">
-        <div className={`
-          flex items-center p-1
-          bg-neutral-800/40 border border-neutral-700
-          transition-all duration-200 rounded-full
-          ${isFocused ? 'ring-1 ring-neutral-700 bg-neutral-800/60' : ''}
-        `}>
-          <div className="relative flex-1">
-            <input
-              type="text"
-              value={question}
-              onChange={(e) => setQuestion(e.target.value)}
-              onFocus={() => setIsFocused(true)}
-              onBlur={() => setIsFocused(false)}
-              placeholder="What do you want to know?"
-              className="
-                w-full px-4 py-2.5 rounded-full text-[16px] leading-normal md:text-sm
-                bg-neutral-900 text-neutral-100 pr-12
-                placeholder:text-neutral-400 
-                focus:outline-none
-                transition-colors duration-200
-                focus:bg-neutral-900
-              "
-              autoComplete="off"
-            />
-            <button
-              type="submit"
-              className={cn(
-                'absolute right-1.5 top-1/2 -translate-y-1/2 flex items-center justify-center w-8 h-8 rounded-full transition-all duration-200 group',
-                isActive
-                  ? 'text-emerald-400 hover:text-emerald-300 bg-neutral-800 hover:bg-emerald-950 cursor-pointer before:absolute before:inset-0 before:rounded-full before:border-2 before:border-t-emerald-400 before:border-r-emerald-400 before:border-b-transparent before:border-l-transparent before:animate-[spin_1s_linear_infinite]'
-                  : 'text-neutral-500 bg-neutral-800/20 border-neutral-800 cursor-not-allowed before:absolute before:inset-0 before:rounded-full before:border-2 before:border-neutral-800'
-              )}
-              disabled={!isActive}
-              aria-label="Submit question"
-            >
-              <CircleGauge className={cn(
-                "h-4 w-4 relative",
-                isActive && "text-emerald-400 animate-[spin_1s_linear_infinite]"
-              )} />
-            </button>
-          </div>
+    <div className="w-full">
+      <form onSubmit={handleSubmit}>
+        <div className={cn(
+          "relative rounded-md border shadow-sm transition-all duration-150",
+          isFocused
+            ? "border-primary ring-1 ring-primary/30" 
+            : "border-border hover:border-muted-foreground/50"
+        )}>
+          <input
+            type="text"
+            value={question}
+            onChange={(e) => setQuestion(e.target.value)}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+            placeholder="What do you want to know?"
+            className="
+              w-full px-4 py-3 rounded-md text-base
+              bg-background text-foreground
+              placeholder:text-muted-foreground
+              focus:outline-none
+              transition-colors duration-200
+              pr-12
+            "
+            autoComplete="off"
+          />
+          <button
+            type="submit"
+            className={cn(
+              'absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center w-8 h-8 rounded-md transition-all duration-200',
+              isActive
+                ? 'text-primary-foreground bg-primary hover:bg-primary/90 cursor-pointer'
+                : 'text-muted-foreground bg-muted cursor-not-allowed opacity-70'
+            )}
+            disabled={!isActive}
+            aria-label="Submit question"
+          >
+            <ArrowRight className="h-4 w-4" />
+          </button>
         </div>
       </form>
     </div>

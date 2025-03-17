@@ -1,13 +1,21 @@
 import { lazy, Suspense } from 'react';
 import Link from 'next/link';
 import { BaseLinkProps } from '@/types';
+import { Github, ExternalLink } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
-const BaseLink = ({ children, className = '', ...props }: BaseLinkProps) => (
+const BaseLink = ({ children, className = '', icon, ...props }: BaseLinkProps & { icon?: React.ReactNode }) => (
   <Link
-    className={`bg-neutral-800/40 relative overflow-hidden transition-colors duration-200 hover:bg-neutral-700/40 border border-neutral-700/50 flex items-center justify-center h-9 px-4 rounded-full ${className}`}
+    className={cn(
+      "flex items-center gap-1.5 px-2.5 py-1.5 rounded-md transition-all duration-150",
+      "hover:bg-secondary text-muted-foreground hover:text-foreground",
+      "text-sm font-medium border border-transparent",
+      className
+    )}
     {...props}
   >
-    <span className="text-sm font-medium text-neutral-400 relative z-10">{children}</span>
+    {icon}
+    <span>{children}</span>
   </Link>
 );
 
@@ -20,21 +28,25 @@ const ContactPopover = lazy(() => import('../popovers/ContactPopover').then(modu
 })));
 
 const PopoverFallback = () => (
-  <button className="text-neutral-500">Loading...</button>
+  <button className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-muted-foreground text-sm">
+    <ExternalLink className="h-3.5 w-3.5" />
+    <span>Loading...</span>
+  </button>
 );
 
 export const PageFooter = () => {
   return (
-    <footer className="h-16 sm:h-20 flex items-center bg-gradient-to-b from-neutral-900/80 to-neutral-900/0">
-      <div className="flex justify-between items-center w-full">
-        <div className="text-xs sm:text-sm text-neutral-500">
+    <footer className="py-4 border-t border-border mt-auto">
+      <div className="flex flex-col sm:flex-row justify-between items-center w-full gap-3">
+        <div className="text-sm text-muted-foreground order-2 sm:order-1">
           © {new Date().getFullYear()} Florian Lup
         </div>
-        <nav className="flex items-center gap-x-2">
+        <nav className="flex items-center gap-x-2 order-1 sm:order-2">
           <BaseLink 
             href="https://github.com/florian-lup"
             target="_blank"
             rel="noopener noreferrer"
+            icon={<Github className="h-3.5 w-3.5" />}
           >
             GitHub
           </BaseLink>

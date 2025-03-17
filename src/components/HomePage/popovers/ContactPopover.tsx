@@ -1,18 +1,25 @@
 "use client";
 
 import * as React from 'react';
-import { Copy, Check } from 'lucide-react';
+import { Copy, Check, Mail } from 'lucide-react';
 import * as PopoverPrimitive from '@radix-ui/react-popover';
 import { usePopover } from '@/hooks';
 import { BaseButtonProps } from '@/types';
+import { cn } from '@/lib/utils';
 
 const BaseButton = ({ children, className = '', ...props }: BaseButtonProps) => (
   <button
     type="button"
-    className={`bg-neutral-800/40 relative overflow-hidden transition-colors duration-200 hover:bg-neutral-700/40 border border-neutral-700/50 flex items-center justify-center h-9 px-4 rounded-full ${className}`}
+    className={cn(
+      "flex items-center gap-1.5 px-2.5 py-1.5 rounded-md",
+      "hover:bg-secondary text-muted-foreground hover:text-foreground",
+      "transition-all duration-150 text-sm font-medium border border-transparent",
+      className
+    )}
     {...props}
   >
-    <span className="text-sm font-medium text-neutral-400 relative z-10">{children}</span>
+    <Mail className="h-3.5 w-3.5" />
+    <span>{children}</span>
   </button>
 );
 
@@ -39,16 +46,16 @@ export const ContactPopover: React.FC = () => {
 
   const content = (
     <div className="space-y-3 text-sm">
-      <h3 className="font-medium text-neutral-100">Get in Touch</h3>
-      <div className="flex items-center gap-x-3 text-neutral-300">
+      <h3 className="font-medium text-card-foreground">Get in Touch</h3>
+      <div className="flex items-center gap-x-3 text-card-foreground/90">
         <span className="flex-1">{email}</span>
         <button
           onClick={copyToClipboard}
-          className="p-2 rounded-lg bg-neutral-800/60 transition-colors duration-200 hover:bg-neutral-700/60"
+          className="p-2 rounded-md bg-secondary transition-colors duration-200 hover:bg-secondary/80"
           aria-label="Copy email address"
         >
           {copied ? (
-            <Check className="h-4 w-4 text-emerald-500" />
+            <Check className="h-4 w-4 text-primary" />
           ) : (
             <Copy className="h-4 w-4" />
           )}
@@ -64,13 +71,13 @@ export const ContactPopover: React.FC = () => {
       </PopoverPrimitive.Trigger>
       <PopoverPrimitive.Portal>
         <PopoverPrimitive.Content
-          className="rounded-xl p-4 bg-neutral-800/95 backdrop-blur-sm shadow-xl shadow-neutral-900/50 border border-neutral-700/50 z-50 w-72"
+          className="rounded-lg p-4 bg-card shadow-md border border-border z-50 w-72"
           sideOffset={8}
           align="end"
           side="bottom"
         >
           {content}
-          <PopoverPrimitive.Arrow className="fill-neutral-800/95" />
+          <PopoverPrimitive.Arrow className="fill-card" />
         </PopoverPrimitive.Content>
       </PopoverPrimitive.Portal>
     </PopoverPrimitive.Root>
