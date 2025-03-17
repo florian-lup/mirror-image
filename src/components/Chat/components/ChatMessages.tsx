@@ -73,7 +73,7 @@ export const ChatMessages: React.FC<ChatMessagesProps> = ({
           key={message.id}
           className={`rounded-lg p-2 sm:p-3 ${
             message.type === 'user' 
-              ? 'bg-secondary text-secondary-foreground' 
+              ? 'bg-zinc-800 text-secondary-foreground' 
               : 'bg-card text-card-foreground'
           }`}
         >

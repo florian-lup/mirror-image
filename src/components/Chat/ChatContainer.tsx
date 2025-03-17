@@ -34,7 +34,7 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.15 }}
-            className="bg-card rounded-lg w-full max-w-[98%] h-[95vh] sm:h-[90vh] md:h-[85vh] lg:h-[80vh] sm:max-w-[600px] md:max-w-[700px] lg:max-w-[800px] flex flex-col relative border border-border shadow-card"
+            className="bg-card rounded-lg w-full max-w-[98%] h-[95vh] sm:h-[90vh] md:h-[85vh] lg:h-[80vh] sm:max-w-[600px] md:max-w-[700px] lg:max-w-[800px] flex flex-col relative border border-border"
           >
             <ChatHeader onClose={onClose} />
             <ChatMessages 
