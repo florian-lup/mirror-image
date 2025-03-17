@@ -11,12 +11,12 @@ export const WelcomePage = () => {
     <ChatManager>
       {({ handleOpenChat }) => (
         <div className="min-h-screen bg-background flex flex-col">
-          <div className="flex-1 flex flex-col">
-            <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 flex flex-col min-h-screen">
-              <PageHeader />
-              
-              <main className="flex-1 flex flex-col justify-center py-4 sm:py-8">
-                <div className="space-y-6 sm:space-y-10">
+          <PageHeader />
+          
+          <div className="flex-1 flex items-center justify-center py-8 md:py-12">
+            <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">              
+              <main>
+                <div className="space-y-8 sm:space-y-12">
                   <section>
                     <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-foreground mb-4 sm:mb-6 md:mb-8 text-center">
                       Ask me anything...
@@ -31,10 +31,10 @@ export const WelcomePage = () => {
                   </section>
                 </div>
               </main>
-
-              <PageFooter />
             </div>
           </div>
+          
+          <PageFooter />
         </div>
       )}
     </ChatManager>

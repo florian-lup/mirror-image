@@ -36,27 +36,29 @@ const PopoverFallback = () => (
 
 export const PageFooter = () => {
   return (
-    <footer className="py-4 border-t border-border mt-auto">
-      <div className="flex flex-col sm:flex-row justify-between items-center w-full gap-3">
-        <div className="text-sm text-muted-foreground order-2 sm:order-1">
-          © {new Date().getFullYear()} Florian Lup
+    <footer className="w-full py-4 border-t border-border mt-auto">
+      <div className="container mx-auto max-w-none px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col sm:flex-row justify-between items-center w-full gap-3">
+          <div className="text-sm text-muted-foreground order-2 sm:order-1 w-full sm:w-auto text-center sm:text-left">
+            © {new Date().getFullYear()} Florian Lup
+          </div>
+          <nav className="flex items-center gap-x-2 order-1 sm:order-2 w-full sm:w-auto justify-center sm:justify-end">
+            <BaseLink 
+              href="https://github.com/florian-lup"
+              target="_blank"
+              rel="noopener noreferrer"
+              icon={<Github className="h-3.5 w-3.5" />}
+            >
+              GitHub
+            </BaseLink>
+            <Suspense fallback={<PopoverFallback />}>
+              <ContactPopover />
+            </Suspense>
+            <Suspense fallback={<PopoverFallback />}>
+              <PrivacyPopover />
+            </Suspense>
+          </nav>
         </div>
-        <nav className="flex items-center gap-x-2 order-1 sm:order-2">
-          <BaseLink 
-            href="https://github.com/florian-lup"
-            target="_blank"
-            rel="noopener noreferrer"
-            icon={<Github className="h-3.5 w-3.5" />}
-          >
-            GitHub
-          </BaseLink>
-          <Suspense fallback={<PopoverFallback />}>
-            <ContactPopover />
-          </Suspense>
-          <Suspense fallback={<PopoverFallback />}>
-            <PrivacyPopover />
-          </Suspense>
-        </nav>
       </div>
     </footer>
   );
