@@ -1,4 +1,4 @@
-import { Message, ChatMessagesProps } from '@/types';
+import { ChatMessagesProps } from '@/types';
 import { useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -37,6 +37,8 @@ const MarkdownMessage: React.FC<MarkdownMessageProps> = ({ content, className })
               {children}
             </a>
           ),
+          strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
+          em: ({ children }) => <em className="italic">{children}</em>,
         }}
       >
         {content}
