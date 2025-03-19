@@ -1,9 +1,5 @@
 import { BaseMessage } from "@langchain/core/messages";
-import { ConversationSummaryMemory } from "langchain/memory";
-import { PromptTemplate } from "@langchain/core/prompts";
-import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
-import { ChatOpenAI } from "@langchain/openai";
-
+import { BufferMemory } from "langchain/memory";
 
 // Memory types
 export interface ChatMemoryVariables {
@@ -23,51 +19,16 @@ export interface ChatContext {
   answer: string;
 }
 
-const SUMMARY_TEMPLATE = `You are summarizing our conversation.
-
-Key points to follow:
-1. Be concise and focus on the main topics discussed
-2. Only include information that was actually discussed
-3. Maintain context for follow-up questions
-
-Current summary:
-{summary}
-
-New conversation:
-{new_lines}
-
-Updated summary (be concise):`;
-
-const summaryPrompt = PromptTemplate.fromTemplate(SUMMARY_TEMPLATE);
-
 // Model selection based on environment variable
 const MODEL_PROVIDER = process.env.LLM_PROVIDER?.toLowerCase() || 'gemini';
 
-// Create models for memory summarization
-const geminiMemoryModel = new ChatGoogleGenerativeAI({
-  modelName: "gemini-2.0-flash",
-  temperature: 0.3, // Lower temperature for more consistent summaries
-  apiKey: process.env.GOOGLE_API_KEY,
-});
+console.log(`Using ${MODEL_PROVIDER} for chat memory`);
 
-const openAIMemoryModel = new ChatOpenAI({
-  modelName: "gpt-4o-mini", // Using a smaller model for summarization to save costs
-  temperature: 0.3,
-  openAIApiKey: process.env.OPENAI_API_KEY,
-});
-
-// Select memory model based on environment variable
-const memorySummaryModel = MODEL_PROVIDER === 'openai' ? openAIMemoryModel : geminiMemoryModel;
-
-console.log(`Using ${MODEL_PROVIDER} for memory summarization`);
-
-export const chatMemory = new ConversationSummaryMemory({
-  llm: memorySummaryModel,
+export const chatMemory = new BufferMemory({
   returnMessages: true,
   memoryKey: "chat_history",
   inputKey: "question",
-  outputKey: "answer",
-  prompt: summaryPrompt
+  outputKey: "answer"
 });
 
 type MessageLike = string | BaseMessage | {
