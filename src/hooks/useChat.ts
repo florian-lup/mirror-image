@@ -1,17 +1,8 @@
 import { useState, useCallback, useRef } from 'react';
-import { Message } from '@/types';
+import { Message, UseChatReturn, UseChatParams } from '@/types';
 
-interface UseChatReturn {
-  messages: Message[];
-  isLoading: boolean;
-  error: string | null;
-  sendMessage: (content: string) => Promise<void>;
-  clearMessages: () => void;
-  stopLoading: () => void;
-}
-
-export const useChat = (): UseChatReturn => {
-  const [messages, setMessages] = useState<Message[]>([]);
+export const useChat = (params?: UseChatParams): UseChatReturn => {
+  const [messages, setMessages] = useState<Message[]>(params?.initialMessages || []);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const abortControllerRef = useRef<AbortController | null>(null);

@@ -10,21 +10,10 @@
 
 "use client";
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useChat } from '@/hooks';
 import { ChatContainer } from './ChatContainer';
-
-interface ChatManagerProps {
-  /** 
-   * Render prop that receives chat operations and returns React nodes.
-   * @param handleOpenChat Function to open chat and send initial message
-   */
-  children: (props: {
-    handleOpenChat: (question: string) => void;
-  }) => React.ReactNode;
-  /** Optional callback when chat is closed */
-  onClose?: () => void;
-}
+import { ChatManagerProps } from '@/types';
 
 export const ChatManager: React.FC<ChatManagerProps> = ({ children, onClose }) => {
   // Track if chat UI is visible

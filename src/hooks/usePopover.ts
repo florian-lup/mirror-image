@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
-import { UsePopoverReturn } from '@/types';
+import { UsePopoverReturn, UsePopoverParams } from '@/types';
 
-export const usePopover = (initialState = false): UsePopoverReturn => {
+export const usePopover = (initialState: UsePopoverParams = false): UsePopoverReturn => {
   const [isOpen, setIsOpen] = useState(initialState);
 
   const open = useCallback(() => setIsOpen(true), []);

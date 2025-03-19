@@ -1,18 +1,8 @@
 import { ChatHeader } from './components/ChatHeader';
 import { ChatMessages } from './components/ChatMessages';
 import { ChatInput } from './components/ChatInput';
-import { Message } from '@/types';
+import { ChatContainerProps } from '@/types';
 import { motion, AnimatePresence } from 'framer-motion';
-
-interface ChatContainerProps {
-  isOpen: boolean;
-  onClose: () => void;
-  messages: Message[];
-  isLoading: boolean;
-  error: string | null;
-  onSendMessage: (content: string) => Promise<void>;
-  stopLoading?: () => void;
-}
 
 export const ChatContainer: React.FC<ChatContainerProps> = ({
   isOpen,

@@ -1,4 +1,4 @@
-import { Message } from '@/types';
+import { Message, ChatMessagesProps } from '@/types';
 import { useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -44,12 +44,6 @@ const MarkdownMessage: React.FC<MarkdownMessageProps> = ({ content, className })
     </div>
   );
 };
-
-interface ChatMessagesProps {
-  messages: Message[];
-  isLoading: boolean;
-  error: string | null;
-}
 
 export const ChatMessages: React.FC<ChatMessagesProps> = ({ 
   messages,

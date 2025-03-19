@@ -1,5 +1,5 @@
+import React, { useState } from 'react';
 import { ArrowUp, Square } from 'lucide-react';
-import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { ChatInputProps } from '@/types';
 
