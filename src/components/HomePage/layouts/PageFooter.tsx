@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { BaseLinkProps } from '@/types';
 import { Github, ExternalLink } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -40,7 +41,16 @@ export const PageFooter = () => {
       <div className="container mx-auto max-w-none px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row justify-between items-center w-full gap-3">
           <div className="text-sm text-muted-foreground order-2 sm:order-1 w-full sm:w-auto text-center sm:text-left">
-            © {new Date().getFullYear()} Florian Lup
+            <div className="flex items-center gap-2 justify-center sm:justify-start">
+              <Image
+                src="/logo.svg"
+                alt="Logo"
+                width={20}
+                height={20}
+                className="object-contain"
+              />
+              <span>© {new Date().getFullYear()} Florian Lup</span>
+            </div>
           </div>
           <nav className="flex items-center gap-x-2 order-1 sm:order-2 w-full sm:w-auto justify-center sm:justify-end">
             <BaseLink 
