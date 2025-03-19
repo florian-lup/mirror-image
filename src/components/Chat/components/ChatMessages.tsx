@@ -69,7 +69,7 @@ export const ChatMessages: React.FC<ChatMessagesProps> = ({
           key={message.id}
           className={`rounded-lg p-2 sm:p-3 ${
             message.type === 'user' 
-              ? 'bg-zinc-800 text-secondary-foreground' 
+              ? 'bg-secondary text-foreground' 
               : 'bg-card text-card-foreground'
           }`}
         >
@@ -91,7 +91,7 @@ export const ChatMessages: React.FC<ChatMessagesProps> = ({
       )}
 
       {error && (
-        <div className="bg-accent rounded-lg p-3 text-accent-foreground">
+        <div className="bg-secondary rounded-lg p-3 text-card-foreground">
           {error}
         </div>
       )}
