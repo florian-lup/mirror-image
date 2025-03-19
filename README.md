@@ -8,21 +8,21 @@ A Next.js application that creates an AI-powered chat interface to interact with
 
 2. **Memory Management**:
 
-   - The system maintains a summary of the conversation
-   - Each new interaction is processed and integrated into the summary
-   - This enables natural follow-up questions and contextual responses
+   - The system stores recent chat messages directly in memory
+   - Maintains conversation context for natural interactions
+   - Enables seamless follow-up questions and contextual responses
 
 3. **Response Generation**:
    - Combines relevant bio information from vector search
-   - Uses conversation summary for context
+   - Uses conversation history for context
    - Generates natural, first-person responses
 
 ## Tech Stack
 
 - **Framework**: Next.js with TypeScript
-- **AI Model**: Gpt-4o & Google's Gemini 1.5 Flash
+- **AI Model**: Gpt-4o & Google's Gemini 2.0 Flash
 - **Vector Store**: Upstash Vector
-- **Memory**: LangChain ConversationSummaryMemory
+- **Memory**: LangChain BufferMemory
 - **LLM Framework**: LangChain
 
 ## Setup
