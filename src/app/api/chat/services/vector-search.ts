@@ -14,8 +14,8 @@ export interface VectorSearchResult {
 }
 
 export const vectorIndex = new Index({
-  url: process.env.BIO_UPSTASH_VECTOR_REST_URL!,
-  token: process.env.BIO_UPSTASH_VECTOR_REST_TOKEN!,
+  url: process.env.MIRROR_IMAGE_UPSTASH_VECTOR_REST_URL!,
+  token: process.env.MIRROR_IMAGE_UPSTASH_VECTOR_REST_TOKEN!,
 });
 
 // Minimum similarity score (0 to 1) - higher means more relevant

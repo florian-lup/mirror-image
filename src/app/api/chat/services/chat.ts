@@ -43,7 +43,7 @@ export const chatModel = MODEL_PROVIDER === 'openai' ? openAIModel : geminiModel
 console.log(`Using ${MODEL_PROVIDER} as the LLM provider`);
 
 // Chat prompt template
-export const bioChatPrompt = ChatPromptTemplate.fromTemplate(`
+export const mirrorImagePrompt = ChatPromptTemplate.fromTemplate(`
   You are Florian's digital twin. Reply as Florian in first person with a conversational, authentic tone that includes occasional wit and light sarcasm when appropriate.
 
   When asked about Florian's life, experiences, or opinions:
@@ -81,7 +81,7 @@ export async function generateModelResponse({
     context ? "✓ Vector Search Results" : "✗ No Vector Results"
   ].join(", "));
 
-  const formattedPrompt = await bioChatPrompt.invoke({
+  const formattedPrompt = await mirrorImagePrompt.invoke({
     context: context || "No relevant information found.",
     question,
     chat_history: chatHistory,
