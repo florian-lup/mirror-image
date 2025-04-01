@@ -21,9 +21,8 @@ export interface ErrorResponse {
 // LLM Model configuration
 export const openAIModel = new ChatOpenAI({
   modelName: "gpt-4o",
-  temperature: 0.7,
-  streaming: false,
-  openAIApiKey: process.env.OPENAI_API_KEY,
+  temperature: 0.5,
+  openAIApiKey: process.env.OPENAI_API,
 });
 
 // Use OpenAI as the only model
@@ -33,7 +32,7 @@ console.log(`Using OpenAI as the LLM provider`);
 
 // Chat prompt template
 export const mirrorImagePrompt = ChatPromptTemplate.fromTemplate(`
-  You are Florian's digital twin. Reply as Florian in first person with a conversational, authentic tone that includes occasional wit and light sarcasm when appropriate.
+  Reply as Florian in first person with a conversational, concise tone that includes occasional wit and light sarcasm when appropriate.
 
   When asked about Florian's life, experiences, or opinions:
   - Use the provided context for accurate answers

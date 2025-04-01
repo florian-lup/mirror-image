@@ -1,4 +1,7 @@
-import { Index } from "@upstash/vector";
+import { Pinecone } from "@pinecone-database/pinecone";
+import { OpenAIEmbeddings } from "@langchain/openai";
+import { PineconeStore } from "@langchain/pinecone";
+import { Document } from "@langchain/core/documents";
 
 export interface VectorQueryResult {
   id: string | number;
@@ -6,47 +9,59 @@ export interface VectorQueryResult {
   data?: string;
 }
 
-// Additional search result type
-export interface VectorSearchResult {
-  id: string | number;
-  score: number;
-  data?: string;
-}
-
-export const vectorIndex = new Index({
-  url: process.env.MIRROR_IMAGE_UPSTASH_VECTOR_REST_URL!,
-  token: process.env.MIRROR_IMAGE_UPSTASH_VECTOR_REST_TOKEN!,
-});
-
 // Minimum similarity score (0 to 1) - higher means more relevant
 const MIN_SIMILARITY_SCORE = 0.7;
 
+// Number of top results to return from vector search
+const TOP_K = 5;
+
+// Initialize Pinecone client
+const pinecone = new Pinecone({
+  apiKey: process.env.PINECONE_API_KEY!,
+});
+
+// Initialize OpenAI embeddings
+const embeddings = new OpenAIEmbeddings({
+  openAIApiKey: process.env.OPENAI_API,
+});
+
+// Get the index using the environment variable
+const index = pinecone.Index(process.env.PINECONE_INDEX_NAME!);
+
+// Create the vector store using LangChain
+const vectorStore = new PineconeStore(embeddings, { pineconeIndex: index });
+
 export async function searchRelevantContent(query: string) {
-  console.log("\n1. Querying Vector Database...");
-  const results = await vectorIndex.query({
-    data: query,
-    topK: 10,
-    includeData: true
-  });
+  console.log("\n1. Querying Vector Database (Pinecone)...");
+  
+  try {
+    // Use LangChain's similarity search with score
+    const results = await vectorStore.similaritySearchWithScore(query, TOP_K);
+    
+    // Format and filter results
+    const relevantContent = results
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      .filter(([_doc, score]: [Document, number]) => {
+        const isRelevant = score >= MIN_SIMILARITY_SCORE;
+        console.log(`- Score for chunk: ${score.toFixed(3)}${isRelevant ? ' ✓' : ' ✗'}`);
+        return isRelevant;
+      })
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      .map(([doc, _score]: [Document, number]) => doc.pageContent)
+      .filter((content: string) => content !== "")
+      .join("\n\n");
 
-  // Extract the content from the results with similarity score filtering
-  const relevantContent = results
-    .filter((result: VectorQueryResult) => {
-      const isRelevant = result.score >= MIN_SIMILARITY_SCORE;
-      console.log(`- Score for chunk: ${result.score.toFixed(3)}${isRelevant ? ' ✓' : ' ✗'}`);
-      return isRelevant;
-    })
-    .map((result: VectorQueryResult) => result.data ?? "")
-    .filter((content: string) => content !== "")
-    .join("\n\n");
+    console.log("Vector Search Results:");
+    console.log("- Number of chunks found:", results.length);
+    console.log("- Number of relevant chunks:", results.filter((r: [Document, number]) => r[1] >= MIN_SIMILARITY_SCORE).length);
+    console.log("- Relevant content:", relevantContent ? "Found" : "None");
+    if (relevantContent) {
+      console.log("- Content preview:", relevantContent.substring(0, 150) + "...");
+    }
 
-  console.log("Vector Search Results:");
-  console.log("- Number of chunks found:", results.length);
-  console.log("- Number of relevant chunks:", results.filter(r => r.score >= MIN_SIMILARITY_SCORE).length);
-  console.log("- Relevant content:", relevantContent ? "Found" : "None");
-  if (relevantContent) {
-    console.log("- Content preview:", relevantContent.substring(0, 150) + "...");
+    return relevantContent;
+  } catch (error) {
+    console.error("Error during Pinecone vector search:", error);
+    return "";
   }
-
-  return relevantContent;
 } 
