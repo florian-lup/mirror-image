@@ -19,10 +19,7 @@ export interface ChatContext {
   answer: string;
 }
 
-// Model selection based on environment variable
-const MODEL_PROVIDER = process.env.LLM_PROVIDER?.toLowerCase() || 'gemini';
-
-console.log(`Using ${MODEL_PROVIDER} for chat memory`);
+console.log(`Using OpenAI for chat memory`);
 
 export const chatMemory = new BufferMemory({
   returnMessages: true,

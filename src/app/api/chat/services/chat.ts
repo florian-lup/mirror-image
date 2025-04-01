@@ -2,7 +2,6 @@ import { searchRelevantContent } from "./vector-search";
 import { getConversationHistory, saveToMemory } from "./memory";
 import { AIMessage } from "@langchain/core/messages";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
-import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { ChatOpenAI } from "@langchain/openai";
 
 // Request types
@@ -19,14 +18,7 @@ export interface ErrorResponse {
   error: string;
 }
 
-// LLM Models configuration
-export const geminiModel = new ChatGoogleGenerativeAI({
-  modelName: "gemini-2.0-flash",
-  temperature: 0.7,
-  streaming: false,
-  apiKey: process.env.GOOGLE_API_KEY,
-});
-
+// LLM Model configuration
 export const openAIModel = new ChatOpenAI({
   modelName: "gpt-4o",
   temperature: 0.7,
@@ -34,13 +26,10 @@ export const openAIModel = new ChatOpenAI({
   openAIApiKey: process.env.OPENAI_API_KEY,
 });
 
-// Default model selection based on environment variable
-const MODEL_PROVIDER = process.env.LLM_PROVIDER?.toLowerCase() || 'gemini';
+// Use OpenAI as the only model
+export const chatModel = openAIModel;
 
-// Select model based on environment variable
-export const chatModel = MODEL_PROVIDER === 'openai' ? openAIModel : geminiModel;
-
-console.log(`Using ${MODEL_PROVIDER} as the LLM provider`);
+console.log(`Using OpenAI as the LLM provider`);
 
 // Chat prompt template
 export const mirrorImagePrompt = ChatPromptTemplate.fromTemplate(`
@@ -90,17 +79,16 @@ export async function generateModelResponse({
   // Get the full response text
   const aiMessage = await chatModel.invoke(formattedPrompt.toChatMessages());
   
-  // Handle different model response formats
+  // Handle response format
   let responseText: string;
   if (aiMessage instanceof AIMessage) {
     responseText = typeof aiMessage.content === 'string' 
       ? aiMessage.content 
       : JSON.stringify(aiMessage.content);
   } else {
-    // Handle Gemini model response
     responseText = typeof aiMessage === 'string' 
       ? aiMessage 
-      : aiMessage.text || JSON.stringify(aiMessage);
+      : JSON.stringify(aiMessage);
   }
   
   console.log("\nAI Response:", responseText);
