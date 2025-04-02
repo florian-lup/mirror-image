@@ -1,5 +1,5 @@
 import React from 'react';
-import { X } from 'lucide-react';
+import { FaTimes } from 'react-icons/fa';
 import { ChatHeaderProps } from '@/types';
 import Image from 'next/image';
 
@@ -12,7 +12,7 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({ onClose }) => {
         className="p-1 sm:p-1.5 hover:bg-secondary rounded-md transition-colors focus-ring"
         aria-label="Close chat"
       >
-        <X className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-muted-foreground" />
+        <FaTimes className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-muted-foreground" />
       </button>
     </div>
   );

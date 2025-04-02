@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from 'react';
-import { Copy, Check, Mail } from 'lucide-react';
+import { FaCopy, FaCheck, FaEnvelope } from 'react-icons/fa';
 import * as PopoverPrimitive from '@radix-ui/react-popover';
 import { usePopover } from '@/hooks';
 import { BaseButtonProps } from '@/types';
@@ -18,7 +18,7 @@ const BaseButton = ({ children, className = '', ...props }: BaseButtonProps) => 
     )}
     {...props}
   >
-    <Mail className="h-3.5 w-3.5" />
+    <FaEnvelope className="h-3.5 w-3.5" />
     <span>{children}</span>
   </button>
 );
@@ -55,9 +55,9 @@ export const ContactPopover: React.FC = () => {
           aria-label="Copy email address"
         >
           {copied ? (
-            <Check className="h-4 w-4 text-primary" />
+            <FaCheck className="h-4 w-4 text-primary" />
           ) : (
-            <Copy className="h-4 w-4" />
+            <FaCopy className="h-4 w-4" />
           )}
         </button>
       </div>

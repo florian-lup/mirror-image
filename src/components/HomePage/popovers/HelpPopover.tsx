@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from 'react';
-import { HelpCircle } from 'lucide-react';
+import { BsQuestionLg } from "react-icons/bs";
 import * as PopoverPrimitive from '@radix-ui/react-popover';
 import { usePopover } from '@/hooks';
 import { BaseButtonProps } from '@/types';
@@ -27,7 +27,7 @@ export const HelpPopover: React.FC = () => {
 
   const trigger = (
     <IconButton>
-      <HelpCircle className="h-5 w-5" />
+      <BsQuestionLg className="h-5 w-5" />
     </IconButton>
   );
 

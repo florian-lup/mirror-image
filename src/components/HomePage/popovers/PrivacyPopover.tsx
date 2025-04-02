@@ -4,7 +4,7 @@ import * as React from 'react';
 import * as PopoverPrimitive from '@radix-ui/react-popover';
 import { usePopover } from '@/hooks';
 import { BaseButtonProps } from '@/types';
-import { Shield } from 'lucide-react';
+import { FaShieldAlt } from 'react-icons/fa';
 import { cn } from '@/lib/utils';
 
 const BaseButton = ({ children, className = '', ...props }: BaseButtonProps) => (
@@ -18,7 +18,7 @@ const BaseButton = ({ children, className = '', ...props }: BaseButtonProps) => 
     )}
     {...props}
   >
-    <Shield className="h-3.5 w-3.5" />
+    <FaShieldAlt className="h-3.5 w-3.5" />
     <span>{children}</span>
   </button>
 );

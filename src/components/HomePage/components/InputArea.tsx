@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { ArrowRight } from 'lucide-react';
+import { FaArrowRight } from 'react-icons/fa';
 import { cn } from '@/lib/utils';
 
 interface InputAreaProps {
@@ -59,7 +59,7 @@ export const InputArea: React.FC<InputAreaProps> = ({ onAskQuestion }) => {
             disabled={!isActive}
             aria-label="Submit question"
           >
-            <ArrowRight className="h-4 w-4" />
+            <FaArrowRight className="h-4 w-4" />
           </button>
         </div>
       </form>

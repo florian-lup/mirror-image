@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from '@/lib/utils';
-import { Briefcase, Code, Sparkles, Coffee } from 'lucide-react';
+import { FaBriefcase, FaCode, FaStar, FaCoffee } from 'react-icons/fa';
 
 interface FaqListProps {
   onQuestionClick: (question: string) => void;
@@ -10,19 +10,19 @@ interface FaqListProps {
 const faqQuestions = [
   { 
     text: "What's your background and experience?",
-    icon: <Briefcase className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+    icon: <FaBriefcase className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
   },
   { 
     text: "What kind of projects have you worked on?",
-    icon: <Sparkles className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+    icon: <FaStar className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
   },
   { 
     text: "What technologies do you specialize in?",
-    icon: <Code className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+    icon: <FaCode className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
   },
   { 
     text: "What are your interests outside of work?",
-    icon: <Coffee className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+    icon: <FaCoffee className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
   }
 ];
 

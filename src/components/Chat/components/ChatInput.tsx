@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowUp, Square } from 'lucide-react';
+import { FaArrowUp, FaStopCircle  } from 'react-icons/fa';
 import { cn } from '@/lib/utils';
 import { ChatInputProps } from '@/types';
 
@@ -45,9 +45,9 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSubmit, isLoading = fals
           aria-label={isLoading ? "Stop loading" : "Send message"}
         >
           {isLoading ? (
-            <Square className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            <FaStopCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           ) : (
-            <ArrowUp className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            <FaArrowUp className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           )}
         </button>
       </form>

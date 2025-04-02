@@ -2,7 +2,8 @@ import { lazy, Suspense } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BaseLinkProps } from '@/types';
-import { Github, ExternalLink } from 'lucide-react';
+import { FaGithub } from "react-icons/fa";
+import { FaExternalLinkAlt } from "react-icons/fa";
 import { cn } from '@/lib/utils';
 
 const BaseLink = ({ children, className = '', icon, ...props }: BaseLinkProps & { icon?: React.ReactNode }) => (
@@ -30,7 +31,7 @@ const ContactPopover = lazy(() => import('../popovers/ContactPopover').then(modu
 
 const PopoverFallback = () => (
   <button className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-muted-foreground text-sm">
-    <ExternalLink className="h-3.5 w-3.5" />
+    <FaExternalLinkAlt className="h-3.5 w-3.5" />
     <span>Loading...</span>
   </button>
 );
@@ -57,7 +58,7 @@ export const PageFooter = () => {
               href="https://github.com/florian-lup"
               target="_blank"
               rel="noopener noreferrer"
-              icon={<Github className="h-3.5 w-3.5" />}
+              icon={<FaGithub className="h-3.5 w-3.5" />}
             >
               GitHub
             </BaseLink>

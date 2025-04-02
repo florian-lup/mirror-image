@@ -1,7 +1,6 @@
 import { ChatMessagesProps } from '@/types';
 import { useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 
 interface MarkdownMessageProps {
   content: string;
@@ -12,7 +11,6 @@ const MarkdownMessage: React.FC<MarkdownMessageProps> = ({ content, className })
   return (
     <div className={className}>
       <ReactMarkdown
-        remarkPlugins={[remarkGfm]}
         components={{
           p: ({ children }) => <p className="mb-2 last:mb-0 text-sm sm:text-base">{children}</p>,
           ul: ({ children }) => <ul className="list-disc ml-4 mb-2 text-sm sm:text-base">{children}</ul>,
