@@ -1,6 +1,8 @@
 import { ChatMessagesProps } from '@/types';
 import { useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
+import remarkGfm from 'remark-gfm';
 
 interface MarkdownMessageProps {
   content: string;
@@ -11,6 +13,8 @@ const MarkdownMessage: React.FC<MarkdownMessageProps> = ({ content, className })
   return (
     <div className={className}>
       <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        rehypePlugins={[rehypeRaw]}
         components={{
           p: ({ children }) => <p className="mb-2 last:mb-0 text-sm sm:text-base">{children}</p>,
           ul: ({ children }) => <ul className="list-disc ml-4 mb-2 text-sm sm:text-base">{children}</ul>,
@@ -19,12 +23,6 @@ const MarkdownMessage: React.FC<MarkdownMessageProps> = ({ content, className })
           h1: ({ children }) => <h1 className="text-lg sm:text-xl font-semibold mb-2">{children}</h1>,
           h2: ({ children }) => <h2 className="text-base sm:text-lg font-semibold mb-2">{children}</h2>,
           h3: ({ children }) => <h3 className="text-sm sm:text-base font-semibold mb-2">{children}</h3>,
-          code: ({ children }) => (
-            <code className="bg-secondary px-1 py-0.5 rounded text-xs sm:text-sm font-mono">{children}</code>
-          ),
-          pre: ({ children }) => (
-            <pre className="bg-secondary p-2 sm:p-3 rounded-lg mb-3 overflow-x-auto font-mono text-xs sm:text-sm">{children}</pre>
-          ),
           a: ({ href, children }) => (
             <a 
               href={href}
