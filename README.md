@@ -1,6 +1,6 @@
 # Mirror Image
 
-A personal website with AI-powered chat using Pinecone Vector DB and LangChain.
+A RAG system using LangChain, Pinecone, and GPT-4.5 to answer questions about my background and expertise.
 
 ## Features
 
@@ -22,37 +22,23 @@ A personal website with AI-powered chat using Pinecone Vector DB and LangChain.
 5. Run the ingestion script: `npm run ingest`
 6. Start the development server: `npm run dev`
 
-## Document Ingestion for Pinecone Vector Database
+## Document Ingestion
 
-This directory is used to store documents that will be ingested into the Pinecone vector database for semantic search.
-
-## Adding Documents
-
-1. Place your text documents in this directory (or subdirectories)
-2. Supported file types: `.txt`
-3. Run the ingestion script from the project root:
+1. Add your documents to the `/documents` folder (currently supporting .txt files)
+2. Run the document ingestion script:
 
 ```bash
 npm run ingest
+# or
+yarn ingest
 ```
 
-## Document Guidelines
+This script will:
 
-- Documents should be plain text (`.txt`) files
-- Each document should contain relevant information you want to be able to search and retrieve
-- The ingestion process will split documents into smaller chunks and create embeddings
-
-## Notes
-
-- Documents are chunked at approximately 1000 characters with 200 character overlaps
-- All files in this directory and its subdirectories will be processed
-- The ingestion process might take some time depending on the number and size of documents
-
-## Environment Variables
-
-- `OPENAI_API`: Your OpenAI API key for generating embeddings and responses
-- `PINECONE_API_KEY`: Your Pinecone API key for vector storage
-- `PINECONE_INDEX_NAME`: Name of your Pinecone index
+- Load documents from the specified directory
+- Split them into smaller chunks
+- Generate embeddings using OpenAI
+- Store the embeddings in Pinecone for fast retrieval
 
 ## Development
 
@@ -68,4 +54,21 @@ npm run start
 
 # Ingest documents into Pinecone
 npm run ingest
+
+# Clean all records from Pinecone index
+npm run clean-index
 ```
+
+## Index Management
+
+To clean up your Pinecone index and remove all records, you can use:
+
+```bash
+npm run clean-index
+```
+
+This is useful when you want to:
+
+- Start fresh with a clean index
+- Remove outdated or incorrect data
+- Reset the vector database for testing
