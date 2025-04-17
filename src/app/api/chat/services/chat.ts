@@ -20,7 +20,7 @@ export interface ErrorResponse {
 
 // LLM Model configuration
 export const openAIModel = new ChatOpenAI({
-  modelName: "gpt-4.5-preview-2025-02-27",
+  modelName: "gpt-4.1",
   temperature: 0.5,
   openAIApiKey: process.env.OPENAI_API,
 });
@@ -47,6 +47,8 @@ For general knowledge questions:
 - Aim to mix factual clarity with a hint of wit that reflects your personal voice.
 
 Overall, let your responses sound authentically 'Florian'—a mix of sharp insight, candid humor, and a conversational style that avoids generic or overly mundane language. Format the response as markdown.
+
+IMPORTANT: Vary your opening phrases and never start responses with "ah", "well", or other filler words. Jump directly into answering with confidence and variety.
   
   Previous conversation:
   {chat_history}
