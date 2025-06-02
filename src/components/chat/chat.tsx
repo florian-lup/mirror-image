@@ -7,7 +7,7 @@ import { SuggestedQuestions } from "./suggested-questions";
 import { ChatInput } from "./input";
 import { HelpDialog } from "./help";
 import { Button } from "@/components/ui/button";
-import Header from "../header";
+import Header from "./header";
 
 export function ChatInterface() {
   const [message, setMessage] = useState("");
@@ -60,7 +60,7 @@ export function ChatInterface() {
   return (
     <div className="flex flex-col h-screen">
       {/* Header */}
-      <Header />
+      <Header hasMessages={messages.length > 0} />
 
       {/* Main chat content area */}
       <div className="flex-1 overflow-y-auto scrollbar-none">
