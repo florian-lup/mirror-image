@@ -1,0 +1,96 @@
+"use client";
+
+import { useState, useRef, useEffect } from "react";
+import { ChatMessage } from "./messages";
+import { TypingIndicator } from "./typing-indicator";
+import { SuggestedQuestions } from "./suggested-questions";
+import { ChatInput } from "./input";
+
+export function ChatInterface() {
+  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState<Array<{ role: 'user' | 'assistant'; content: string }>>([]);
+  const [isTyping, setIsTyping] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, isTyping]);
+
+  const handleSendMessage = async () => {
+    if (!message.trim()) return;
+
+    const userMessage = message.trim();
+    setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
+    setMessage("");
+    setIsTyping(true);
+
+    // Here you would typically send the message to your API
+    // For now, we'll just add a placeholder response
+    setTimeout(() => {
+      setMessages(prev => [...prev, {
+        role: 'assistant',
+        content: "Thanks for your message! This is a placeholder response. In a real implementation, this would connect to your AI API."
+      }]);
+      setIsTyping(false);
+    }, 1500);
+  };
+
+  const handlePromptClick = (prompt: string) => {
+    setMessages(prev => [...prev, { role: 'user', content: prompt }]);
+    setIsTyping(true);
+
+    // Here you would typically send the message to your API
+    // For now, we'll just add a placeholder response
+    setTimeout(() => {
+      setMessages(prev => [...prev, {
+        role: 'assistant',
+        content: "Thanks for your message! This is a placeholder response. In a real implementation, this would connect to your AI API."
+      }]);
+      setIsTyping(false);
+    }, 1500);
+  };
+
+  return (
+    <div className="flex flex-col h-screen">
+      {/* Main chat content area */}
+      <div className="flex-1 overflow-y-auto">
+        <div className="max-w-4xl mx-auto p-6">
+          {messages.length === 0 ? (
+            <div className="flex flex-col items-center justify-center min-h-[70vh] space-y-8">
+              {/* Initial greeting when no messages exist */}
+              <div className="text-center space-y-3">
+                <h1 className="text-4xl font-bold text-foreground">Hello there!</h1>
+                <p className="text-xl text-muted-foreground">How can I help you today?</p>
+              </div>
+
+              {/* Suggested prompts to get the conversation started */}
+              <SuggestedQuestions onPromptClick={handlePromptClick} />
+            </div>
+          ) : (
+            <div className="space-y-6">
+              {/* Display conversation history */}
+              {messages.map((msg, index) => (
+                <ChatMessage key={index} role={msg.role} content={msg.content} />
+              ))}
+              {/* Show typing indicator when AI is responding */}
+              {isTyping && <TypingIndicator />}
+              <div ref={messagesEndRef} />
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Fixed input area at the bottom */}
+      <ChatInput
+        message={message}
+        setMessage={setMessage}
+        onSendMessage={handleSendMessage}
+        isTyping={isTyping}
+      />
+    </div>
+  );
+} 

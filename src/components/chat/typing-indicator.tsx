@@ -1,8 +1,9 @@
+import * as React from "react";
 import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Bot } from "lucide-react";
 
-export function TypingIndicator() {
+const TypingIndicatorComponent = () => {
   return (
     <div className="flex gap-3">
       <Avatar className="size-8 shrink-0">
@@ -22,4 +23,6 @@ export function TypingIndicator() {
       </Card>
     </div>
   );
-} 
+};
+
+export const TypingIndicator = React.memo(TypingIndicatorComponent); 

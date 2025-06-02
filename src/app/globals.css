@@ -220,3 +220,31 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .scrollbar-none {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
+}
+
+/* Apply pointer cursor to interactive elements */
+a,
+button,
+input[type='button'],
+input[type='submit'],
+input[type='reset'],
+select,
+[role='button'],
+[role='link'],
+[role='tab'],
+[role='menuitem'],
+[onclick],
+[tabindex]:not([tabindex='-1']),
+.cursor-pointer,
+.clickable {
+  cursor: pointer;
+}
