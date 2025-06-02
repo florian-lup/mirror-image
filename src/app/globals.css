@@ -221,6 +221,8 @@
   }
 }
 
+/* utility classes */
+
 @layer utilities {
   .scrollbar-none {
     -ms-overflow-style: none; /* IE and Edge */

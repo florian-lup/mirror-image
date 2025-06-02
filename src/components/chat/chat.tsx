@@ -5,6 +5,9 @@ import { ChatMessage } from "./messages";
 import { TypingIndicator } from "./typing-indicator";
 import { SuggestedQuestions } from "./suggested-questions";
 import { ChatInput } from "./input";
+import { HelpDialog } from "./help";
+import { Button } from "@/components/ui/button";
+import Header from "../header";
 
 export function ChatInterface() {
   const [message, setMessage] = useState("");
@@ -56,15 +59,26 @@ export function ChatInterface() {
 
   return (
     <div className="flex flex-col h-screen">
+      {/* Header */}
+      <Header />
+
       {/* Main chat content area */}
       <div className="flex-1 overflow-y-auto scrollbar-none">
-        <div className="max-w-3xl mx-auto p-6">
+        <div className="max-w-3xl mx-auto p-6 h-full">
           {messages.length === 0 ? (
-            <div className="flex flex-col justify-center min-h-[60vh] space-y-8">
+            <div className="flex flex-col justify-center items-start h-full text-left">
               {/* Initial greeting when no messages exist */}
-              <div className="text-left space-y-3">
+              <div className="space-y-3">
                 <h1 className="text-4xl font-bold text-foreground">Hello there!</h1>
-                <p className="text-xl text-muted-foreground">How can I help you today?</p>
+                <p className="text-xl text-muted-foreground">
+                  How can I{" "}
+                  <HelpDialog>
+                    <Button variant="link">
+                      help
+                    </Button>
+                  </HelpDialog>
+                  {" "}you today?
+                </p>
               </div>
             </div>
           ) : (
