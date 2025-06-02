@@ -57,18 +57,15 @@ export function ChatInterface() {
   return (
     <div className="flex flex-col h-screen">
       {/* Main chat content area */}
-      <div className="flex-1 overflow-y-auto">
-        <div className="max-w-4xl mx-auto p-6">
+      <div className="flex-1 overflow-y-auto scrollbar-none">
+        <div className="max-w-3xl mx-auto p-6">
           {messages.length === 0 ? (
-            <div className="flex flex-col items-center justify-center min-h-[70vh] space-y-8">
+            <div className="flex flex-col justify-center min-h-[60vh] space-y-8">
               {/* Initial greeting when no messages exist */}
-              <div className="text-center space-y-3">
+              <div className="text-left space-y-3">
                 <h1 className="text-4xl font-bold text-foreground">Hello there!</h1>
                 <p className="text-xl text-muted-foreground">How can I help you today?</p>
               </div>
-
-              {/* Suggested prompts to get the conversation started */}
-              <SuggestedQuestions onPromptClick={handlePromptClick} />
             </div>
           ) : (
             <div className="space-y-6">
@@ -85,12 +82,22 @@ export function ChatInterface() {
       </div>
 
       {/* Fixed input area at the bottom */}
-      <ChatInput
-        message={message}
-        setMessage={setMessage}
-        onSendMessage={handleSendMessage}
-        isTyping={isTyping}
-      />
+      <div>
+        {/* Show suggested questions above input only when no messages */}
+        {messages.length === 0 && (
+          <div className="max-w-3xl mx-auto p-4 pb-2">
+            <SuggestedQuestions onPromptClick={handlePromptClick} />
+          </div>
+        )}
+
+        {/* Input area */}
+        <ChatInput
+          message={message}
+          setMessage={setMessage}
+          onSendMessage={handleSendMessage}
+          isTyping={isTyping}
+        />
+      </div>
     </div>
   );
 } 

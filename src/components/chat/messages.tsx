@@ -21,9 +21,9 @@ function ChatMessageComponent({ role, content }: ChatMessageProps) {
         </Avatar>
       )}
 
-      <Card className={`max-w-[70%] p-4 ${isUser
+      <Card className={`max-w-[70%] p-2 ${isUser
         ? 'bg-primary text-primary-foreground'
-        : 'bg-card border-border/50'
+        : 'bg-background border-none shadow-none'
         }`}>
         <p className="text-sm leading-relaxed whitespace-pre-wrap">{content}</p>
       </Card>
