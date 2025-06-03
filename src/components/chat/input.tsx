@@ -2,6 +2,7 @@ import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowUp } from "lucide-react";
+import { useCallback } from "react";
 
 interface ChatInputProps {
   message: string;
@@ -23,6 +24,9 @@ const ChatInputComponent = ({ message, setMessage, onSendMessage, isTyping }: Ch
     onSendMessage();
   };
 
+  const setMessageRef = useCallback((val: string) => setMessage(val), []);
+  const sendRef = useCallback(() => handleSendMessage(), [handleSendMessage]);
+
   return (
     <div className="max-w-3xl mx-auto p-4 pt-2">
       {/* Composite input: textarea + footer */}
@@ -32,7 +36,7 @@ const ChatInputComponent = ({ message, setMessage, onSendMessage, isTyping }: Ch
           id="chat-input"
           placeholder="Ask me anything..."
           value={message}
-          onChange={(e) => setMessage(e.target.value)}
+          onChange={(e) => setMessageRef(e.target.value)}
           onKeyDown={handleKeyDown}
           className="w-full resize-none border-none rounded-none p-3 min-h-[72px] max-h-42 shadow-none"
           rows={2}
@@ -43,7 +47,7 @@ const ChatInputComponent = ({ message, setMessage, onSendMessage, isTyping }: Ch
         <div className="flex justify-end gap-2 p-2">
           <Button
             size="icon"
-            onClick={handleSendMessage}
+            onClick={sendRef}
             disabled={!message.trim() || isTyping}
             className="size-9 rounded-full"
           >
