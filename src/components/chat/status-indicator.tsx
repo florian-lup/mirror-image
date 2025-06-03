@@ -17,7 +17,7 @@ const StatusIndicatorComponent = () => {
   React.useEffect(() => {
     const interval = setInterval(() => {
       setMessageIndex((prev) => (prev + 1) % messages.length);
-    }, 1000);
+    }, 2000);
 
     return () => clearInterval(interval);
   }, []);

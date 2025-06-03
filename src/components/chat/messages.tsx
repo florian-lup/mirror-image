@@ -2,14 +2,9 @@ import * as React from "react";
 import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Sparkles } from "lucide-react";
-import type { ChatRole } from "@/types/chat";
+import type { ChatMessage as ChatMessageType } from "@/types/chat";
 
-interface ChatMessageProps {
-  role: ChatRole;
-  content: string;
-}
-
-function ChatMessageComponent({ role, content }: ChatMessageProps) {
+function ChatMessageComponent({ role, content }: ChatMessageType) {
   const isUser = role === 'user';
 
   return (

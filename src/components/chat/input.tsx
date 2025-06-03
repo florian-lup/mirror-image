@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowUp } from "lucide-react";
 import { useCallback } from "react";
+import { useEnterSubmit } from "@/hooks/useEnterSubmit";
 
 interface ChatInputProps {
   message: string;
@@ -12,12 +13,7 @@ interface ChatInputProps {
 }
 
 const ChatInputComponent = ({ message, setMessage, onSendMessage, isTyping }: ChatInputProps) => {
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      onSendMessage();
-    }
-  };
+  const handleKeyDown = useEnterSubmit(onSendMessage);
 
   const handleSendMessage = () => {
     if (!message.trim()) return;

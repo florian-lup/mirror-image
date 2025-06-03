@@ -10,11 +10,9 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 
-interface PrivacyProps {
-  children: React.ReactNode
-}
+import type { WithChildren } from "@/types/common"
 
-export function Privacy({ children }: PrivacyProps) {
+export function Privacy({ children }: WithChildren) {
   return (
     <Sheet>
       <SheetTrigger asChild>

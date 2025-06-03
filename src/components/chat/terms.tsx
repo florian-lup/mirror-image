@@ -10,11 +10,9 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 
-interface TermsProps {
-  children: React.ReactNode
-}
+import type { WithChildren } from "@/types/common"
 
-export function Terms({ children }: TermsProps) {
+export function Terms({ children }: WithChildren) {
   return (
     <Sheet>
       <SheetTrigger asChild>
