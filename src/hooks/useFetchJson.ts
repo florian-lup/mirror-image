@@ -40,8 +40,9 @@ export function useFetchJson<TResponse = unknown>(): UseFetchJsonReturn<TRespons
         const data = (await res.json()) as TResponse;
         setLoading(false);
         return data;
-      } catch (err: any) {
-        setError(err?.message ?? "Unknown error");
+      } catch (err: unknown) {
+        const error = err as Error;
+        setError(error.message ?? "Unknown error");
         setLoading(false);
         return null;
       }

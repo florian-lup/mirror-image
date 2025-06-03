@@ -32,7 +32,8 @@ function ChatMessageComponent({ role, content }: ChatMessageType) {
             remarkPlugins={[remarkGfm]}
             className="prose prose-sm dark:prose-invert break-words"
             components={{
-              a: ({ node, ...props }) => (
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
+              a: ({ node: _unused, ...props }) => (
                 <a
                   {...props}
                   target="_blank"

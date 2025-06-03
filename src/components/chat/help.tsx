@@ -1,5 +1,7 @@
 "use client";
 
+/* eslint-disable react/no-unescaped-entities */
+
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
 import { useState } from "react";
 import {

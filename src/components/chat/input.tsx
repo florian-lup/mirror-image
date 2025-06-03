@@ -16,12 +16,12 @@ interface ChatInputProps {
 const ChatInputComponent = ({ message, setMessage, onSendMessage, isTyping, hasMessages }: ChatInputProps) => {
   const handleKeyDown = useEnterSubmit(onSendMessage);
 
-  const handleSendMessage = () => {
+  const handleSendMessage = useCallback(() => {
     if (!message.trim()) return;
     onSendMessage();
-  };
+  }, [message, onSendMessage]);
 
-  const setMessageRef = useCallback((val: string) => setMessage(val), []);
+  const setMessageRef = useCallback((val: string) => setMessage(val), [setMessage]);
   const sendRef = useCallback(() => handleSendMessage(), [handleSendMessage]);
 
   return (

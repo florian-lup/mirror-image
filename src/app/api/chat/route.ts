@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { pinecone } from '@/lib/pinecone';
 import { openai } from '@/lib/openai';
 import type { ChatMessage } from '@/types/chat';
+import type OpenAI from 'openai';
 
 export async function POST(req: NextRequest) {
   let messages: ChatMessage[] | undefined;
@@ -36,7 +37,7 @@ Guidelines:
 `;
 
   // ---- OpenAI function calling (tool calling) setup ----
-  const tools: any = [
+  const tools = [
     {
       type: 'function',
       function: {
@@ -54,13 +55,13 @@ Guidelines:
         },
       },
     },
-  ];
+  ] as unknown as OpenAI.ChatCompletionTool[];
 
   // Build initial message list (system + chat history)
-  const messagesForOpenAI: any[] = [
+  const messagesForOpenAI = [
     { role: 'system', content: systemPrompt },
     ...messages,
-  ];
+  ] as unknown as OpenAI.ChatCompletionMessageParam[];
 
   let firstResponse;
   try {
@@ -70,13 +71,14 @@ Guidelines:
       tools,
       tool_choice: 'auto',
     });
-  } catch (err: any) {
-    console.error('OpenAI chat.completions error', err);
-    const msg = err?.message || 'OpenAI request failed';
+  } catch (err: unknown) {
+    const error = err as Error;
+    console.error('OpenAI chat.completions error', error);
+    const msg = error.message || 'OpenAI request failed';
     return NextResponse.json({ error: msg }, { status: 500 });
   }
 
-  const firstMsg = firstResponse.choices[0].message as any;
+  const firstMsg = firstResponse.choices[0].message;
 
   // If the model decided to call the tool
   if (firstMsg.tool_calls && firstMsg.tool_calls.length > 0) {
@@ -93,7 +95,7 @@ Guidelines:
     }
 
     // Append the original assistant tool call message and the tool result message
-    const followupMessages: any[] = [
+    const followupMessages = [
       ...messagesForOpenAI,
       firstMsg,
       {
@@ -102,7 +104,7 @@ Guidelines:
         tool_call_id: toolCall.id,
         content: searchResult,
       },
-    ];
+    ] as unknown as OpenAI.ChatCompletionMessageParam[];
 
     let finalResp;
     try {
@@ -112,9 +114,10 @@ Guidelines:
         tools,
         tool_choice: 'none',
       });
-    } catch (err: any) {
-      console.error('OpenAI follow-up error', err);
-      return NextResponse.json({ error: err?.message || 'OpenAI request failed' }, { status: 500 });
+    } catch (err: unknown) {
+      const error = err as Error;
+      console.error('OpenAI follow-up error', error);
+      return NextResponse.json({ error: error.message || 'OpenAI request failed' }, { status: 500 });
     }
 
     const assistantReply = finalResp.choices[0].message.content;
@@ -144,11 +147,14 @@ async function runSearchBio(query: string): Promise<string> {
       includeMetadata: true,
     });
 
-    const chunks = resp.matches?.map((m) => (m.metadata as any)?.text ?? '').filter(Boolean) ?? [];
+    const chunks = resp.matches?.map((m) => {
+      const meta = m.metadata as { text?: string } | undefined;
+      return meta?.text ?? '';
+    }).filter(Boolean) ?? [];
     if (!chunks.length) return 'No relevant context found.';
 
     return chunks.join('\n\n');
-  } catch (err) {
+  } catch (err: unknown) {
     console.error('Pinecone query error', err);
     return 'No relevant context found.';
   }
