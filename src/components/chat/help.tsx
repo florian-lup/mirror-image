@@ -40,9 +40,6 @@ export function HelpDialog({ children }: HelpDialogProps) {
             <strong>How it works:</strong> The AI uses Retrieval-Augmented Generation (RAG), which means it can pull in relevant information from my public documents and content to provide more accurate, helpful answers. Think of it as an AI that can look things up about me in real time!
           </p>
           <p>
-            <strong>Privacy:</strong> Your messages are only used to generate a response and are not stored or shared. No personal data is collected.
-          </p>
-          <p>
             <strong>Limitations:</strong> The AI tries its best, but it might not always get things perfect. If you have questions about how it works, my background, or anything else, just ask! You can also explore the suggested questions to get started.
           </p>
         </div>
