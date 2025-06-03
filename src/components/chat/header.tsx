@@ -2,35 +2,30 @@ import { FileText, ShieldAlert, Mail, CheckCircle, RotateCcw } from "lucide-reac
 import { FaGithub } from "react-icons/fa"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
-import { useState } from "react"
+import { useCallback } from "react"
 import { Privacy } from "./privacy"
 import { Terms } from "./terms"
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"
 
 interface HeaderProps {
   hasMessages?: boolean;
 }
 
 export default function Header({ hasMessages = false }: HeaderProps) {
-  const [isEmailCopied, setIsEmailCopied] = useState(false)
+  const [isEmailCopied, copy] = useCopyToClipboard();
 
   const handleGitHubClick = () => {
     window.open("https://github.com/florian-lup", "_blank", "noopener,noreferrer")
   }
 
-  const handleContactClick = async () => {
-    try {
-      await navigator.clipboard.writeText("contact@florianlup.com")
-      setIsEmailCopied(true)
+  const handleContactClick = useCallback(async () => {
+    const success = await copy("contact@florianlup.com")
+    if (success) {
       toast.success("Email copied to clipboard!")
-
-      // Reset the icon after 2 seconds
-      setTimeout(() => {
-        setIsEmailCopied(false)
-      }, 2000)
-    } catch (err) {
+    } else {
       toast.error("Failed to copy email to clipboard")
     }
-  }
+  }, [copy])
 
   const handleReloadClick = () => {
     window.location.reload()

@@ -1,27 +1,21 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import { ChatMessage } from "./messages";
+import { useState } from "react";
+import { ChatMessage as ChatMessageComponent } from "./messages";
 import { TypingIndicator } from "./typing-indicator";
 import { SuggestedQuestions } from "./suggested-questions";
 import { ChatInput } from "./input";
 import { HelpDialog } from "./help";
 import { Button } from "@/components/ui/button";
 import Header from "./header";
+import { useAutoScroll } from "@/hooks/useAutoScroll";
+import type { ChatMessage as ChatMessageType } from "@/types/chat";
 
 export function ChatInterface() {
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState<Array<{ role: 'user' | 'assistant'; content: string }>>([]);
+  const [messages, setMessages] = useState<ChatMessageType[]>([]);
   const [isTyping, setIsTyping] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages, isTyping]);
+  const messagesEndRef = useAutoScroll([messages, isTyping]);
 
   const handleSendMessage = async () => {
     if (!message.trim()) return;
@@ -85,7 +79,7 @@ export function ChatInterface() {
             <div className="space-y-6">
               {/* Display conversation history */}
               {messages.map((msg, index) => (
-                <ChatMessage key={index} role={msg.role} content={msg.content} />
+                <ChatMessageComponent key={index} role={msg.role} content={msg.content} />
               ))}
               {/* Show typing indicator when AI is responding */}
               {isTyping && <TypingIndicator />}

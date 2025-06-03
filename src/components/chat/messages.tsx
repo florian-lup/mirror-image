@@ -2,9 +2,10 @@ import * as React from "react";
 import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Sparkles } from "lucide-react";
+import type { ChatRole } from "@/types/chat";
 
 interface ChatMessageProps {
-  role: 'user' | 'assistant';
+  role: ChatRole;
   content: string;
 }
 
