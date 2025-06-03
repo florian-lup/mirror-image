@@ -9,9 +9,10 @@ import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"
 
 interface HeaderProps {
   hasMessages?: boolean;
+  onNewChat?: () => void;
 }
 
-export default function Header({ hasMessages = false }: HeaderProps) {
+export default function Header({ hasMessages = false, onNewChat }: HeaderProps) {
   const [isEmailCopied, copy] = useCopyToClipboard();
 
   const handleGitHubClick = () => {
@@ -28,7 +29,11 @@ export default function Header({ hasMessages = false }: HeaderProps) {
   }, [copy])
 
   const handleReloadClick = () => {
-    window.location.reload()
+    if (onNewChat) {
+      onNewChat();
+    } else {
+      window.location.reload();
+    }
   }
 
   return (

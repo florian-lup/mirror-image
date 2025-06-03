@@ -1,4 +1,6 @@
 import * as React from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Sparkles } from "lucide-react";
@@ -17,11 +19,32 @@ function ChatMessageComponent({ role, content }: ChatMessageType) {
         </Avatar>
       )}
 
-      <Card className={`max-w-[70%] p-2 ${isUser
-        ? 'bg-primary text-primary-foreground'
-        : 'bg-background border-none shadow-none'
-        }`}>
-        <p className="text-sm leading-relaxed whitespace-pre-wrap">{content}</p>
+      <Card
+        className={`max-w-[70%] p-2 ${isUser
+          ? 'bg-primary text-primary-foreground'
+          : 'bg-background border-none shadow-none'
+          }`}
+      >
+        {isUser ? (
+          <p className="text-sm leading-relaxed whitespace-pre-wrap">{content}</p>
+        ) : (
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            className="prose prose-sm dark:prose-invert break-words"
+            components={{
+              a: ({ node, ...props }) => (
+                <a
+                  {...props}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline text-primary hover:opacity-80"
+                />
+              ),
+            }}
+          >
+            {content}
+          </ReactMarkdown>
+        )}
       </Card>
     </div>
   );

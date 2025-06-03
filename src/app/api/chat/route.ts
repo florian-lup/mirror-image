@@ -19,13 +19,13 @@ export async function POST(req: NextRequest) {
     model: 'text-embedding-3-small',
     input: lastUserMsg.content,
   });
+
   const vector = embedResp.data[0].embedding as number[];
 
   // 2. Query Pinecone
-  const index = pinecone.index('flo').namespace('bio');
-  const queryResp = await index.query({
+  const queryResp = await pinecone.index('flo').namespace('bio').query({
     vector,
-    topK: 5,
+    topK: 10,
     includeMetadata: true,
   });
 
@@ -36,12 +36,12 @@ export async function POST(req: NextRequest) {
 
   // 3. Build prompt with chat history + context
   const chatCompletion = await openai.chat.completions.create({
-    model: 'gpt-4o-mini',
+    model: 'gpt-4.1-mini',
     messages: [
       {
         role: 'system',
         content:
-          'You are Florian\'s personal bio assistant. Use the provided context to answer questions about Florian. If the context is insufficient, answer based on your general knowledge of Florian\'s bio.',
+          'You are Florian\'s personal bio assistant. Use the provided context to answer questions about Florian. If the context is insufficient, answer based on your general knowledge of Florian\'s bio. If the question is not related to Florian, from your general knowledge.',
       },
       {
         role: 'system',

@@ -13,7 +13,7 @@ import { useChat } from '@/hooks/useChat';
 
 export function ChatInterface() {
   const [message, setMessage] = useState("");
-  const { messages, isTyping, send } = useChat();
+  const { messages, isTyping, send, reset } = useChat();
   const messagesEndRef = useAutoScroll([messages, isTyping]);
 
   const handleSendMessage = async () => {
@@ -33,7 +33,7 @@ export function ChatInterface() {
   return (
     <div className="flex flex-col h-screen">
       {/* Header */}
-      <Header hasMessages={messages.length > 0} />
+      <Header hasMessages={messages.length > 0} onNewChat={reset} />
 
       {/* Main chat content area */}
       <div className="flex-1 overflow-y-auto scrollbar-none">
@@ -83,6 +83,7 @@ export function ChatInterface() {
           setMessage={setMessage}
           onSendMessage={handleSendMessage}
           isTyping={isTyping}
+          hasMessages={messages.length > 0}
         />
       </div>
     </div>

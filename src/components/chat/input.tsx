@@ -10,9 +10,10 @@ interface ChatInputProps {
   setMessage: (message: string) => void;
   onSendMessage: () => void;
   isTyping: boolean;
+  hasMessages: boolean;
 }
 
-const ChatInputComponent = ({ message, setMessage, onSendMessage, isTyping }: ChatInputProps) => {
+const ChatInputComponent = ({ message, setMessage, onSendMessage, isTyping, hasMessages }: ChatInputProps) => {
   const handleKeyDown = useEnterSubmit(onSendMessage);
 
   const handleSendMessage = () => {
@@ -30,7 +31,7 @@ const ChatInputComponent = ({ message, setMessage, onSendMessage, isTyping }: Ch
         {/* Text area */}
         <Textarea
           id="chat-input"
-          placeholder="Ask me anything..."
+          placeholder={hasMessages ? "Ask a follow up question…" : "Ask me anything…"}
           value={message}
           onChange={(e) => setMessageRef(e.target.value)}
           onKeyDown={handleKeyDown}

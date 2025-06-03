@@ -7,6 +7,7 @@ interface UseChatReturn {
   messages: ChatMessage[];
   isTyping: boolean;
   send: (content: string) => Promise<void>;
+  reset: () => void;
 }
 
 export function useChat(): UseChatReturn {
@@ -36,5 +37,10 @@ export function useChat(): UseChatReturn {
     setIsTyping(false);
   };
 
-  return { messages, isTyping, send };
+  const reset = () => {
+    setMessages([]);
+    setIsTyping(false);
+  };
+
+  return { messages, isTyping, send, reset };
 } 

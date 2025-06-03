@@ -50,21 +50,21 @@ async function main() {
 
   // 1. Read markdown file
   const markdown = await fs.readFile(SOURCE_FILE, 'utf8');
-  const chunks = splitMarkdown(markdown);
-  console.log(`Split markdown into ${chunks.length} chunks`);
+  const richChunks = splitMarkdown(markdown); // { text, section }
+  console.log(`Split markdown into ${richChunks.length} chunks`);
 
-  // 2. Embed all chunks in one batch – OpenAI can handle up to 2048 inputs
+  // 2. Embed all chunk texts in one batch – OpenAI can handle up to 2048 inputs
   const { data: embeddings } = (await openai.embeddings.create({
     model: EMBEDDING_MODEL,
-    input: chunks,
+    input: richChunks.map((c) => c.text),
   })) as { data: { embedding: number[] }[] };
 
   // 3. Build vectors to upsert
   const vectors = embeddings.map((item, i) => ({
-    id: sha256(chunks[i]).slice(0, 16),
+    id: sha256(richChunks[i].text).slice(0, 16),
     values: item.embedding as number[],
     metadata: {
-      text: chunks[i],
+      text: richChunks[i].text,
       source: 'bio.md',
       index: i,
     },
@@ -83,36 +83,67 @@ function sha256(text: string) {
   return crypto.createHash('sha256').update(text).digest('hex');
 }
 
+interface RichChunk {
+  text: string;
+  section: string;
+}
+
 /**
- * Very simple markdown splitter.
- *   • Every heading ("#", "##" …) starts a new chunk.
- *   • Every list item ("- ") becomes its own chunk.
- *   • Otherwise we accumulate lines until ≈ 250 tokens (~ 1700 chars) then cut.
+ * Smarter markdown splitter that keeps a heading with its body until the next
+ * heading appears.  It also tags each chunk with the nearest `##` section name
+ * so we can later filter (e.g. section === "projects").
  */
-function splitMarkdown(md: string): string[] {
-  const approxTokenLimit = 250 * 4.5; // ~4.5 chars per token on average
-  const chunks: string[] = [];
+function splitMarkdown(md: string): RichChunk[] {
+  const approxTokenLimit = 400 * 4.5; // allow larger chunks (~400 tokens)
+
+  const chunks: RichChunk[] = [];
   let buffer: string[] = [];
+  let currentSection = 'general';
+
+  const slugify = (s: string) =>
+    s
+      .toLowerCase()
+      .replace(/\[[^\]]+\]\([^\)]+\)/g, '') // remove markdown links
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
 
   const push = () => {
     if (buffer.length) {
-      chunks.push(buffer.join('\n').trim());
+      const text = buffer.join('\n').trim();
+      if (text) chunks.push({ text, section: currentSection });
       buffer = [];
     }
   };
 
-  for (const line of md.split('\n')) {
-    if (/^#/.test(line) || /^- /.test(line)) {
+  const lines = md.split('\n');
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+
+    const headingMatch = line.match(/^(#{1,6})\s+(.*)/);
+    if (headingMatch) {
+      // Start of a new chunk -> flush previous
       push();
-      chunks.push(line.trim());
+
+      const level = headingMatch[1].length;
+      const headingText = headingMatch[2].trim();
+
+      // Update current section label when we hit a level-2 heading (##)
+      if (level === 2) {
+        currentSection = slugify(headingText) || 'general';
+      }
+
+      buffer.push(line); // include the heading itself
     } else {
       buffer.push(line);
-      const charCount = buffer.reduce((acc, l) => acc + l.length, 0);
-      if (charCount >= approxTokenLimit) push();
     }
+
+    // If the buffer grows too large, force a cut (rare for bios)
+    const charCount = buffer.reduce((acc, l) => acc + l.length, 0);
+    if (charCount >= approxTokenLimit) push();
   }
+
   push();
-  return chunks.filter(Boolean);
+  return chunks;
 }
 
 // Execute if called directly (node scripts/upsert-bio.ts)
