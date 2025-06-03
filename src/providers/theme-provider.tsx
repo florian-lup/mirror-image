@@ -11,4 +11,4 @@ export function ThemeProviderWrapper({ children }: { children: React.ReactNode }
       {children}
     </ThemeProvider>
   );
-}
+} 

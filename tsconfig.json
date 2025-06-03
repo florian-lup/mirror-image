@@ -35,6 +35,9 @@
       "@/components/*": [
         "./src/components/*"
       ],
+      "@/providers/*": [
+        "./src/providers/*"
+      ],
       "@/utils/*": [
         "./src/utils/*"
       ]
