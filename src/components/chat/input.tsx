@@ -25,25 +25,32 @@ const ChatInputComponent = ({ message, setMessage, onSendMessage, isTyping }: Ch
 
   return (
     <div className="max-w-3xl mx-auto p-4 pt-2">
-      <div className="relative">
+      {/* Composite input: textarea + footer */}
+      <div className="rounded-md border overflow-hidden p-2">
+        {/* Text area */}
         <Textarea
-          id="chat input"
+          id="chat-input"
           placeholder="Ask me anything..."
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={handleKeyDown}
-          className="pr-10 min-h-[92px] max-h-42 resize-none bg-background/50 backdrop-blur"
+          className="w-full resize-none border-none rounded-none p-3 min-h-[72px] max-h-42 shadow-none"
           rows={2}
           disabled={isTyping}
         />
-        <Button
-          size="icon"
-          onClick={handleSendMessage}
-          disabled={!message.trim() || isTyping}
-          className="absolute right-2 bottom-2 size-8 rounded-full"
-        >
-          <ArrowUp className="size-4" />
-        </Button>
+
+        {/* Footer */}
+        <div className="flex justify-end gap-2 p-2">
+          <Button
+            size="icon"
+            onClick={handleSendMessage}
+            disabled={!message.trim() || isTyping}
+            className="size-9 rounded-full"
+          >
+            <ArrowUp className="size-4" />
+          </Button>
+          {/* Future buttons can be added here */}
+        </div>
       </div>
     </div>
   );
