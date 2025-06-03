@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ChatMessage as ChatMessageComponent } from "./messages";
-import { TypingIndicator } from "./typing-indicator";
+import { StatusIndicator } from "./status-indicator";
 import { SuggestedQuestions } from "./suggested-questions";
 import { ChatInput } from "./input";
 import { HelpDialog } from "./help";
@@ -82,7 +82,7 @@ export function ChatInterface() {
                 <ChatMessageComponent key={index} role={msg.role} content={msg.content} />
               ))}
               {/* Show typing indicator when AI is responding */}
-              {isTyping && <TypingIndicator />}
+              {isTyping && <StatusIndicator />}
               <div ref={messagesEndRef} />
             </div>
           )}
