@@ -9,46 +9,25 @@ import { HelpDialog } from "./help";
 import { Button } from "@/components/ui/button";
 import Header from "./header";
 import { useAutoScroll } from "@/hooks/useAutoScroll";
-import type { ChatMessage as ChatMessageType } from "@/types/chat";
+import { useChat } from '@/hooks/useChat';
 
 export function ChatInterface() {
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState<ChatMessageType[]>([]);
-  const [isTyping, setIsTyping] = useState(false);
+  const { messages, isTyping, send } = useChat();
   const messagesEndRef = useAutoScroll([messages, isTyping]);
 
   const handleSendMessage = async () => {
     if (!message.trim()) return;
 
     const userMessage = message.trim();
-    setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
-    setMessage("");
-    setIsTyping(true);
-
-    // Here you would typically send the message to your API
-    // For now, we'll just add a placeholder response
-    setTimeout(() => {
-      setMessages(prev => [...prev, {
-        role: 'assistant',
-        content: "Thanks for your message! This is a placeholder response. In a real implementation, this would connect to your AI API."
-      }]);
-      setIsTyping(false);
-    }, 1500);
+    await send(userMessage);
+    setMessage('');
   };
 
-  const handlePromptClick = (prompt: string) => {
-    setMessages(prev => [...prev, { role: 'user', content: prompt }]);
-    setIsTyping(true);
-
-    // Here you would typically send the message to your API
-    // For now, we'll just add a placeholder response
-    setTimeout(() => {
-      setMessages(prev => [...prev, {
-        role: 'assistant',
-        content: "Thanks for your message! This is a placeholder response. In a real implementation, this would connect to your AI API."
-      }]);
-      setIsTyping(false);
-    }, 1500);
+  const handlePromptClick = async (prompt: string) => {
+    const userMessage = prompt.trim();
+    await send(userMessage);
+    setMessage('');
   };
 
   return (
