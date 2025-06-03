@@ -19,6 +19,16 @@ const geistMono = Geist_Mono({
 
 const siteUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://florianlup.com';
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: 'white' },
+    { media: '(prefers-color-scheme: dark)', color: 'black' },
+  ],
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
