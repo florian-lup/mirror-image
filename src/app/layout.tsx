@@ -2,8 +2,9 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
-import { ThemeProviderWrapper } from "@/components/theme-provider";
+import { ThemeProviderWrapper } from "@/components/providers/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import { env } from "@/lib/env";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,7 +18,7 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://florianlup.com';
+const siteUrl = env.BASE_URL;
 
 export const viewport: Viewport = {
   width: 'device-width',

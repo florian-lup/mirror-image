@@ -1,11 +1,10 @@
 import { MetadataRoute } from 'next';
+import { env } from '@/lib/env';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.florianlup.com';
-
   return [
     {
-      url: baseUrl,
+      url: env.BASE_URL,
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 1,

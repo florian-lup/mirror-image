@@ -14,10 +14,9 @@ const nextConfig: NextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
-      // Add your external image domains here
       {
         protocol: 'https',
-        hostname: '**',
+        hostname: '**.florianlup.com',
       },
     ],
   },
