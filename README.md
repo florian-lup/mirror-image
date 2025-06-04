@@ -1,0 +1,122 @@
+# Mirror Image
+
+A personal AI chatbot that utilizes Retrieval-Augmented Generation (RAG) to provide contextually accurate responses based on biographical information. Built with Next.js, OpenAI & Pinecone.
+
+## Features
+
+- 🤖 **Intelligent Conversations**: AI-powered chat with personality and context awareness
+- 🔍 **Semantic Search**: Vector-based retrieval of relevant biographical information
+- 🎨 **Modern UI**: Clean, responsive interface with dark/light theme support
+
+## Tech Stack
+
+- **Next.js 15** - React framework with App Router
+- **React 19** - Latest React with concurrent features
+- **TypeScript** - Type-safe development
+- **Tailwind CSS 4** - Utility-first CSS framework
+- **Radix UI** - Accessible component primitives
+- **shadcn/ui** - Modern component library
+- **OpenAI API** - Language model and embeddings
+- **Pinecone** - Vector database for semantic search
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+ and npm/pnpm/yarn
+- OpenAI API key
+- Pinecone API key and index setup
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd mirror-image
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   # or
+   pnpm install
+   # or
+   yarn install
+   ```
+
+3. **Set up environment variables**
+   
+   Create a `.env` file in the root directory:
+   ```env
+   OPENAI_API_KEY=your_openai_api_key_here
+   PINECONE_API_KEY=your_pinecone_api_key_here
+   ```
+
+4. **Prepare your biographical data**
+   
+   Create `documents/bio.md` with the biographical information you want the AI to reference.
+
+5. **Upload biographical data to Pinecone**
+   ```bash
+   npm run upsert
+   ```
+   
+   This script will:
+   - Read your `bio.md` file
+   - Split it into semantic chunks
+   - Generate embeddings using OpenAI
+   - Store the vectors in your Pinecone index
+
+6. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+   
+   Open [http://localhost:3000](http://localhost:3000) to see the application.
+
+### Pinecone Setup
+
+1. Create a Pinecone account and get your API key
+2. Create an index with the following settings:
+   - **Dimensions**: 1536 (for text-embedding-3-small)
+   - **Metric**: Cosine
+   - **Namespace**: `bio` (used automatically by the upsert script)
+
+## Project Structure
+
+```
+mirror-image/
+├── src/
+│   ├── app/                    # Next.js App Router
+│   │   ├── api/chat/          # Chat API endpoint
+│   │   └── page.tsx           # Main chat page
+│   ├── components/            # React components
+│   │   ├── chat/             # Chat-specific components
+│   │   └── ui/               # Reusable UI components
+│   ├── hooks/                # Custom React hooks
+│   ├── lib/                  # Utility libraries and configs
+│   ├── providers/            # React context providers
+│   └── types/                # TypeScript type definitions
+├── documents/                # Source documents for RAG
+│   └── bio.md               # Biographical information
+├── scripts/                 # Utility scripts
+│   └── upsert-bio.ts       # Data upload script
+└── public/                  # Static assets
+```
+
+## Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm run upsert` - Upload biographical data to Pinecone
+
+## Deployment
+
+The application is optimized for deployment on Vercel:
+
+1. Connect your repository to Vercel
+2. Add environment variables in Vercel dashboard
+3. Deploy automatically on push to main branch
+
