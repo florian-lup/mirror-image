@@ -20,8 +20,8 @@ export function ChatInterface() {
     if (!message.trim()) return;
 
     const userMessage = message.trim();
-    await send(userMessage);
     setMessage('');
+    await send(userMessage);
   };
 
   const handlePromptClick = async (prompt: string) => {
