@@ -50,6 +50,7 @@ A personal AI chatbot that utilizes Retrieval-Augmented Generation (RAG) to prov
    ```env
    OPENAI_API_KEY=your_openai_api_key_here
    PINECONE_API_KEY=your_pinecone_api_key_here
+   NEXT_PUBLIC_BASE_URL=http://localhost:3000
    ```
 
 4. **Prepare your biographical data**
