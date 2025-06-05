@@ -33,7 +33,10 @@ export function useChat(): UseChatReturn {
     setIsTyping(true);
 
     const assistantReply = await callApi(history);
-    setMessages(prev => [...prev, { role: 'assistant', content: assistantReply }]);
+    setMessages((prev: ChatMessage[]) => [
+      ...prev,
+      { role: 'assistant', content: assistantReply },
+    ]);
     setIsTyping(false);
   };
 
