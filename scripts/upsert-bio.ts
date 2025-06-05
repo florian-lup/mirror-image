@@ -12,10 +12,10 @@ import 'dotenv/config';
  * Usage:
  *   pnpm run upsert          # or npm run upsert / yarn upsert
  *
- * Environment variables required (see README or .env.local):
+ * Environment variables required (see README or .env):
  *   OPENAI_API_KEY        – OpenAI secret key
  *   PINECONE_API_KEY      – Pinecone secret key
- */
+*/
 
 import fs from 'node:fs/promises';
 import path from 'node:path';
