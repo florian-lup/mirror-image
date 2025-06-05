@@ -35,7 +35,7 @@ const ChatInputComponent = ({ message, setMessage, onSendMessage, isTyping, hasM
           value={message}
           onChange={(e) => setMessageRef(e.target.value)}
           onKeyDown={handleKeyDown}
-          className="w-full resize-none border-none rounded-none p-3 min-h-[72px] max-h-42 shadow-none"
+          className="w-full resize-none border-none rounded-none p-3 min-h-[72px] max-h-40 shadow-none"
           rows={2}
           disabled={isTyping}
         />
