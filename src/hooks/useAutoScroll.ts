@@ -12,7 +12,7 @@ import { useEffect, useRef } from "react";
  * <div ref={bottomRef} />
  */
 export function useAutoScroll(dependencies: unknown[]): React.RefObject<HTMLDivElement | null> {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
