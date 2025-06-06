@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 
-export function ErrorPage({
+export default function ErrorPage({
   error,
   reset,
 }: {
@@ -30,5 +30,3 @@ export function ErrorPage({
     </div>
   );
 }
-
-export default ErrorPage;

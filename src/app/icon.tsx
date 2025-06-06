@@ -8,7 +8,7 @@ export const size = {
 export const contentType = 'image/png';
 
 // Image generation
-export function Icon() {
+export default function Icon() {
   return new ImageResponse(
     (
       <div
@@ -32,5 +32,3 @@ export function Icon() {
     }
   );
 }
-
-export default Icon;

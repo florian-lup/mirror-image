@@ -3,7 +3,7 @@
 import Link, { useLinkStatus } from 'next/link';
 import { Button } from '@/components/ui/button';
 
-export function NotFoundPage() {
+export default function NotFoundPage() {
   const { pending } = useLinkStatus();
   return (
     <div className="flex min-h-screen flex-col items-center justify-center p-4">
@@ -21,5 +21,3 @@ export function NotFoundPage() {
     </div>
   );
 }
-
-export default NotFoundPage;
