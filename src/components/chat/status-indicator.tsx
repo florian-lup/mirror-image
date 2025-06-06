@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState, useEffect, memo } from "react";
 import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Loader2 } from "lucide-react";
@@ -12,9 +12,9 @@ const messages = [
 ];
 
 const StatusIndicatorComponent = () => {
-  const [messageIndex, setMessageIndex] = React.useState(0);
+  const [messageIndex, setMessageIndex] = useState(0);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const interval = setInterval(() => {
       setMessageIndex((prev) => (prev + 1) % messages.length);
     }, 3000);
@@ -41,4 +41,4 @@ const StatusIndicatorComponent = () => {
   );
 };
 
-export const StatusIndicator = React.memo(StatusIndicatorComponent); 
+export const StatusIndicator = memo(StatusIndicatorComponent);

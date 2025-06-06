@@ -1,4 +1,4 @@
-import * as React from "react";
+import { memo } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowUp } from "lucide-react";
@@ -57,4 +57,4 @@ const ChatInputComponent = ({ message, setMessage, onSendMessage, isTyping, hasM
   );
 };
 
-export const ChatInput = React.memo(ChatInputComponent);
+export const ChatInput = memo(ChatInputComponent);
