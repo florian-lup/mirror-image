@@ -15,20 +15,7 @@ export function middleware(request: NextRequest) {
     },
   });
 
-  // Add security headers
-  response.headers.set('X-Frame-Options', 'DENY');
-  response.headers.set('X-Content-Type-Options', 'nosniff');
-  response.headers.set('Referrer-Policy', 'origin-when-cross-origin');
-  response.headers.set(
-    'Permissions-Policy',
-    'camera=(), microphone=(), geolocation=()'
-  );
-
-  // Add CSP header for enhanced security
-  response.headers.set(
-    'Content-Security-Policy',
-    "default-src 'self'; img-src 'self' data: https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline';"
-  );
+  // Security headers moved to src/app/headers.ts
 
   return response;
 }

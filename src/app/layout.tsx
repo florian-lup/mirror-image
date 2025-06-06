@@ -6,6 +6,7 @@ import "./globals.css";
 import { ThemeProviderWrapper } from "@/providers/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { env } from "@/lib/env";
+import { headers as securityHeaders } from "./headers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -102,3 +103,5 @@ export default function RootLayout({
     </html>
   );
 }
+
+export { securityHeaders as headers };
