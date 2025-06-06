@@ -1,7 +1,7 @@
-import * as React from 'react';
+import type { ReactNode } from 'react';
 
 export type WithChildren = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 export interface ApiError {

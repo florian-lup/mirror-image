@@ -1,5 +1,4 @@
-import { FileText, ShieldAlert, Mail, CheckCircle, RotateCcw } from "lucide-react"
-import { FaGithub } from "react-icons/fa"
+import { FileText, ShieldAlert, Mail, CheckCircle, RotateCcw, ExternalLink } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
 import { useCallback } from "react"
@@ -52,7 +51,7 @@ export default function Header({ hasMessages = false, onNewChat }: HeaderProps) 
         {/* Right side - Other buttons */}
         <div className="flex items-center gap-4">
           <Button variant="ghost" size="sm" className="text-muted-foreground" onClick={handleGitHubClick}>
-            <FaGithub className="w-4 h-4" />
+            <ExternalLink className="w-4 h-4" />
             <span className="hidden sm:inline ml-2">GitHub</span>
           </Button>
           <Button variant="ghost" size="sm" className="text-muted-foreground" onClick={handleContactClick}>

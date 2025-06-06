@@ -3,7 +3,7 @@
 /* eslint-disable react/no-unescaped-entities */
 
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import {
   Dialog,
   DialogContent,
@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/dialog";
 
 interface HelpDialogProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export function HelpDialog({ children }: HelpDialogProps) {
