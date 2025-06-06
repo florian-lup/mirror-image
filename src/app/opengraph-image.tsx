@@ -9,7 +9,7 @@ export const size = {
 export const contentType = 'image/png';
 
 // Image generation
-export async function Image() {
+export default async function Image() {
   return new ImageResponse(
     (
       <div
@@ -38,5 +38,3 @@ export async function Image() {
     }
   );
 }
-
-export default Image;
