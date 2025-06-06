@@ -2,7 +2,6 @@ import { memo } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowUp } from "lucide-react";
-import { useCallback } from "react";
 import { useEnterSubmit } from "@/hooks/useEnterSubmit";
 
 interface ChatInputProps {
@@ -16,13 +15,14 @@ interface ChatInputProps {
 const ChatInputComponent = ({ message, setMessage, onSendMessage, isTyping, hasMessages }: ChatInputProps) => {
   const handleKeyDown = useEnterSubmit(onSendMessage);
 
-  const handleSendMessage = useCallback(() => {
+  function handleSendMessage() {
     if (!message.trim()) return;
     onSendMessage();
-  }, [message, onSendMessage]);
+  }
 
-  const setMessageRef = useCallback((val: string) => setMessage(val), [setMessage]);
-  const sendRef = useCallback(() => handleSendMessage(), [handleSendMessage]);
+  function handleChange(val: string) {
+    setMessage(val);
+  }
 
   return (
     <div className="max-w-3xl mx-auto p-4 pt-2">
@@ -33,7 +33,7 @@ const ChatInputComponent = ({ message, setMessage, onSendMessage, isTyping, hasM
           id="chat-input"
           placeholder={hasMessages ? "Ask a follow up question…" : "Ask me anything…"}
           value={message}
-          onChange={(e) => setMessageRef(e.target.value)}
+          onChange={(e) => handleChange(e.target.value)}
           onKeyDown={handleKeyDown}
           className="w-full resize-none border-none rounded-none p-3 min-h-[72px] max-h-40 shadow-none"
           rows={2}
@@ -44,7 +44,7 @@ const ChatInputComponent = ({ message, setMessage, onSendMessage, isTyping, hasM
         <div className="flex justify-end gap-2 p-2">
           <Button
             size="icon"
-            onClick={sendRef}
+            onClick={handleSendMessage}
             disabled={!message.trim() || isTyping}
             className="size-9 rounded-full"
           >

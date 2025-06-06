@@ -7,7 +7,7 @@ import { SuggestedQuestions } from "./suggested-questions";
 import { ChatInput } from "./input";
 import { HelpDialog } from "./help";
 import { Button } from "@/components/ui/button";
-import Header from "./header";
+import { Header } from "./header";
 import { useAutoScroll } from "@/hooks/useAutoScroll";
 import { useChat } from '@/hooks/useChat';
 

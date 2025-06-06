@@ -1,9 +1,17 @@
-import { ChatInterface } from "@/components/chat/chat";
+import { lazy, Suspense } from "react";
 
-export default function ChatPage() {
+const ChatInterface = lazy(() =>
+  import("@/components/chat/chat").then((m) => ({ default: m.ChatInterface }))
+);
+
+export function ChatPage() {
   return (
     <div className="min-h-screen bg-background">
-      <ChatInterface />
+      <Suspense fallback={<div className="p-4">Loading chat…</div>}>
+        <ChatInterface />
+      </Suspense>
     </div>
   );
 }
+
+export default ChatPage;
