@@ -1,4 +1,4 @@
-import * as React from "react";
+import { memo } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Card } from "@/components/ui/card";
@@ -49,4 +49,4 @@ function ChatMessageComponent({ role, content }: ChatMessageType) {
   );
 }
 
-export const ChatMessage = React.memo(ChatMessageComponent); 
+export const ChatMessage = memo(ChatMessageComponent);
