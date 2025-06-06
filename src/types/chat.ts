@@ -8,4 +8,8 @@ export interface ChatMessage {
 export interface ChatApiResponse {
   reply?: string;
   error?: string;
-} 
+}
+
+export interface ChatApiError {
+  error: string;
+}
