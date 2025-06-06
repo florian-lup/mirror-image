@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 import { env } from '@/lib/env';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export function sitemap(): MetadataRoute.Sitemap {
   return [
     {
       url: env.BASE_URL,
@@ -10,4 +10,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
   ];
-} 
+}
+
+export default sitemap;

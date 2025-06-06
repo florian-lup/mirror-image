@@ -1,7 +1,10 @@
-import Link from 'next/link';
+'use client';
+
+import Link, { useLinkStatus } from 'next/link';
 import { Button } from '@/components/ui/button';
 
-export default function NotFound() {
+export function NotFoundPage() {
+  const { pending } = useLinkStatus();
   return (
     <div className="flex min-h-screen flex-col items-center justify-center p-4">
       <h1 className="mb-4 text-6xl font-bold">404</h1>
@@ -10,8 +13,13 @@ export default function NotFound() {
         Sorry, the page you are looking for doesn&apos;t exist or has been moved.
       </p>
       <Button asChild>
-        <Link href="/">Return Home</Link>
+        <Link href="/" onNavigate={() => console.log('navigate home')}>
+          Return Home
+        </Link>
       </Button>
+      {pending && <span className="mt-2 text-muted-foreground">Loading…</span>}
     </div>
   );
-} 
+}
+
+export default NotFoundPage;

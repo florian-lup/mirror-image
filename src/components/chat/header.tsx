@@ -1,7 +1,6 @@
 import { FileText, ShieldAlert, Mail, CheckCircle, RotateCcw, ExternalLink } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
-import { useCallback } from "react"
 import { Privacy } from "./privacy"
 import { Terms } from "./terms"
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"
@@ -11,21 +10,21 @@ interface HeaderProps {
   onNewChat?: () => void;
 }
 
-export default function Header({ hasMessages = false, onNewChat }: HeaderProps) {
+export function Header({ hasMessages = false, onNewChat }: HeaderProps) {
   const [isEmailCopied, copy] = useCopyToClipboard();
 
   const handleGitHubClick = () => {
     window.open("https://github.com/florian-lup", "_blank", "noopener,noreferrer")
   }
 
-  const handleContactClick = useCallback(async () => {
+  async function handleContactClick() {
     const success = await copy("contact@florianlup.com")
     if (success) {
       toast.success("Email copied to clipboard!")
     } else {
       toast.error("Failed to copy email to clipboard")
     }
-  }, [copy])
+  }
 
   const handleReloadClick = () => {
     if (onNewChat) {
